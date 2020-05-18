@@ -1,22 +1,26 @@
 {
-    "name": "drupal-composer/drupal-project",
-    "description": "Project template for Drupal 7 projects with composer",
+    "name": "argopecten/aegir-composer",
+    "description": "Composer-based Aegir 3.x install",
     "type": "project",
     "license": "GPL-2.0-or-later",
     "authors": [
         {
-            "name": "",
+            "name": "petergerner",
             "role": ""
         }
     ],
     "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.drupal.org/7"
+        "drupal": {
+              "type": "composer",
+              "url": "https://packages.drupal.org/7"
+        },
+        "hostmaster": {
+            "type": "vcs",
+            "url":  "https://github.com/argopecten/hostmaster"
         }
     ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=7.1",
         "ext-curl": "*",
         "ext-gd": "*",
         "ext-json": "*",
@@ -28,10 +32,11 @@
         "cweagans/composer-patches": "^1.6.5",
         "drupal-composer/preserve-paths": "^0.1",
         "drupal/composer_autoloader": "^1.0",
-        "drupal/drupal": "^7.69",
+        "drupal/drupal": "7.69",
         "drush/drush": "^8.0",
         "symfony/filesystem": "~2.7|^3",
-        "webflo/drupal-finder": "^1.0.0"
+        "webflo/drupal-finder": "^1.0.0",
+        "argopecten/hostmaster": "dev-composer"
     },
     "conflict": {
         "drupal/core": "8.*"
