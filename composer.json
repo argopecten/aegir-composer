@@ -9,7 +9,7 @@
             "role": ""
         }
     ],
-    "repositories": [
+    "repositories": {
         "drupal": {
               "type": "composer",
               "url": "https://packages.drupal.org/7"
@@ -18,7 +18,7 @@
             "type": "vcs",
             "url":  "https://github.com/argopecten/hostmaster"
         }
-    ],
+    },
     "require": {
         "php": ">=7.1",
         "ext-curl": "*",
