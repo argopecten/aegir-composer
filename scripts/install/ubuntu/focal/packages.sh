@@ -38,3 +38,7 @@ sudo apt install postfix -y
 # sudo ufw app info 'Postfix'
 #  Postfix SMTPS
 #  Postfix Submission
+
+#  - create Aegis user with permission to restart webserver
+#    this runs with root privileges
+sudo su -c ./aegir-user.sh
