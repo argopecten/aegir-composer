@@ -20,14 +20,15 @@ source "$DIR/../../aegir.cfg"
 #    copy Drush completion file to /var/aegir/.drush/drush.complete.sh
 #    copy example Drush prompt file to /var/aegir/.drush/drush.prompt.sh
 #    add path to Drush: export PATH="$PATH:/var/aegir/vendor/bin"
+#
+#  - link provision module into drush paths
+#    provision module has been installed via composer
 ###########################################################
 
-
+#  - initialize Drush with Aegir home
 DRUSH=$AEGIR_HOME/vendor/bin/drush
-
-# does it really needed? drush init does it anyway...
-# link drush into /usr/local/bin
-# sudo ln -s $DRUSH /usr/local/bin/drush
-
-#  - initialize Drush with Aegir adduser
 sudo su - aegir -c "$DRUSH init  --add-path=$AEGIR_HOME --bg -y"
+
+#  - link provision module into drush paths
+sudo mkdir -p /usr/share/drush/commands
+sudo ln -s $AEGIR_HOME/web/sites/all/drush/provision /usr/share/drush/commands

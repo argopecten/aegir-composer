@@ -24,7 +24,8 @@ adduser --system --group --home $AEGIR_HOME aegir --shell /usr/bin/bash
 adduser aegir www-data
 
 #  - sudo rights to restart webserver
-echo 'aegir ALL=NOPASSWD: /etc/init.d/nginx    # for Nginx'  | tee /tmp/aegir
-echo 'aegir ALL=NOPASSWD: /usr/sbin/apache2ctl # for Apache' | tee /tmp/aegir
+# echo 'aegir ALL=NOPASSWD: /etc/init.d/nginx    # for Nginx'  >  /tmp/aegir
+# echo 'aegir ALL=NOPASSWD: /usr/sbin/apache2ctl # for Apache' >> /tmp/aegir
+echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' >  /tmp/aegir
 chmod 0440 /tmp/aegir
 mv /tmp/aegir /etc/sudoers.d/aegir
