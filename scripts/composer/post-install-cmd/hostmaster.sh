@@ -11,8 +11,8 @@ source "$DIR/../../aegir.cfg"
 
 ###########################################################
 # Install Aegir
-#  - create Aegis user with permission to restart webserver
-#  - install Aegir
+#  - install Hostmast module of Aegir
+#    https://www.drupal.org/project/hostmaster/
 ###########################################################
 
 
@@ -29,8 +29,6 @@ while ! mysqladmin ping -hlocalhost --silent; do
 done
 echo "ÆGIR | Database is active!"
 
-
-#  - install Aegir
 # variables for Aegir
 echo "ÆGIR | -------------------------"
 echo 'ÆGIR | Hello! '
@@ -59,49 +57,44 @@ drush cc drush
 echo 'ÆGIR | Checking drush status...'
 drush status
 
+# if @hostmaster is not accessible, install it.
+echo "ÆGIR | Hostmaster install..."
+echo "ÆGIR | -------------------------"
+echo "ÆGIR | Running: drush cc drush"
+drush cc drush
 
-drush @hostmaster vget site_name > /dev/null 2>&1
-if [ ${PIPESTATUS[0]} == 0 ]; then
-  echo "ÆGIR | Hostmaster site found. Aborting..."
-  exit 1
-else
-  # if @hostmaster is not accessible, install it.
-  echo "ÆGIR | Hostmaster install..."
-  echo "ÆGIR | -------------------------"
-  echo "ÆGIR | Running: drush cc drush"
-  drush cc drush
+# test sudo
+sudo su - aegir -c '
+echo "ÆGIR | -------------------------"
+echo "ÆGIR | This is the aegir user."
+'
 
-  # test sudo
-  sudo su -s /bin/bash - aegir -c '
-  echo "ÆGIR | -------------------------"
-  echo "ÆGIR | This is the aegir user."
-  '
+echo "ÆGIR | -------------------------"
+echo "ÆGIR | Running: drush hostmaster-install"
+sudo su - aegir -c " \
+  drush hostmaster-install -y --strict=0 $HOSTNAME \
+    --aegir_db_host     = 'localhost' \
+    --aegir_db_pass     = $MYSQL_AEGIR_DB_PASSWORD \
+    --aegir_db_port     = '3306' \
+    --aegir_db_user     = $MYSQL_AEGIR_DB_USER \
+    --aegir_host        = $HOSTNAME \
+    --client_name       = $AEGIR_CLIENT_NAME \
+    --client_email      = $AEGIR_CLIENT_EMAIL \
+    --http_service_type = $WEBSERVER \
+    --profile           = $AEGIR_PROFILE \
+    --root              = $AEGIR_HOSTMASTER_ROOT \
+    --working-copy      = $AEGIR_WORKING_COPY \
+"
+sleep 3
+echo "ÆGIR | Running 'drush cc drush' ... "
+drush cc drush
 
-  echo "ÆGIR | -------------------------"
-  echo "ÆGIR | Running: drush hostmaster-install"
-  sudo su -s /bin/bash - aegir -c " \
-    drush hostmaster-install -y --strict=0 $HOSTNAME \
-      --aegir_db_host     = 'localhost' \
-      --aegir_db_pass     = $MYSQL_AEGIR_DB_PASSWORD \
-      --aegir_db_port     = '3306' \
-      --aegir_db_user     = $MYSQL_AEGIR_DB_USER \
-      --aegir_host        = $HOSTNAME \
-      --client_name       = $AEGIR_CLIENT_NAME \
-      --client_email      = $AEGIR_CLIENT_EMAIL \
-      --http_service_type = $WEBSERVER \
-      --profile           = $AEGIR_PROFILE \
-      --root              = $AEGIR_HOSTMASTER_ROOT \
-      --working-copy      = $AEGIR_WORKING_COPY \
-  "
-  sleep 3
-  echo "ÆGIR | Running 'drush cc drush' ... "
-  drush cc drush
+# enable modules
+echo "ÆGIR | Enabling hosting queued..."
 
-  # enable modules
-  echo "ÆGIR | Enabling hosting queued..."
-  drush @hostmaster en hosting_queued -y
+# TODO: should be aegir user?
+drush @hostmaster en hosting_queued -y
 
-  # echo "ÆGIR | Enabling hosting modules for CiviCRM ..."
-  # fix_permissions, fix_ownership, hosting_civicrm, hosting_civicrm_cron
-  # drush @hostmaster en hosting_civicrm_cron -y
-fi
+# echo "ÆGIR | Enabling hosting modules for CiviCRM ..."
+# fix_permissions, fix_ownership, hosting_civicrm, hosting_civicrm_cron
+# drush @hostmaster en hosting_civicrm_cron -y

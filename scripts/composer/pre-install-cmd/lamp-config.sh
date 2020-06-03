@@ -7,39 +7,49 @@
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
 source "$DIR/../../aegir.cfg"
-source "$DIR/../../php.cfg"
 
 ###########################################################
-# Install and configure PHP packages for Aegir
-#  - set PHP repo
-#  - install required PHP packages
-#  - PHP configurations: memory size, upload, ...
+# Configure LAMP for Aegir
 ###########################################################
 
-V=$PHP_VERSION
-echo PHP=$V
+#  - securing MariaDB
+echo -e "\n\n$MYSQL_ROOT_PASSWORD\n$MYSQL_ROOT_PASSWORD\n\n\nn\n\n " | sudo mysql_secure_installation 2>/dev/null
 
-# using the PHP repo https://packages.sury.org/php/
-sudo LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php -y
-sudo apt update -y
+# TODO: create user aegir_root
+# mysql --user="root" --password="$MYSQL_ROOT_PASSWORD" --execute="GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_AEGIR_DB_USER'@'%' IDENTIFIED BY '$MYSQL_AEGIR_DB_PASSWORD' WITH GRANT OPTION;"
 
-case "$PHP_MOD" in
-fpm)   echo "PHP: FPM"
-    PHP_PKG=php$V-fpm
-    ;;
-mod-php)  echo "PHP: mod-php"
-    PHP_PKG=libapache2-mod-php$V
-    ;;
-*) echo "PHP mode is not defined, aborting!"
-   exit 1
-   ;;
+# enable all IP addresses to bind, not just localhost
+# TODO: locate .cnf file: sed -i 's/bind-address/#bind-address/' /etc/mysql/my.cnf
+
+sudo service mysql restart
+
+###########################################################
+# Install and configure Nginx or Apache2 for Aegir
+#  - install webserver
+#  - link Aegir config file
+#  - enable modules
+###########################################################
+
+case "$WEBSERVER" in
+  nginx)   echo "Setup Nginx..."
+      sudo apt install nginx -y
+      sudo ln -s /var/aegir/config/nginx.conf /etc/nginx/conf.d/aegir.conf
+      sudo ufw allow 'Nginx Full'
+      ;;
+
+  apache2)  echo "Setup Apache ..."
+      sudo apt install apache2 -y
+      sudo ln -s /var/aegir/config/apache.conf /etc/apache2/conf-available/aegir.conf
+      sudo a2enmod rewrite
+      sudo a2enconf aegir
+      sudo ufw allow 'APACHE Full'
+      ;;
+
+  *) echo "No webserver defined, aborting!"
+     exit 1
+     ;;
+
 esac
-
-# install PHP libraries for Drupal & Aegir
-sudo apt install php$V-mysql php$V-xml php$V-gd $PHP_PKG -y
-
-# install PHP libraries for CiviCRM
-sudo apt install php$V-mbstring php$V-curl php$V-zip -y
 
 #  - PHP configurations: memory size, upload, ...
 case "$WEBSERVER" in
@@ -68,11 +78,15 @@ apache2)  echo "Configuring PHP for Apache ..."
    ;;
 esac
 
-# Composer
-wget https://raw.githubusercontent.com/composer/getcomposer.org/$COMPOSER_VERSION/web/installer -O - -q | php -- --quiet
-sudo mv composer.phar /usr/bin/composer
-# composer --version
+# Postfix install & config
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | Postfix config ..."
+#    TODO: does it really needed?
+sudo debconf-set-selections <<< "postfix postfix/mailname string $hostname"
+sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
 
-# TODO:
-# - reload services
-# - clean up
+# TODO
+# sudo ufw allow 'Postfix'
+# sudo ufw app info 'Postfix'
+#  Postfix SMTPS
+#  Postfix Submission

@@ -54,24 +54,23 @@
     "scripts": {
         "pre-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
-            "bash scripts/install/ubuntu/focal/packages.sh",
-            "bash scripts/install/ubuntu/focal/dbserver.sh",
-            "bash scripts/install/ubuntu/focal/webserver.sh",
-            "bash scripts/install/ubuntu/focal/php.sh"
+            "bash scripts/composer/pre-install-cmd/lamp-config.sh"
         ],
         "pre-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "bash scripts/install/ubuntu/focal/drush.sh"
+            "bash scripts/composer/post-install-cmd/move.sh",
+            "bash scripts/composer/post-install-cmd/drush.sh",
+            "bash scripts/composer/post-install-cmd/provision.sh",
+            "bash scripts/composer/post-install-cmd/hostmaster.sh"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ],
         "post-create-project-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-            "bash scripts/install/ubuntu/focal/aegir-install.sh"
+            "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
         ]
     },
     "extra": {

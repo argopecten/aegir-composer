@@ -8,7 +8,6 @@ DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
 source "$DIR/../../aegir.cfg"
 
-
 ###########################################################
 # Configure Drush on the server
 #  - download: done via Composer, see composer.json
@@ -21,14 +20,8 @@ source "$DIR/../../aegir.cfg"
 #    copy example Drush prompt file to /var/aegir/.drush/drush.prompt.sh
 #    add path to Drush: export PATH="$PATH:/var/aegir/vendor/bin"
 #
-#  - link provision module into drush paths
-#    provision module has been installed via composer
 ###########################################################
 
 #  - initialize Drush with Aegir home
 DRUSH=$AEGIR_HOME/vendor/bin/drush
 sudo su - aegir -c "$DRUSH init  --add-path=$AEGIR_HOME --bg -y"
-
-#  - link provision module into drush paths
-sudo mkdir -p /usr/share/drush/commands
-sudo ln -s $AEGIR_HOME/web/sites/all/drush/provision /usr/share/drush/commands
