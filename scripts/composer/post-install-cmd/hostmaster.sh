@@ -8,7 +8,6 @@ DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
 source "$DIR/../../aegir.cfg"
 
-
 ###########################################################
 # Install Aegir
 #  - install Hostmast module of Aegir
@@ -61,7 +60,7 @@ drush status
 echo "ÆGIR | Hostmaster install..."
 echo "ÆGIR | -------------------------"
 echo "ÆGIR | Running: drush cc drush"
-drush cc drush
+sudo su - aegir -c "drush cc drush"
 
 # test sudo
 sudo su - aegir -c '
@@ -74,26 +73,23 @@ echo "ÆGIR | Running: drush hostmaster-install"
 sudo su - aegir -c " \
   drush hostmaster-install -y --strict=0 $HOSTNAME \
     --aegir_db_host     = 'localhost' \
-    --aegir_db_pass     = $MYSQL_AEGIR_DB_PASSWORD \
+    --aegir_db_pass     = $MYSQL_ROOT_PASSWORD \
     --aegir_db_port     = '3306' \
-    --aegir_db_user     = $MYSQL_AEGIR_DB_USER \
+    --aegir_db_user     = 'root' \
     --aegir_host        = $HOSTNAME \
     --client_name       = $AEGIR_CLIENT_NAME \
     --client_email      = $AEGIR_CLIENT_EMAIL \
     --http_service_type = $WEBSERVER \
-    --profile           = $AEGIR_PROFILE \
     --root              = $AEGIR_HOSTMASTER_ROOT \
     --working-copy      = $AEGIR_WORKING_COPY \
 "
 sleep 3
 echo "ÆGIR | Running 'drush cc drush' ... "
-drush cc drush
+sudo su - aegir -c "drush cc drush"
 
 # enable modules
 echo "ÆGIR | Enabling hosting queued..."
-
-# TODO: should be aegir user?
-drush @hostmaster en hosting_queued -y
+sudo su - aegir -c "drush @hostmaster en hosting_queued -y"
 
 # echo "ÆGIR | Enabling hosting modules for CiviCRM ..."
 # fix_permissions, fix_ownership, hosting_civicrm, hosting_civicrm_cron

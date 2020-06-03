@@ -25,3 +25,8 @@ source "$DIR/../../aegir.cfg"
 #  - initialize Drush with Aegir home
 DRUSH=$AEGIR_HOME/vendor/bin/drush
 sudo su - aegir -c "$DRUSH init  --add-path=$AEGIR_HOME --bg -y"
+
+# add drush path to all user
+echo '#!/bin/sh
+export PATH="$PATH:/var/aegir/vendor/bin"' | sudo tee /etc/profile.d/drush.sh
+sudo su -c "chmod +x /etc/profile.d/drush.sh"

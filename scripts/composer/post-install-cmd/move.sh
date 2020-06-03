@@ -18,7 +18,7 @@ source "$DIR/../../aegir.cfg"
 
 # target directory is the aegir home: $AEGIR_HOME
 # download directory
-SRC="$DIR/../../../aegir-$AEGIR_VERSION"
+SRC="./*"
 
 #  move aegir-composer into aegir home
-sudo su aegir -c "cp -a $SRC/* $AEGIR_HOME"
+sudo su aegir -c "cp -a $SRC $AEGIR_HOME"
