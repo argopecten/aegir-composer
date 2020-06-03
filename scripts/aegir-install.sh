@@ -28,8 +28,6 @@ echo "ÆGIR"
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | B) Installing Aegir with Composer ..."
 
-AEGIR_VERSION="dev-proba"    # should come from aegir.cfg!
-
 composer create-project argopecten/aegir-composer \
          --stability dev \
          --no-interaction \
