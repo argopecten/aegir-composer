@@ -31,6 +31,7 @@ sudo service mysql restart
 #  - PHP configurations: memory size, upload, ...
 ###########################################################
 
+V=$PHP_VERSION
 case "$WEBSERVER" in
   nginx)   echo "Setup Nginx..."
       sudo ln -s $AEGIR_HOME/config/nginx.conf /etc/nginx/conf.d/aegir.conf
@@ -56,7 +57,6 @@ case "$WEBSERVER" in
       sudo sed -i -e "/^post_max_size/s/^.*$/post_max_size = $PHP_POST_MAX_SIZE/" /etc/php/$V/apache2/php.ini
       # memory_limit
       sudo sed -i -e "/^memory_limit/s/^.*$/memory_limit = $PHP_MEMORY_LIMIT/" /etc/php/$V/apache2/php.ini
-      ;;
       ;;
 
   *) echo "No webserver defined, aborting!"
