@@ -13,16 +13,14 @@ source "$DIR/../../os/config/php.cfg"
 # Configure LAMP for Aegir
 ###########################################################
 
+# set hostname
+# TBC: is it OK here????
+sudo hostnamectl set-hostname "$AEGIR_HOST"
+
 #  - securing MariaDB
 echo -e "\n\n$MYSQL_ROOT_PASSWORD\n$MYSQL_ROOT_PASSWORD\n\n\nn\n\n " | sudo mysql_secure_installation 2>/dev/null
-
-# - create user aegir db user
-sudo su -c "mysql --execute='GRANT ALL ON *.* TO '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' IDENTIFIED BY '$AEGIR_DB_PASSWORD' WITH GRANT OPTION;'"
-
-# enable all IP addresses to bind, not just localhost
-# TODO: locate .cnf file: sed -i 's/bind-address/#bind-address/' /etc/mysql/my.cnf
-
 sudo service mysql restart
+
 
 ###########################################################
 # Install and configure Nginx or Apache2 for Aegir
@@ -30,12 +28,12 @@ sudo service mysql restart
 #  - enable modules
 #  - PHP configurations: memory size, upload, ...
 ###########################################################
-
 V=$PHP_VERSION
 case "$WEBSERVER" in
   nginx)   echo "Setup Nginx..."
       sudo ln -s $AEGIR_HOME/config/nginx.conf /etc/nginx/conf.d/aegir.conf
       # remove /etc/nginx/sites-enabled/default ???
+      # service nginx reload
       sudo ufw allow 'Nginx Full'
       # upload_max_filesize
       sudo sed -i -e "/^upload_max_filesize/s/^.*$/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/" /etc/php/$V/cli/php.ini
@@ -48,7 +46,9 @@ case "$WEBSERVER" in
       ;;
 
   apache2)  echo "Setup Apache ..."
-      sudo ln -s $AEGIR_HOME/config/apache.conf /etc/apache2/conf-available/aegir.conf
+      # sudo ln -sf $AEGIR_HOME/config/apache.conf /etc/apache2/conf-available/aegir.conf
+      sudo a2enconf aegir
+      sudo a2enmod ssl rewrite
       sudo ufw allow 'APACHE Full'
       # upload_max_filesize
       sudo sed -i -e "/^upload_max_filesize/s/^.*$/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/" /etc/php/$V/cli/php.ini

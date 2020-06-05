@@ -46,8 +46,6 @@ case "$WEBSERVER" in
 
   apache2)
       sudo apt install apache2 -y
-      sudo a2enmod rewrite
-      sudo a2enconf aegir
       ;;
 
   *) echo "No webserver defined, aborting!"
@@ -82,8 +80,8 @@ echo "ÆGIR | ------------------------------------------------------------------
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | 6) Installing PHP Composer ..."
 echo "ÆGIR | ------------------------------------------------------------------"
-wget https://raw.githubusercontent.com/composer/getcomposer.org/$COMPOSER_VERSION/web/installer -O - -q | php -- --quiet
-sudo mv composer.phar /usr/bin/composer
+wget https://raw.githubusercontent.com/composer/getcomposer.org/$COMPOSER_VERSION/web/installer -O - -q | php -- --quiet > ./composer.phar
+sudo mv ./composer.phar /usr/bin/composer
 composer --version
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | PHP Composer installed."
