@@ -61,7 +61,7 @@
         ],
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "bash scripts/composer/post-install-cmd/move.sh",
+            "bash scripts/composer/post-install-cmd/aegir-user.sh",
             "bash scripts/composer/post-install-cmd/drush.sh",
             "bash scripts/composer/post-install-cmd/provision.sh",
             "bash scripts/composer/post-install-cmd/hostmaster.sh"

@@ -52,9 +52,9 @@ echo "ÆGIR | Checking Aegir directory..."
 ls -lah $AEGIR_HOME
 echo "ÆGIR | -------------------------"
 echo "ÆGIR | Running 'drush cc drush' ... "
-drush cc drush
+sudo su - aegir -c "drush cc drush"
 echo 'ÆGIR | Checking drush status...'
-drush status
+sudo su - aegir -c "drush status"
 
 # if @hostmaster is not accessible, install it.
 echo "ÆGIR | Hostmaster install..."
@@ -82,7 +82,7 @@ echo "ÆGIR | Running: drush hostmaster-install"
 #    --http_service_type = $WEBSERVER \
 #    --root              = $AEGIR_HOSTMASTER_ROOT \
 #    --working-copy      = $AEGIR_WORKING_COPY \
-"
+# "
 # sleep 3
 echo "ÆGIR | Running 'drush cc drush' ... "
 # sudo su - aegir -c "drush cc drush"

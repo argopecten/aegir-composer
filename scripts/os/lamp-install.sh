@@ -40,7 +40,8 @@ echo "ÆGIR | 3) Installing the webserver for Aegir ..."
 echo "ÆGIR | ------------------------------------------------------------------"
 case "$WEBSERVER" in
   nginx)
-      sudo apt install nginx -y
+      # sudo apt install nginx -y
+      # sudo systemctl enable nginx
       ;;
 
   apache2)
@@ -86,14 +87,4 @@ sudo mv composer.phar /usr/bin/composer
 composer --version
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | PHP Composer installed."
-echo "ÆGIR | ------------------------------------------------------------------"
-
-#  - create Aegir user with permission to restart webserver
-#    this runs with root privileges
-echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | 7) Creating aegir user ..."
-echo "ÆGIR | ------------------------------------------------------------------"
-sudo su -c "bash $DIR/$OS/$FLAVOR/aegir-user.sh"
-echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | aegir user installed."
 echo "ÆGIR | ------------------------------------------------------------------"

@@ -17,7 +17,7 @@ source "$DIR/../../os/config/php.cfg"
 echo -e "\n\n$MYSQL_ROOT_PASSWORD\n$MYSQL_ROOT_PASSWORD\n\n\nn\n\n " | sudo mysql_secure_installation 2>/dev/null
 
 # - create user aegir db user
-# sudo su -c "mysql --user=root --execute='GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_AEGIR_DB_USER'@% IDENTIFIED BY '$MYSQL_AEGIR_DB_PASSWORD' WITH GRANT OPTION;'"
+sudo su -c "mysql --execute='GRANT ALL ON *.* TO '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' IDENTIFIED BY '$AEGIR_DB_PASSWORD' WITH GRANT OPTION;'"
 
 # enable all IP addresses to bind, not just localhost
 # TODO: locate .cnf file: sed -i 's/bind-address/#bind-address/' /etc/mysql/my.cnf
@@ -35,6 +35,7 @@ V=$PHP_VERSION
 case "$WEBSERVER" in
   nginx)   echo "Setup Nginx..."
       sudo ln -s $AEGIR_HOME/config/nginx.conf /etc/nginx/conf.d/aegir.conf
+      # remove /etc/nginx/sites-enabled/default ???
       sudo ufw allow 'Nginx Full'
       # upload_max_filesize
       sudo sed -i -e "/^upload_max_filesize/s/^.*$/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/" /etc/php/$V/cli/php.ini
