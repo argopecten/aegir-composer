@@ -13,6 +13,7 @@ source "$DIR/../../aegir.cfg"
 #  - create the user
 #  - add to webserver group
 #  - grant sudo rights
+# - fix permissions on installed directories
 ###########################################################
 
 #  - create user if not yet there
@@ -39,6 +40,9 @@ echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
 sudo chmod 0440 /tmp/aegir
 sudo chown root:root /tmp/aegir
 sudo mv /tmp/aegir /etc/sudoers.d/aegir
+
+# - fix permissions on installed directories
+sudo chown aegir:aegir -R "$AEGIR_HOME"
 
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | aegir user installed."

@@ -40,8 +40,8 @@ echo "ÆGIR | 3) Installing the webserver for Aegir ..."
 echo "ÆGIR | ------------------------------------------------------------------"
 case "$WEBSERVER" in
   nginx)
-      # sudo apt install nginx -y
-      # sudo systemctl enable nginx
+      sudo apt install nginx -y
+      sudo systemctl enable nginx
       ;;
 
   apache2)
