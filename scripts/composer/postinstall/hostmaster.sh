@@ -21,6 +21,10 @@ echo "ÆGIR | -------------------------"
 # sudo apache2ctl graceful
 # sudo apache2ctl configtest
 
+SITE_URI=$AEGIR_HOST
+AEGIR_ROOT="$AEGIR_HOME/web"
+AEGIR_HOSTMASTER_ROOT=$AEGIR_ROOT/hostmaster
+
 # Fix ownership & permissions scripts
 sudo bash $AEGIR_HOSTMASTER_ROOT/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
 # ls -la /usr/local/bin/fix-drupal-*.sh
@@ -43,9 +47,6 @@ echo "ÆGIR | Database is active!"
 echo "ÆGIR | -------------------------"
 echo 'ÆGIR | Hello! '
 echo 'ÆGIR | We will install Aegir with the following options:'
-SITE_URI=$AEGIR_HOST
-AEGIR_ROOT="$AEGIR_HOME/web"
-AEGIR_HOSTMASTER_ROOT=$AEGIR_ROOT/hostmaster
 echo "ÆGIR | -------------------------"
 echo "ÆGIR | Aegir URI:      $SITE_URI"
 echo "ÆGIR | Aegir server:   $AEGIR_HOST"
