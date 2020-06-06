@@ -45,7 +45,7 @@ echo 'ÆGIR | Hello! '
 echo 'ÆGIR | We will install Aegir with the following options:'
 SITE_URI=$AEGIR_HOST
 AEGIR_ROOT="$AEGIR_HOME/web"
-AEGIR_HOSTMASTER_ROOT=$AEGIR_ROOT/hostmaster-$AEGIR_VERSION
+AEGIR_HOSTMASTER_ROOT=$AEGIR_ROOT/hostmaster
 echo "ÆGIR | -------------------------"
 echo "ÆGIR | Aegir URI:      $SITE_URI"
 echo "ÆGIR | Aegir server:   $AEGIR_HOST"
@@ -56,6 +56,8 @@ echo "ÆGIR | Webserver:      $WEBSERVER"
 echo "ÆGIR | Webserver port: '80'"
 echo "ÆGIR | Database host:  $AEGIR_DB_HOST"
 echo "ÆGIR | Database user:  $AEGIR_DB_USER"
+# just for dev!!!
+echo "ÆGIR | Database pwd:   $AEGIR_DB_PASS"
 echo "ÆGIR | Database port:  '3306'"
 echo "ÆGIR | Aegir version:  $AEGIR_VERSION"
 echo "ÆGIR | Aegir platform: $AEGIR_HOSTMASTER_ROOT"
@@ -74,7 +76,8 @@ sudo su - aegir -c "drush status"
 # ???
 # https://gitlab.com/aegir/provision/-/blob/7.x-3.x/install.hostmaster.inc
 # skip makefile .... line 54...
-mkdir -p $AEGIR_HOSTMASTER_ROOT
+echo "ÆGIR | Checking Aegir frontend directory..."
+ls -lah $AEGIR_HOSTMASTER_ROOT
 
 echo "ÆGIR | -------------------------"
 echo "ÆGIR | Running: drush hostmaster-install"
