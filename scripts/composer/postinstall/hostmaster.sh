@@ -30,7 +30,7 @@ sudo bash $AEGIR_HOSTMASTER_ROOT/sites/all/modules/contrib/hosting_tasks_extra/f
 AEGIR_DB_PASS=$(openssl rand -base64 12)
 AEGIR_DB_HOST='localhost'
 # GRANT ALL ON *.* TO 'aegir_db_user'@'localhost' IDENTIFIED BY 'strongpassword' WITH GRANT OPTION;
-sudo su -c "mysql --execute='GRANT ALL ON *.* TO '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' IDENTIFIED BY '$AEGIR_DB_PASS' WITH GRANT OPTION;'"
+sudo su -c "mysql --execute='GRANT ALL ON *.* TO '\'$AEGIR_DB_USER\''@'\'$AEGIR_DB_HOST\'' IDENTIFIED BY '\'$AEGIR_DB_PASS\'' WITH GRANT OPTION;\'"
 
 # Returns true once mysql can connect.
 while ! mysqladmin ping -h"$AEGIR_DB_HOST" --silent; do
@@ -44,7 +44,7 @@ echo "ÆGIR | -------------------------"
 echo 'ÆGIR | Hello! '
 echo 'ÆGIR | We will install Aegir with the following options:'
 SITE_URI=$AEGIR_HOST
-AEGIR_ROOT="$AEGIR_HOME/web/"
+AEGIR_ROOT="$AEGIR_HOME/web"
 AEGIR_HOSTMASTER_ROOT=$AEGIR_ROOT/hostmaster-$AEGIR_VERSION
 echo "ÆGIR | -------------------------"
 echo "ÆGIR | Aegir URI:      $SITE_URI"
@@ -70,6 +70,11 @@ echo "ÆGIR | Hostmaster install..."
 echo 'ÆGIR | Checking drush status...'
 sudo su - aegir -c "drush cc drush"
 sudo su - aegir -c "drush status"
+
+# ???
+# https://gitlab.com/aegir/provision/-/blob/7.x-3.x/install.hostmaster.inc
+# skip makefile .... line 54...
+mkdir -p $AEGIR_HOSTMASTER_ROOT
 
 echo "ÆGIR | -------------------------"
 echo "ÆGIR | Running: drush hostmaster-install"
