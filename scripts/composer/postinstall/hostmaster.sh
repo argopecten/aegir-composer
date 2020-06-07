@@ -22,8 +22,8 @@ echo "ÆGIR | -------------------------"
 # sudo apache2ctl configtest
 
 SITE_URI=$AEGIR_HOST
-AEGIR_ROOT="$AEGIR_HOME/web"
-AEGIR_HOSTMASTER_ROOT=$AEGIR_ROOT/hostmaster
+AEGIR_ROOT="$AEGIR_HOME/hostmaster"
+AEGIR_HOSTMASTER_ROOT=$AEGIR_ROOT
 
 # Fix ownership & permissions scripts
 sudo bash $AEGIR_HOSTMASTER_ROOT/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh

@@ -75,12 +75,12 @@
     },
     "extra": {
         "installer-paths": {
-            "web/hostmaster": ["type:drupal-core"],
-            "web/hostmaster/profiles/{$name}/": ["type:drupal-profile"],
-            "web/hostmaster/sites/all/drush/{$name}/": ["type:drupal-drush"],
-            "web/hostmaster/sites/all/libraries/{$name}/": ["type:drupal-library"],
-            "web/hostmaster/sites/all/modules/contrib/{$name}/": ["type:drupal-module"],
-            "web/hostmaster/sites/all/themes/contrib/{$name}/": ["type:drupal-theme"]
+            "hostmaster": ["type:drupal-core"],
+            "hostmaster/profiles/{$name}/": ["type:drupal-profile"],
+            "hostmaster/sites/all/drush/{$name}/": ["type:drupal-drush"],
+            "hostmaster/sites/all/libraries/{$name}/": ["type:drupal-library"],
+            "hostmaster/sites/all/modules/contrib/{$name}/": ["type:drupal-module"],
+            "hostmaster/sites/all/themes/contrib/{$name}/": ["type:drupal-theme"]
         },
         "patches": {
             "cweagans/composer-patches": {

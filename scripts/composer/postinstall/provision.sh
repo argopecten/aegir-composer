@@ -17,4 +17,4 @@ source "$DIR/../../aegir.cfg"
 
 #  - link provision module into drush paths
 sudo mkdir -p /usr/share/drush/commands
-sudo ln -s $AEGIR_HOME/web/hostmaster/sites/all/drush/provision /usr/share/drush/commands
+sudo ln -s $AEGIR_HOME/hostmaster/sites/all/drush/provision /usr/share/drush/commands
