@@ -20,7 +20,7 @@ sudo hostnamectl set-hostname "$AEGIR_HOST"
 #  - securing MariaDB
 echo -e "\n\n$MYSQL_ROOT_PASSWORD\n$MYSQL_ROOT_PASSWORD\n\n\nn\n\n " | sudo mysql_secure_installation 2>/dev/null
 sudo service mysql restart
-
+echo "select host, user, password from mysql.user;" |  sudo mysql
 
 ###########################################################
 # Install and configure Nginx or Apache2 for Aegir

@@ -32,6 +32,7 @@ fi
 sudo adduser --quiet aegir www-data
 
 #  - grant sudo rights for everything
+# TODO: use config file from source
 echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
 # restricted permissions only to restart webserver
 # echo 'aegir ALL=NOPASSWD: /etc/init.d/nginx    # for Nginx'  >  /tmp/aegir

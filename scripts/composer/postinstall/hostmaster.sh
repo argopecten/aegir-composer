@@ -34,7 +34,8 @@ sudo bash $AEGIR_HOSTMASTER_ROOT/sites/all/modules/contrib/hosting_tasks_extra/f
 AEGIR_DB_PASS=$(openssl rand -base64 12)
 AEGIR_DB_HOST='localhost'
 # GRANT ALL ON *.* TO 'aegir_db_user'@'localhost' IDENTIFIED BY 'strongpassword' WITH GRANT OPTION;
-sudo su -c "mysql --execute='GRANT ALL ON *.* TO '\'$AEGIR_DB_USER\''@'\'$AEGIR_DB_HOST\'' IDENTIFIED BY '\'$AEGIR_DB_PASS\'' WITH GRANT OPTION;\'"
+echo "GRANT ALL ON *.* TO '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' IDENTIFIED BY '$AEGIR_DB_PASS' WITH GRANT OPTION;" | sudo mysql
+echo "select host, user, password from mysql.user;" |  sudo mysql
 
 # Returns true once mysql can connect.
 while ! mysqladmin ping -h"$AEGIR_DB_HOST" --silent; do
