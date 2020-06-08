@@ -85,17 +85,17 @@ echo "ÆGIR | -------------------------"
 echo "ÆGIR | Running: drush hostmaster-install"
 sudo su - aegir -c " \
 drush hostmaster-install -y --strict=0 $SITE_URI \
-  --aegir_db_host     = $AEGIR_DB_HOST \
-  --aegir_db_pass     = $AEGIR_DB_PASS \
-  --aegir_db_port     = '3306' \
-  --aegir_db_user     = $AEGIR_DB_USER \
-  --aegir_host        = $AEGIR_HOST \
-  --aegir_root        = $AEGIR_ROOT \
-  --client_name       = $AEGIR_CLIENT_NAME \
-  --client_email      = $AEGIR_CLIENT_EMAIL \
-  --http_service_type = $WEBSERVER \
-  --root              = $AEGIR_HOSTMASTER_ROOT \
-  --version           = $AEGIR_VERSION \
+  --aegir_db_host=$AEGIR_DB_HOST \
+  --aegir_db_pass=$AEGIR_DB_PASS \
+  --aegir_db_port='3306' \
+  --aegir_db_user=$AEGIR_DB_USER \
+  --aegir_host=$AEGIR_HOST \
+  --aegir_root=$AEGIR_ROOT \
+  --client_name=$AEGIR_CLIENT_NAME \
+  --client_email=$AEGIR_CLIENT_EMAIL \
+  --http_service_type=$WEBSERVER \
+  --root=$AEGIR_HOSTMASTER_ROOT \
+  --version=$AEGIR_VERSION \
 "
 
 # sleep 3
