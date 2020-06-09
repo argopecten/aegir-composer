@@ -11,23 +11,26 @@ source "$DIR/../../os/config/php.cfg"
 
 ###########################################################
 # Configure LAMP for Aegir
-###########################################################
-
-# set hostname
-# TBC: is it OK here????
-sudo hostnamectl set-hostname "$AEGIR_HOST"
-
-#  - securing MariaDB
-echo -e "\n\n$MYSQL_ROOT_PASSWORD\n$MYSQL_ROOT_PASSWORD\n\n\nn\n\n " | sudo mysql_secure_installation 2>/dev/null
-sudo service mysql restart
-echo "select host, user, password from mysql.user;" |  sudo mysql
-
-###########################################################
-# Install and configure Nginx or Apache2 for Aegir
+# 1) securing database server
+# 2) configure webserver
 #  - link Aegir config file
 #  - enable modules
 #  - PHP configurations: memory size, upload, ...
+#  - firewall settings
+# 3) configure Postfix
+# 4) clean up & reload services
 ###########################################################
+
+###########################################################
+# 1) securing database server
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | Securing database server ..."
+echo -e "\n\n$MYSQL_ROOT_PASSWORD\n$MYSQL_ROOT_PASSWORD\n\n\nn\n\n " | sudo mysql_secure_installation 2>/dev/null
+
+###########################################################
+# 2) configure webserver
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | Configuring webserver & PHP ..."
 V=$PHP_VERSION
 case "$WEBSERVER" in
   nginx)   echo "Setup Nginx..."
@@ -46,9 +49,12 @@ case "$WEBSERVER" in
       ;;
 
   apache2)  echo "Setup Apache ..."
-      # sudo ln -sf $AEGIR_HOME/config/apache.conf /etc/apache2/conf-available/aegir.conf
+      # link aegir config file
+      sudo ln -s $AEGIR_HOME/hostmaster/config/apache.conf /etc/apache2/conf-available/aegir.conf
+      # enable modules
       sudo a2enconf aegir
       sudo a2enmod ssl rewrite
+      # firewall settings
       sudo ufw allow 'APACHE Full'
       # upload_max_filesize
       sudo sed -i -e "/^upload_max_filesize/s/^.*$/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/" /etc/php/$V/cli/php.ini
@@ -66,15 +72,55 @@ case "$WEBSERVER" in
 
 esac
 
-# Postfix install & config
+###########################################################
+# 3) configure Postfix
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Postfix config ..."
-#    TODO: does it really needed?
-sudo debconf-set-selections <<< "postfix postfix/mailname string $hostname"
-sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
-
-# TODO
+# sudo debconf-set-selections <<< "postfix postfix/mailname string $hostname"
+# sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
 # sudo ufw allow 'Postfix'
 # sudo ufw app info 'Postfix'
 #  Postfix SMTPS
 #  Postfix Submission
+
+###########################################################
+# 4) clean up & reload services
+# - reload LAMP services
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | Reloading LAMP services ..."
+# cron
+sudo systemctl restart cron
+
+# database
+sudo systemctl restart mysql
+# Returns true once mysql can connect.
+while ! mysqladmin ping -h"$AEGIR_DB_HOST" --silent; do
+  sleep 3
+  echo "ÆGIR | Waiting for database on $AEGIR_DB_HOST ..."
+done
+echo "ÆGIR | Database is active!"
+
+# webserver & PHP
+case "$WEBSERVER" in
+    nginx) echo "Reload Nginx..."
+        sudo systemctl restart php$V-fpm
+        sudo systemctl restart nginx
+        ;;
+    apache2)  echo "Reload Apache ..."
+        sudo systemctl restart apache2
+        # sudo apache2ctl graceful
+        # sudo apache2ctl configtest
+        # TODO: php-fpm
+        ;;
+    *) echo "No webserver defined, aborting!"
+        exit 1
+        ;;
+esac
+
+# postfix
+sudo systemctl restart postfix
+
+# - clean up
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | Cleaning up ..."
+sudo apt autoremove -y

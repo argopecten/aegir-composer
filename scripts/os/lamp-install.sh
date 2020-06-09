@@ -11,21 +11,24 @@ source "$DIR/../aegir.cfg"
 ###########################################################
 # Install required dependencies for Aegir
 #
-#   - system packages and Aegir user
-#   - database server
-#   - webserver
-#   - PHP libraries and composer
-#   - install and configure Aegir
+#   1) Update OS & install packages
+#   2) database server
+#   3) webserver
+#   4) postfix
+#   5) PHP libraries for Aegir
+#   6) PHP composer
 ###########################################################
 
 
 # Install required OS packages for Aegir
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | 1) Installing system packages ..."
-# echo $DIR/$OS/$FLAVOR/packages.sh
+# install packages
 bash $DIR/$OS/$FLAVOR/packages.sh
+# (re)set hostname
+sudo hostnamectl set-hostname "$AEGIR_HOST"
 
-# Install & config database server
+# Install database server
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | 2) Installing database server for Aegir ..."
 echo "ÆGIR | ------------------------------------------------------------------"
@@ -34,7 +37,7 @@ echo "ÆGIR | ------------------------------------------------------------------
 echo "ÆGIR | Database server installed."
 echo "ÆGIR | ------------------------------------------------------------------"
 
-# Install & config webserver
+# Install webserver
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | 3) Installing the webserver for Aegir ..."
 echo "ÆGIR | ------------------------------------------------------------------"
@@ -68,7 +71,7 @@ echo "ÆGIR | ------------------------------------------------------------------
 echo "ÆGIR | Postfix installed."
 echo "ÆGIR | ------------------------------------------------------------------"
 
-# Install & config PHP libraries
+# Install PHP libraries for Aegir
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | 5) Installing PHP libraries ..."
 bash $DIR/$OS/$FLAVOR/php.sh

@@ -11,7 +11,7 @@ source "$DIR/../../aegir.cfg"
 ###########################################################
 #  Create Aegir user with permission to restart webserver
 #  - create the user
-#  - add to webserver group
+#  - add aegir user to webserver group
 #  - grant sudo rights
 # - fix permissions on installed directories
 ###########################################################
@@ -37,12 +37,11 @@ echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
 # restricted permissions only to restart webserver
 # echo 'aegir ALL=NOPASSWD: /etc/init.d/nginx    # for Nginx'  >  /tmp/aegir
 # echo 'aegir ALL=NOPASSWD: /usr/sbin/apache2ctl # for Apache' >> /tmp/aegir
-
 sudo chmod 0440 /tmp/aegir
 sudo chown root:root /tmp/aegir
 sudo mv /tmp/aegir /etc/sudoers.d/aegir
 
-# - fix permissions on installed directories
+# - set permissions on installed directories
 sudo chown aegir:aegir -R "$AEGIR_HOME"
 
 echo "ÆGIR | ------------------------------------------------------------------"

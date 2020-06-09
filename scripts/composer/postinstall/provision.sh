@@ -15,6 +15,19 @@ source "$DIR/../../aegir.cfg"
 #  - initialize: link provision module into drush paths
 ###########################################################
 
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | Initializing Aegir backend ..."
+echo "ÆGIR | ------------------------------------------------------------------"
+
+
+DRUSH_COMMANDS=/usr/share/drush/commands
+# remove old version, if any
+if [ -d "$DRUSH_COMMANDS" ]; then
+    # provision exists
+    sudo rm -rf $DRUSH_COMMANDS
+else
+    sudo mkdir -p $DRUSH_COMMANDS
+fi
+
 #  - link provision module into drush paths
-sudo mkdir -p /usr/share/drush/commands
-sudo ln -s $AEGIR_HOME/hostmaster/sites/all/drush/provision /usr/share/drush/commands
+sudo ln -s $AEGIR_HOME/hostmaster/sites/all/drush/provision $DRUSH_COMMANDS

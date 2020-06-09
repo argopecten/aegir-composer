@@ -22,6 +22,10 @@ source "$DIR/../../aegir.cfg"
 #
 ###########################################################
 
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | Initializing Drush with Aegir ..."
+echo "ÆGIR | ------------------------------------------------------------------"
+
 #  - initialize Drush with Aegir home
 DRUSH=$AEGIR_HOME/vendor/bin/drush
 sudo su - aegir -c "$DRUSH init  --add-path=$AEGIR_HOME --bg -y"

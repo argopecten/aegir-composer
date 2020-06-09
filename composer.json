@@ -17,6 +17,10 @@
         "hostmaster": {
             "type": "vcs",
             "url":  "https://github.com/argopecten/hostmaster"
+        },
+        "hosting_deploy": {
+            "type": "vcs",
+            "url":  "https://github.com/argopecten/hosting_deploy"
         }
     },
     "require": {
