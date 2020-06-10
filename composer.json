@@ -58,12 +58,14 @@
     "scripts": {
         "pre-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
+            "echo 'pre-install-cmd event fired'",
             "bash scripts/composer/preinstall/lamp-config.sh"
         ],
         "pre-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
         "post-install-cmd": [
+            "echo 'post-install-cmd event fired'",
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
             "bash scripts/composer/postinstall/aegir-user.sh",
             "bash scripts/composer/postinstall/drush.sh",

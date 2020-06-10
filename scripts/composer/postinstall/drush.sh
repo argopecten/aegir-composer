@@ -32,9 +32,9 @@ sudo su - aegir -c "$DRUSH init  --add-path=$AEGIR_HOME --bg -y"
 
 # add drush path to all user
 echo '#!/bin/sh
-export PATH="$PATH:/var/aegir/vendor/bin"' | sudo tee /etc/profile.d/drush.sh
+export PATH="$PATH:$AEGIR_HOME/vendor/bin"' | sudo tee /etc/profile.d/drush.sh
 sudo su -c "chmod +x /etc/profile.d/drush.sh"
 
 # link drush into /usr/local/bin/drush
 # otherwise hosting-queued is not running
-sudo su -c "ln -s /var/aegir/vendor/bin/drush /usr/local/bin"
+sudo su -c "ln -s $AEGIR_HOME/vendor/bin/drush /usr/local/bin"
