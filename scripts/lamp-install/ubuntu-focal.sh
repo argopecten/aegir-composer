@@ -127,6 +127,9 @@ echo "ÆGIR | ------------------------------------------------------------------
 sudo debconf-set-selections <<< "postfix postfix/mailname string $AEGIR_HOST"
 sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
 sudo apt install postfix -y
+# is it needed???
+sudo systemctl enable postfix
+sudo systemctl start postfix
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Postfix installed."
 echo "ÆGIR | ------------------------------------------------------------------"

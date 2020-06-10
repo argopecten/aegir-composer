@@ -7,7 +7,9 @@
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
 source "$DIR/../../aegir.cfg"
-source "$DIR/sconfig/php.cfg"
+source "$DIR/config/php.cfg"
+source "$DIR/config/mariadb.cfg"
+source "$DIR/config/postfix.cfg"
 
 ###########################################################
 # Configure LAMP for Aegir
@@ -22,16 +24,48 @@ source "$DIR/sconfig/php.cfg"
 ###########################################################
 
 ###########################################################
+# 1) basic firewall configuration
+sudo ufw default deny incoming
+sudo ufw default deny outgoing
+sudo ufw allow OpenSSH
+sudo ufw enable
+
+###########################################################
 # 1) securing database server
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Securing database server ..."
-echo -e "\n\n$MYSQL_ROOT_PASSWORD\n$MYSQL_ROOT_PASSWORD\n\n\nn\n\n " | sudo mysql_secure_installation 2>/dev/null
+# Set root password in database, aegir still requires it in that way
+# prompt user for database root password
+while true; do
+    read -sp "Database root password: " password
+    echo
+    read -sp "Database root password (again): " password2
+    echo
+    [ "$dbpwd" = "$dbpwd2" ] && break
+    echo "Please try again!"
+done
+echo -e "\n\n$dbpwd\n$dbpwd\n\n\nn\n\n " | sudo mysql_secure_installation 2>/dev/null
+unset dbpwd
+unset dbpwd2
 
 ###########################################################
 # 2) configure webserver
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Configuring webserver & PHP ..."
-V=$PHP_VERSION
+
+# fetch PHP version
+V=`php -v | awk '/PHP 7/ {print $2}' |  cut -d. -f1-2`
+echo "ÆGIR | PHP version is: PHP $V"
+
+# fetch running webserver
+if [[ `ps -acx | grep apache | wc -l` > 0 ]]; then
+    WEBSERVER="apache2"
+fi
+if [[ `ps -acx | grep nginx | wc -l` > 0 ]]; then
+    WEBSERVER="nginx"
+fi
+echo "Server has $WEBSERVER as webserver."
+
 case "$WEBSERVER" in
   nginx)   echo "Setup Nginx..."
       sudo ln -s $AEGIR_HOME/hostmaster/config/nginx.conf /etc/nginx/conf.d/aegir.conf
@@ -76,14 +110,11 @@ esac
 # 3) configure Postfix
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Postfix config ..."
-# sudo debconf-set-selections <<< "postfix postfix/mailname string $hostname"
-# sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
-# sudo ufw allow 'Postfix'
-# sudo ufw app info 'Postfix'
-#  Postfix SMTPS
-#  Postfix Submission
-
+sudo debconf-set-selections <<< "postfix postfix/mailname string $myhostname"
+sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
+sudo ufw allow 'Postfix'
 ###########################################################
+
 # 4) clean up & reload services
 # - reload LAMP services
 echo "ÆGIR | ------------------------------------------------------------------"
@@ -117,8 +148,12 @@ case "$WEBSERVER" in
         ;;
 esac
 
-# postfix
-sudo systemctl restart postfix
+# Postfix
+sudo systemctl reload postfix
+
+# ufw
+sudo ufw reload
+sudo ufw status
 
 # - clean up
 echo "ÆGIR | ------------------------------------------------------------------"

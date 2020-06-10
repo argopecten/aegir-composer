@@ -59,12 +59,16 @@ done
 
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Aegir version to be installed is $AEGIR_VERSION"
-read -p "Continue with this version? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
+read -p "Continue with this version? (Y/N): " confirm
 
-read -p "Enter fullname: " AEGIR_VERSION
-# user="USER INPUT"
-read -p "Enter user: " user
+# if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] then
 
+if [ $confirm == [yY] || $confirm == [yY][eE][sS] ]; then
+  echo "ok"
+else
+  read -p "Enter version: " AEGIR_VERSION
+  # todo: do some validation....
+fi
 
 # Install LAMP components for Aegir
 echo "ÆGIR | ------------------------------------------------------------------"
