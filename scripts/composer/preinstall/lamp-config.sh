@@ -6,10 +6,7 @@
 #
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
-source "$DIR/../../aegir.cfg"
-source "$DIR/config/php.cfg"
-source "$DIR/config/mariadb.cfg"
-source "$DIR/config/postfix.cfg"
+source "$DIR/../../config/*.cfg"
 
 ###########################################################
 # Configure LAMP for Aegir
@@ -28,7 +25,7 @@ source "$DIR/config/postfix.cfg"
 sudo ufw default deny incoming
 sudo ufw default deny outgoing
 sudo ufw allow OpenSSH
-sudo ufw enable
+echo "y" | sudo ufw enable
 
 ###########################################################
 # 1) securing database server
@@ -37,9 +34,9 @@ echo "ÆGIR | Securing database server ..."
 # Set root password in database, aegir still requires it in that way
 # prompt user for database root password
 while true; do
-    read -sp "Database root password: " password
+    read -sp "Database root password: " dbpwd
     echo
-    read -sp "Database root password (again): " password2
+    read -sp "Database root password (again): " dbpwd2
     echo
     [ "$dbpwd" = "$dbpwd2" ] && break
     echo "Please try again!"
@@ -55,7 +52,7 @@ echo "ÆGIR | Configuring webserver & PHP ..."
 
 # fetch PHP version
 V=`php -v | awk '/PHP 7/ {print $2}' |  cut -d. -f1-2`
-echo "ÆGIR | PHP version is: PHP $V"
+echo "ÆGIR | PHP version: $V"
 
 # fetch running webserver
 if [[ `ps -acx | grep apache | wc -l` > 0 ]]; then
@@ -135,7 +132,7 @@ echo "ÆGIR | Database is active!"
 case "$WEBSERVER" in
     nginx) echo "Reload Nginx..."
         sudo systemctl restart php$V-fpm
-        sudo systemctl restart nginx
+        # not here, aegir.conf is not yet in place! sudo systemctl restart nginx
         ;;
     apache2)  echo "Reload Apache ..."
         sudo systemctl restart apache2

@@ -59,7 +59,7 @@
         "pre-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
             "echo 'pre-install-cmd event fired'",
-            "bash scripts/composer/preinstall/lamp-config.sh"
+            "bash scripts/composer/preinstall/lamp-config.sh < /dev/tty"
         ],
         "pre-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"

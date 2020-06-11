@@ -6,7 +6,7 @@
 #
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
-source "$DIR/../../aegir.cfg"
+source "$DIR/../../config/aegir.cfg"
 
 ###########################################################
 # Configure Drush on the server

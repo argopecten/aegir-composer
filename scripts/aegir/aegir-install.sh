@@ -80,8 +80,14 @@ echo "ÆGIR"
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | B) Installing Aegir with Composer ..."
 
-composer create-project argopecten/aegir-composer \
+sudo mkdir /var/aegir
+sudo chown `whoami` /var/aegir
+
+# create-project vendor/project target-directory [version]
+composer create-project \
          --stability dev \
          --no-interaction \
          --repository '{"type": "vcs","url":  "https://github.com/argopecten/aegir-composer"}' \
-         aegir-$AEGIR_VERSION $AEGIR_VERSION
+         argopecten/aegir-composer \
+         /var/aegir \
+         $AEGIR_VERSION

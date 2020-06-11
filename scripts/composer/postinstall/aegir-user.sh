@@ -6,7 +6,7 @@
 #
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
-source "$DIR/../../aegir.cfg"
+source "$DIR/../../config/aegir.cfg"
 
 ###########################################################
 #  Create Aegir user with permission to restart webserver
