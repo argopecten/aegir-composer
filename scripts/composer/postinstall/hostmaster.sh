@@ -29,10 +29,10 @@ echo "select host, user, password from mysql.user;" |  sudo mysql
 # fetch the running webserver
 # TODO: duplicate here, see lamp-config.sh
 if [[ `ps -acx | grep apache | wc -l` > 0 ]]; then
-    WEBSERVER="apache2"
+    # WEBSERVER="apache2"
 fi
 if [[ `ps -acx | grep nginx | wc -l` > 0 ]]; then
-    WEBSERVER="nginx"
+    # WEBSERVER="nginx"
 fi
 echo "Server has $WEBSERVER as webserver."
 
@@ -94,15 +94,14 @@ sudo su - aegir -c "drush cc drush"
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Install hosting-queued daemon..."
 # Install the init script
-#sudo cp $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
-#sudo chmod 755 /etc/init.d/hosting-queued
-# Setup symlinks and runlevels
-#sudo update-rc.d hosting-queued defaults
-# Start the daemon
-#sudo systemctl start hosting-queued
-#sudo systemctl enable hosting-queued
-# enable module in Aegir
-#sudo su - aegir -c "drush @hostmaster pm-enable -y hosting_queued"
+sudo cp $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
+sudo chmod 755 /etc/init.d/hosting-queued
+# reload the daemons and start hosting-queued
+sudo systemctl daemon-reload
+sudo systemctl enable hosting-queued
+sudo systemctl start hosting-queued
+# enable the Aegir frontend module
+sudo su - aegir -c "drush @hostmaster pm-enable -y hosting_queued"
 
 # fix_permissions, fix_ownership, hosting_civicrm, hosting_civicrm_cron
 echo "ÆGIR | ------------------------------------------------------------------"

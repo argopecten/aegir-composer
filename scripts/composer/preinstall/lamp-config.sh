@@ -26,10 +26,16 @@ source "$CONFIGDIR/postfix.cfg"
 
 ###########################################################
 # 1) basic firewall configuration
+sudo ufw --force reset
 sudo ufw default deny incoming
 sudo ufw default deny outgoing
 sudo ufw allow OpenSSH
-echo "y" | sudo ufw enable
+# enabling git clone
+sudo ufw allow git
+sudo ufw allow out https
+sudo ufw allow out 53
+sudo ufw --force enable
+sudo ufw status
 
 ###########################################################
 # 1) securing database server
@@ -37,6 +43,8 @@ echo "ÆGIR | ------------------------------------------------------------------
 echo "ÆGIR | Securing database server ..."
 # Set root password in database, aegir still requires it in that way
 # prompt user for database root password
+unset dbpwd
+unset dbpwd2
 while true; do
     read -sp "Database root password: " dbpwd
     echo
@@ -66,10 +74,11 @@ if [[ `ps -acx | grep nginx | wc -l` > 0 ]]; then
     WEBSERVER="nginx"
 fi
 echo "Server has $WEBSERVER as webserver."
+echo "WEBSERVER=$WEBSERVER" >> $CONFIGDIR/aegir.cfg
 
 case "$WEBSERVER" in
   nginx)   echo "Setup Nginx..."
-      sudo ln -s $AEGIR_HOME/config/nginx.conf /etc/nginx/conf.d/aegir.conf
+      sudo ln -s $AEGIR_ROOT/config/nginx.conf /etc/nginx/conf.d/aegir.conf
       # remove /etc/nginx/sites-enabled/default ???
       # service nginx reload
       sudo ufw allow 'Nginx Full'
@@ -85,7 +94,7 @@ case "$WEBSERVER" in
 
   apache2)  echo "Setup Apache ..."
       # link aegir config file
-      sudo ln -s $AEGIR_HOME/hostmaster/config/apache.conf /etc/apache2/conf-available/aegir.conf
+      sudo ln -s $AEGIR_ROOT/config/apache.conf /etc/apache2/conf-available/aegir.conf
       # enable modules
       sudo a2enconf aegir
       sudo a2enmod ssl rewrite
