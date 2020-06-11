@@ -58,7 +58,7 @@ echo "ÆGIR | Configuring webserver & PHP ..."
 V=`php -v | awk '/PHP 7/ {print $2}' |  cut -d. -f1-2`
 echo "ÆGIR | PHP version: $V"
 
-# fetch running webserver
+# fetch the running webserver
 if [[ `ps -acx | grep apache | wc -l` > 0 ]]; then
     WEBSERVER="apache2"
 fi
@@ -69,7 +69,7 @@ echo "Server has $WEBSERVER as webserver."
 
 case "$WEBSERVER" in
   nginx)   echo "Setup Nginx..."
-      sudo ln -s $AEGIR_HOME/hostmaster/config/nginx.conf /etc/nginx/conf.d/aegir.conf
+      sudo ln -s $AEGIR_ROOT/config/nginx.conf /etc/nginx/conf.d/aegir.conf
       # remove /etc/nginx/sites-enabled/default ???
       # service nginx reload
       sudo ufw allow 'Nginx Full'

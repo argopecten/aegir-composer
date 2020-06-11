@@ -26,6 +26,16 @@ echo "ÆGIR | ------------------------------------------------------------------
 echo "ÆGIR | aegir_db_user is set"
 echo "select host, user, password from mysql.user;" |  sudo mysql
 
+# fetch the running webserver
+# TODO: duplicate here, see lamp-config.sh
+if [[ `ps -acx | grep apache | wc -l` > 0 ]]; then
+    WEBSERVER="apache2"
+fi
+if [[ `ps -acx | grep nginx | wc -l` > 0 ]]; then
+    WEBSERVER="nginx"
+fi
+echo "Server has $WEBSERVER as webserver."
+
 # variables for Aegir
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | We will install Aegir frontend with the following options:"
