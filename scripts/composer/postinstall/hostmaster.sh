@@ -92,9 +92,12 @@ sudo chmod 755 /etc/init.d/hosting-queued
 # reload the daemons and start hosting-queued
 sudo systemctl daemon-reload
 sudo systemctl enable hosting-queued
-sudo systemctl start hosting-queued
+# sudo systemctl start hosting-queued
+
 # enable the Aegir frontend module
 sudo su - aegir -c "drush @hostmaster pm-enable -y hosting_queued"
+
+sudo systemctl restart hosting-queued
 
 # fix_permissions, fix_ownership, hosting_civicrm, hosting_civicrm_cron
 echo "ÆGIR | ------------------------------------------------------------------"

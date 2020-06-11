@@ -14,17 +14,21 @@ source "$CONFIGDIR/postfix.cfg"
 
 ###########################################################
 # Configure LAMP for Aegir
-# 1) securing database server
-# 2) configure webserver
+# 1) setting up a basic firewall
+# 2) securing database server
+# 3) configure webserver
 #  - link Aegir config file
 #  - enable modules
 #  - PHP configurations: memory size, upload, ...
 #  - firewall settings
-# 3) configure Postfix
-# 4) clean up & reload services
+# 4) configure Postfix
+# 5) clean up & reload services
 ###########################################################
 
 ###########################################################
+# 1) setting up a basic firewall
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | Setting up a basic firewall ..."
 # 1) basic firewall configuration
 sudo ufw --force reset
 sudo ufw default deny incoming
@@ -36,9 +40,11 @@ sudo ufw allow out https
 sudo ufw allow out 53
 sudo ufw --force enable
 sudo ufw status
+echo "ÆGIR | Firewall configured."
+echo "ÆGIR | ------------------------------------------------------------------"
 
 ###########################################################
-# 1) securing database server
+# 2) securing database server
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Securing database server ..."
 # Set root password in database, aegir still requires it in that way
@@ -58,7 +64,7 @@ unset dbpwd
 unset dbpwd2
 
 ###########################################################
-# 2) configure webserver
+# 3) configure webserver
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Configuring webserver & PHP ..."
 
@@ -117,7 +123,7 @@ case "$WEBSERVER" in
 esac
 
 ###########################################################
-# 3) configure Postfix
+# 4) configure Postfix
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Postfix config ..."
 sudo debconf-set-selections <<< "postfix postfix/mailname string $myhostname"
@@ -125,7 +131,7 @@ sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer
 sudo ufw allow 'Postfix'
 ###########################################################
 
-# 4) clean up & reload services
+# 5) clean up & reload services
 # - reload LAMP services
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Reloading LAMP services ..."
