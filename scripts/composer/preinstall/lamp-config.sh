@@ -69,7 +69,7 @@ echo "Server has $WEBSERVER as webserver."
 
 case "$WEBSERVER" in
   nginx)   echo "Setup Nginx..."
-      sudo ln -s $AEGIR_ROOT/config/nginx.conf /etc/nginx/conf.d/aegir.conf
+      sudo ln -s $AEGIR_HOME/config/nginx.conf /etc/nginx/conf.d/aegir.conf
       # remove /etc/nginx/sites-enabled/default ???
       # service nginx reload
       sudo ufw allow 'Nginx Full'

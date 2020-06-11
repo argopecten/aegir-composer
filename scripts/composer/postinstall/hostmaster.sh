@@ -94,20 +94,20 @@ sudo su - aegir -c "drush cc drush"
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Install hosting-queued daemon..."
 # Install the init script
-sudo cp $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
-sudo chmod 755 /etc/init.d/hosting-queued
+#sudo cp $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
+#sudo chmod 755 /etc/init.d/hosting-queued
 # Setup symlinks and runlevels
-sudo update-rc.d hosting-queued defaults
+#sudo update-rc.d hosting-queued defaults
 # Start the daemon
-sudo systemctl start hosting-queued
-sudo systemctl enable hosting-queued
+#sudo systemctl start hosting-queued
+#sudo systemctl enable hosting-queued
 # enable module in Aegir
-sudo su - aegir -c "drush @hostmaster pm-enable -y hosting_queued"
+#sudo su - aegir -c "drush @hostmaster pm-enable -y hosting_queued"
 
 # fix_permissions, fix_ownership, hosting_civicrm, hosting_civicrm_cron
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Enabling hosting modules for CiviCRM ..."
-drush @hostmaster en fix_ownership fix_permissions hosting_civicrm hosting_civicrm_cron -y
+#drush @hostmaster en fix_ownership fix_permissions hosting_civicrm hosting_civicrm_cron -y
 
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Aegir $AEGIR_VERSION has been installed via Composer ..."
