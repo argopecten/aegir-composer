@@ -30,4 +30,4 @@ else
 fi
 
 #  - link provision module into drush paths
-sudo ln -s $AEGIR_HOME/hostmaster/sites/all/drush/provision $DRUSH_COMMANDS
+sudo ln -s $AEGIR_HOSTMASTER/sites/all/drush/provision $DRUSH_COMMANDS

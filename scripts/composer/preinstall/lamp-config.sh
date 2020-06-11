@@ -6,7 +6,11 @@
 #
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
-source "$DIR/../../config/*.cfg"
+CONFIGDIR="$DIR/../../config"
+source "$CONFIGDIR/aegir.cfg"
+source "$CONFIGDIR/mariadb.cfg"
+source "$CONFIGDIR/php.cfg"
+source "$CONFIGDIR/postfix.cfg"
 
 ###########################################################
 # Configure LAMP for Aegir

@@ -15,24 +15,8 @@ source "$DIR/../../config/mariadb.cfg"
 #    https://www.drupal.org/project/hostmaster/
 ###########################################################
 
-
-# more variables for Hostmaster
-
-# frontend URI:
-SITE_URI=$AEGIR_HOST
-# Install aegir in this directory
-#   default used to be: /var/aegir, but in this composer install it's one deeper
-AEGIR_ROOT="$AEGIR_HOME/hostmaster"
-# Hostmaster directory: we install the frontend in this directory
-#   default used to be: /var/aegir/hostmaster-7.x-3.185
-AEGIR_HOSTMASTER_ROOT=$AEGIR_ROOT
-# TODO: add version tag
-
-# Random password, will be stored in /var/aegir/.drush/server_localhost.alias.drushrc.php
-AEGIR_DB_PASS=$(openssl rand -base64 12)
-
 # Deploy the "fix ownership & permissions" scripts
-sudo bash $AEGIR_HOSTMASTER_ROOT/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
+sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
 # ls -la /usr/local/bin/fix-drupal-*.sh
 
 # - create user aegir db user
@@ -58,7 +42,7 @@ echo "ÆGIR | Database user:  $AEGIR_DB_USER"
 echo "ÆGIR | Database pwd:   $AEGIR_DB_PASS"
 echo "ÆGIR | Database port:  '3306'"
 echo "ÆGIR | Aegir version:  $AEGIR_VERSION"
-echo "ÆGIR | Aegir platform: $AEGIR_HOSTMASTER_ROOT"
+echo "ÆGIR | Hostmaster dir: $AEGIR_HOSTMASTER"
 echo "ÆGIR | Admin email:    $AEGIR_CLIENT_EMAIL"
 echo "ÆGIR | Aegir profile:  'hostmaster'"
 echo "ÆGIR | ------------------------------------------------------------------"
@@ -71,7 +55,7 @@ echo "ÆGIR | Checking drush status..."
 sudo su - aegir -c "drush cc drush"
 sudo su - aegir -c "drush status"
 echo "ÆGIR | Checking Aegir frontend directory..."
-ls -lah $AEGIR_HOSTMASTER_ROOT
+ls -lah $AEGIR_HOSTMASTER
 
 echo "ÆGIR | -------------------------"
 echo "ÆGIR | Running: drush hostmaster-install"
@@ -86,7 +70,7 @@ drush hostmaster-install -y --strict=0 $SITE_URI \
   --client_name=$AEGIR_CLIENT_NAME \
   --client_email=$AEGIR_CLIENT_EMAIL \
   --http_service_type=$WEBSERVER \
-  --root=$AEGIR_HOSTMASTER_ROOT \
+  --root=$AEGIR_HOSTMASTER \
   --version=$AEGIR_VERSION \
 "
 
@@ -100,7 +84,7 @@ sudo su - aegir -c "drush cc drush"
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Install hosting-queued daemon..."
 # Install the init script
-sudo cp $AEGIR_HOSTMASTER_ROOT/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
+sudo cp $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
 sudo chmod 755 /etc/init.d/hosting-queued
 # Setup symlinks and runlevels
 sudo update-rc.d hosting-queued defaults
