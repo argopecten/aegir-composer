@@ -17,6 +17,10 @@
         "hostmaster": {
             "type": "vcs",
             "url":  "https://github.com/argopecten/hostmaster"
+        },
+        "hosting_deploy": {
+            "type": "vcs",
+            "url":  "https://github.com/argopecten/hosting_deploy"
         }
     },
     "require": {
@@ -32,11 +36,11 @@
         "cweagans/composer-patches": "^1.6.5",
         "drupal-composer/preserve-paths": "^0.1",
         "drupal/composer_autoloader": "^1.0",
-        "drupal/drupal": "7.69",
+        "drupal/drupal": "7.71",
         "drush/drush": "^8.0",
         "symfony/filesystem": "~2.7|^3",
         "webflo/drupal-finder": "^1.0.0",
-        "argopecten/hostmaster": "dev-composer"
+        "argopecten/hostmaster": "dev-proba"
     },
     "conflict": {
         "drupal/core": "8.*"
@@ -53,13 +57,20 @@
     },
     "scripts": {
         "pre-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
+            "echo 'pre-install-cmd event fired'",
+            "bash scripts/composer/preinstall/lamp-config.sh < /dev/tty"
         ],
         "pre-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
         "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+            "echo 'post-install-cmd event fired'",
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "bash scripts/composer/postinstall/aegir-user.sh  < /dev/tty",
+            "bash scripts/composer/postinstall/drush.sh",
+            "bash scripts/composer/postinstall/provision.sh",
+            "bash scripts/composer/postinstall/hostmaster.sh"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
@@ -70,12 +81,12 @@
     },
     "extra": {
         "installer-paths": {
-            "web/": ["type:drupal-core"],
-            "web/profiles/{$name}/": ["type:drupal-profile"],
-            "web/sites/all/drush/{$name}/": ["type:drupal-drush"],
-            "web/sites/all/libraries/{$name}/": ["type:drupal-library"],
-            "web/sites/all/modules/contrib/{$name}/": ["type:drupal-module"],
-            "web/sites/all/themes/contrib/{$name}/": ["type:drupal-theme"]
+            "hostmaster": ["type:drupal-core"],
+            "hostmaster/profiles/{$name}/": ["type:drupal-profile"],
+            "hostmaster/sites/all/drush/{$name}/": ["type:drupal-drush"],
+            "hostmaster/sites/all/libraries/{$name}/": ["type:drupal-library"],
+            "hostmaster/sites/all/modules/contrib/{$name}/": ["type:drupal-module"],
+            "hostmaster/sites/all/themes/contrib/{$name}/": ["type:drupal-theme"]
         },
         "patches": {
             "cweagans/composer-patches": {
@@ -83,7 +94,7 @@
             }
         },
         "preserve-paths": [
-            "web/sites"
+            "hostmaster/sites"
         ]
     }
 }
