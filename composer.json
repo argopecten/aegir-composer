@@ -57,23 +57,23 @@
     },
     "scripts": {
         "pre-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "pre-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
             "echo 'pre-install-cmd event fired'",
             "bash scripts/composer/preinstall/lamp-config.sh < /dev/tty"
         ],
-        "pre-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        "post-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ],
-        "post-install-cmd": [
-            "echo 'post-install-cmd event fired'",
+        "post-update-cmd": [
+            "echo 'post-update-cmd event fired'",
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
             "bash scripts/composer/postinstall/aegir-user.sh  < /dev/tty",
             "bash scripts/composer/postinstall/drush.sh",
             "bash scripts/composer/postinstall/provision.sh",
             "bash scripts/composer/postinstall/hostmaster.sh"
-        ],
-        "post-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ],
         "post-create-project-cmd": [
             "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
