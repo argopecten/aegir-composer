@@ -51,7 +51,8 @@ if [ -z ${var+githubtoken} ]; then
     # githubtoken remains unset, do nothing
 else
   # githubtoken is set, store it for aegir user
-  echo -e "{ \"github-oauth\": { \"github.com\": \""$githubtoken"\" } }" > $AEGIR_HOME/.config/composer/auth.json
+  sudo su - aegir -c "composer config -g github-oauth.github.com $githubtoken"
+  # echo -e "{ \"github-oauth\": { \"github.com\": \""$githubtoken"\" } }" > $AEGIR_HOME/.config/composer/auth.json
   unset githubtoken
 fi
 
