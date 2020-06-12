@@ -44,6 +44,9 @@ sudo ufw allow out 53
 sudo ufw --force enable
 sudo ufw status
 
+# ???
+read -sp "Press enter: " dummy
+
 echo -e "\n\nÆGIR | Firewall configured.\n"
 echo "ÆGIR | ------------------------------------------------------------------"
 

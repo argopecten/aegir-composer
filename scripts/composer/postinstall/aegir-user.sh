@@ -47,13 +47,14 @@ sudo mv /tmp/aegir /etc/sudoers.d/aegir
 # "/var/aegir/.config/composer/auth.json" for future use by Composer.
 unset githubtoken
 read -sp "Set github personal token (or enter to continue): " githubtoken
-if [ -z ${var+githubtoken} ]; then
+if [ -z $githubtoken ]; then
     # githubtoken remains unset, do nothing
+    echo "ÆGIR | Github personal token has been not set."
 else
-  # githubtoken is set, store it for aegir user
-  sudo su - aegir -c "composer config -g github-oauth.github.com $githubtoken"
-  # echo -e "{ \"github-oauth\": { \"github.com\": \""$githubtoken"\" } }" > $AEGIR_HOME/.config/composer/auth.json
-  unset githubtoken
+    # githubtoken is set, store it for aegir user
+    sudo su - aegir -c "composer config -g github-oauth.github.com $githubtoken"
+    echo "ÆGIR | Github personal token has been set in ./.config/composer/auth.json"
+    unset githubtoken
 fi
 
 # - set permissions on installed directories
