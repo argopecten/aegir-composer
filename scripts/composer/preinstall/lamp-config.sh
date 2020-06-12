@@ -29,18 +29,22 @@ source "$CONFIGDIR/postfix.cfg"
 # 1) setting up a basic firewall
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Setting up a basic firewall ..."
-# 1) basic firewall configuration
+# basic firewall configuration for composer & github
 sudo ufw --force reset
 sudo ufw default deny incoming
 sudo ufw default deny outgoing
 sudo ufw allow OpenSSH
-# enabling git clone
+# enabling git clone via composer
+# composer still uses http!
 sudo ufw allow git
 sudo ufw allow out https
+sudo ufw allow out http
 sudo ufw allow out 53
+# start ufw
 sudo ufw --force enable
 sudo ufw status
-echo "ÆGIR | Firewall configured."
+
+echo -e "\n\nÆGIR | Firewall configured.\n"
 echo "ÆGIR | ------------------------------------------------------------------"
 
 ###########################################################
@@ -52,7 +56,7 @@ echo "ÆGIR | Securing database server ..."
 unset dbpwd
 unset dbpwd2
 while true; do
-    read -sp "Database root password: " dbpwd
+    read -sp "Set database root password: " dbpwd
     echo
     read -sp "Database root password (again): " dbpwd2
     echo

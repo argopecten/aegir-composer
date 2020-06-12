@@ -41,6 +41,20 @@ sudo chmod 0440 /tmp/aegir
 sudo chown root:root /tmp/aegir
 sudo mv /tmp/aegir /etc/sudoers.d/aegir
 
+# Because of GitHub's rate limits on their API it can happen that Composer prompts
+# for authentication asking your username and password so it can go ahead with its work.
+# Optionally set your personal token here, it will be stored in
+# "/var/aegir/.config/composer/auth.json" for future use by Composer.
+unset githubtoken
+read -sp "Set github personal token (or enter to continue): " githubtoken
+if [ -z ${var+githubtoken} ]; then
+    # githubtoken remains unset, do nothing
+else
+  # githubtoken is set, store it for aegir user
+  echo -e "{ \"github-oauth\": { \"github.com\": \""$githubtoken"\" } }" > $AEGIR_HOME/.config/composer/auth.json
+  unset githubtoken
+fi
+
 # - set permissions on installed directories
 sudo chown aegir:aegir -R "$AEGIR_HOME"
 
