@@ -40,7 +40,7 @@
         "drush/drush": "^8.0",
         "symfony/filesystem": "~2.7|^3",
         "webflo/drupal-finder": "^1.0.0",
-        "argopecten/hostmaster": "dev-proba"
+        "argopecten/hostmaster": "dev-composer"
     },
     "conflict": {
         "drupal/core": "8.*"
