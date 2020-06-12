@@ -49,8 +49,8 @@ echo "ÆGIR | Hostmaster dir: $AEGIR_HOSTMASTER"
 echo "ÆGIR | Admin email:    $AEGIR_CLIENT_EMAIL"
 echo "ÆGIR | Aegir profile:  'hostmaster'"
 echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Checking Aegir directory..."
-ls -lah $AEGIR_HOME
+echo "ÆGIR | Checking Aegir root directory..."
+ls -lah $AEGIR_ROOT
 
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Hostmaster install..."

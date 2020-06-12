@@ -94,7 +94,7 @@
             }
         },
         "preserve-paths": [
-            "web/sites"
+            "hostmaster/sites"
         ]
     }
 }
