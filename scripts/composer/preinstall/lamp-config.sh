@@ -126,23 +126,6 @@ echo "ÆGIR | Prepare aegir home at $AEGIR_HOME ..."
 sudo mkdir -p $AEGIR_HOME
 sudo chown `whoami` $AEGIR_HOME
 
-# Because of GitHub's rate limits on their API it can happen that Composer prompts
-# for authentication asking your username and password so it can go ahead with its work.
-# Optionally set your personal token here, it will be stored in
-# "/var/aegir/.config/composer/auth.json" for future use by Composer.
-unset githubtoken
-read -sp "Set github personal token (or enter to continue): " githubtoken
-if [ -z $githubtoken ]; then
-    # githubtoken remains unset, do nothing
-    echo "ÆGIR | Github personal token has not been set for the acting user."
-    echo "ÆGIR | This may later interrupt the deployment process!"
-else
-    # githubtoken is set, will be used for aegir user as well!
-    composer config -g github-oauth.github.com $githubtoken
-    echo -e "\nÆGIR | Github personal token has been set in .config/composer/auth.json"
-    unset githubtoken
-fi
-
 ###########################################################
 # 6) clean up & reload services
 # - reload LAMP services

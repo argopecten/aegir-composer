@@ -45,21 +45,25 @@ sudo mv /tmp/aegir /etc/sudoers.d/aegir
 # - set user permissions on installed directories
 sudo chown aegir:aegir -R "$AEGIR_HOME"
 
-# set github personal token for aegir user
+# Because of GitHub's rate limits on their API it can happen that Composer prompts
+# for authentication asking your username and password so it can go ahead with its work.
+# Optionally set your personal token here, it will be stored in
+# "/var/aegir/.config/composer/auth.json" for future use by Composer.
 unset githubtoken
 # fetch the token of the acting user
 actinguser=`whoami`
 githubtoken=`grep "github.com" /home/$actinguser/.config/composer/auth.json | awk -F'"' '{print $4}'`
 if [ -z $githubtoken ]; then
-    # githubtoken remains unset, do nothing
-    echo "ÆGIR | Github personal token has NOT been set for the aegir user."
+    echo "ÆGIR | Github personal token has NOT been found."
     echo "ÆGIR | This may later interrupt the deployment process!"
-else
-    # githubtoken is set, store it for aegir user
-    sudo su - aegir -c "composer config -g github-oauth.github.com $githubtoken"
-    echo "ÆGIR | Github personal token has been set in .config/composer/auth.json"
-    unset githubtoken
+    read -sp "Enter your github personal token here (or take the risk and press enter to continue): " githubtoken
+    echo
 fi
+else
+# githubtoken is set, store it for aegir user
+sudo su - aegir -c "composer config -g github-oauth.github.com $githubtoken"
+echo "ÆGIR | Github personal token has been set for aegir user in $AEGIR_HOME/.config/composer/auth.json"
+unset githubtoken
 
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | aegir user installed."
