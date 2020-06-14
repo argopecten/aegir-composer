@@ -27,28 +27,7 @@ source "$CONFIGDIR/postfix.cfg"
 
 ###########################################################
 # 1) setting up a basic firewall
-echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Setting up a basic firewall ..."
-# basic firewall configuration for composer & github
-sudo ufw --force reset
-sudo ufw default deny incoming
-sudo ufw default deny outgoing
-sudo ufw allow OpenSSH
-# enabling git clone via composer
-# composer still uses http!
-sudo ufw allow git
-sudo ufw allow out https
-sudo ufw allow out http
-sudo ufw allow out 53
-# start ufw
-sudo ufw --force enable
-sudo ufw status
-
-# ???
-read -sp "Press enter: " dummy
-
-echo -e "\n\nÆGIR | Firewall configured.\n"
-echo "ÆGIR | ------------------------------------------------------------------"
+# TBD
 
 ###########################################################
 # 2) securing database server
@@ -93,8 +72,7 @@ case "$WEBSERVER" in
   nginx)   echo "Setup Nginx..."
       sudo ln -s $AEGIR_ROOT/config/nginx.conf /etc/nginx/conf.d/aegir.conf
       # remove /etc/nginx/sites-enabled/default ???
-      # service nginx reload
-      sudo ufw allow 'Nginx Full'
+
       # upload_max_filesize
       sudo sed -i -e "/^upload_max_filesize/s/^.*$/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/" /etc/php/$V/cli/php.ini
       sudo sed -i -e "/^upload_max_filesize/s/^.*$/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/" /etc/php/$V/fpm/php.ini
@@ -106,13 +84,11 @@ case "$WEBSERVER" in
       ;;
 
   apache2)  echo "Setup Apache ..."
-      # link aegir config file
+      # enable aegir
       sudo ln -s $AEGIR_ROOT/config/apache.conf /etc/apache2/conf-available/aegir.conf
-      # enable modules
       sudo a2enconf aegir
+      # enable modules
       sudo a2enmod ssl rewrite
-      # firewall settings
-      sudo ufw allow 'APACHE Full'
       # upload_max_filesize
       sudo sed -i -e "/^upload_max_filesize/s/^.*$/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/" /etc/php/$V/cli/php.ini
       sudo sed -i -e "/^upload_max_filesize/s/^.*$/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/" /etc/php/$V/apache2/php.ini
@@ -135,7 +111,6 @@ echo "ÆGIR | ------------------------------------------------------------------
 echo "ÆGIR | Postfix config ..."
 sudo debconf-set-selections <<< "postfix postfix/mailname string $myhostname"
 sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
-sudo ufw allow 'Postfix'
 ###########################################################
 
 # 5) clean up & reload services
@@ -173,10 +148,6 @@ esac
 
 # Postfix
 sudo systemctl reload postfix
-
-# ufw
-sudo ufw reload
-sudo ufw status
 
 # - clean up
 echo "ÆGIR | ------------------------------------------------------------------"
