@@ -115,12 +115,14 @@ echo "ÆGIR | ------------------------------------------------------------------
 echo "ÆGIR | Postfix config ..."
 sudo debconf-set-selections <<< "postfix postfix/mailname string $myhostname"
 sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
-###########################################################
+echo "ÆGIR | ------------------------------------------------------------------"
 
 ###########################################################
 # 5) prepare aegir home
 # current user needs write acces to aegir AEGIR_HOME,
 # in order to run "composer create-project $AEGIR_HOME"
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | Prepare aegir home at $AEGIR_HOME ..."
 sudo mkdir -p $AEGIR_HOME
 sudo chown `whoami` $AEGIR_HOME
 
@@ -137,11 +139,9 @@ if [ -z $githubtoken ]; then
 else
     # githubtoken is set, will be used for aegir user as well!
     composer config -g github-oauth.github.com $githubtoken
-    echo "ÆGIR | Github personal token has been set in .config/composer/auth.json"
+    echo -e "\nÆGIR | Github personal token has been set in .config/composer/auth.json"
     unset githubtoken
 fi
-echo "ÆGIR | ------------------------------------------------------------------"
-###########################################################
 
 ###########################################################
 # 6) clean up & reload services
