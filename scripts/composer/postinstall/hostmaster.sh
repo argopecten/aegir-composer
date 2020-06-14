@@ -13,23 +13,36 @@ source "$DIR/../../config/mariadb.cfg"
 # Install Aegir
 #  - install Hostmaster module of Aegir
 #    https://www.drupal.org/project/hostmaster/
+
+#  - Deploy "fix ownership & permissions" scripts
+#  - Create db user for aegir
+#  - Install Aegir frontend via drush hostmaster-install
+#  - Install hosting-queued daemon
+#  - Enable Aegir modules: hosting_civicrm, hosting_civicrm_cron, ...
 ###########################################################
 
-# Deploy the "fix ownership & permissions" scripts
-sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
-# ls -la /usr/local/bin/fix-drupal-*.sh
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | Hostmaster install..."
 
-# - create user aegir db user
+# list Aegir root directory..."
+# ls -lah $AEGIR_ROOT
+# list hostmaster directory
+# ls -lah $AEGIR_HOSTMASTER
+
+#  - Deploy "fix ownership & permissions" scripts
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | deploy fix ownership & permissions scripts"
+sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
+ls -la /usr/local/bin/fix-drupal-*.sh
+
+#  - Create db user for aegir
 # GRANT ALL ON *.* TO 'aegir_db_user'@'localhost' IDENTIFIED BY 'strongpassword' WITH GRANT OPTION;
 echo "GRANT ALL ON *.* TO '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' IDENTIFIED BY '$AEGIR_DB_PASS' WITH GRANT OPTION;" | sudo mysql
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | aegir_db_user is set"
 echo "select host, user, password from mysql.user;" |  sudo mysql
 
-# fetching the webserver type from config file
-echo "Server has $WEBSERVER as webserver."
-
-# variables for Aegir
+#  - Install Aegir frontend via drush hostmaster-install
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | We will install Aegir frontend with the following options:"
 echo "ÆGIR | ------------------------------------------------------------------"
@@ -49,18 +62,6 @@ echo "ÆGIR | Hostmaster dir: $AEGIR_HOSTMASTER"
 echo "ÆGIR | Admin email:    $AEGIR_CLIENT_EMAIL"
 echo "ÆGIR | Aegir profile:  'hostmaster'"
 echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Checking Aegir root directory..."
-ls -lah $AEGIR_ROOT
-
-echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Hostmaster install..."
-echo "ÆGIR | Checking drush status..."
-sudo su - aegir -c "drush cc drush"
-sudo su - aegir -c "drush status"
-echo "ÆGIR | Checking Aegir frontend directory..."
-ls -lah $AEGIR_HOSTMASTER
-
-echo "ÆGIR | -------------------------"
 echo "ÆGIR | Running: drush hostmaster-install"
 sudo su - aegir -c " \
 drush hostmaster-install -y --strict=0 $SITE_URI \
@@ -76,7 +77,6 @@ drush hostmaster-install -y --strict=0 $SITE_URI \
   --root=$AEGIR_HOSTMASTER \
   --version=$AEGIR_VERSION \
 "
-
 # just to be sure :)
 sleep 3
 echo "ÆGIR | ------------------------------------------------------------------"
@@ -92,17 +92,15 @@ sudo chmod 755 /etc/init.d/hosting-queued
 # reload the daemons and start hosting-queued
 sudo systemctl daemon-reload
 sudo systemctl enable hosting-queued
-# sudo systemctl start hosting-queued
-
 # enable the Aegir frontend module
 sudo su - aegir -c "drush @hostmaster pm-enable -y hosting_queued"
-
+# restart queued daemon
 sudo systemctl restart hosting-queued
 
-# fix_permissions, fix_ownership, hosting_civicrm, hosting_civicrm_cron
+#  - Enable Aegir modules: hosting_civicrm, hosting_civicrm_cron, ...
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Enabling hosting modules for CiviCRM ..."
-#drush @hostmaster en fix_ownership fix_permissions hosting_civicrm hosting_civicrm_cron -y
+drush @hostmaster en fix_ownership fix_permissions hosting_civicrm hosting_civicrm_cron -y
 
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Aegir $AEGIR_VERSION has been installed via Composer ..."

@@ -18,8 +18,7 @@ source "$DIR/../../config/aegir.cfg"
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Initializing Aegir backend ..."
 echo "ÆGIR | ------------------------------------------------------------------"
-
-
+#  - link provision module into drush paths
 DRUSH_COMMANDS=/usr/share/drush/commands
 # remove old version, if any
 if [ -d "$DRUSH_COMMANDS" ]; then
@@ -28,6 +27,4 @@ if [ -d "$DRUSH_COMMANDS" ]; then
 else
     sudo mkdir -p $DRUSH_COMMANDS
 fi
-
-#  - link provision module into drush paths
 sudo ln -s $AEGIR_HOSTMASTER/sites/all/drush/provision $DRUSH_COMMANDS

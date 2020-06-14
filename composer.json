@@ -61,14 +61,12 @@
         ],
         "pre-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
-            "echo 'pre-update-cmd event fired'",
             "bash scripts/composer/preinstall/lamp-config.sh < /dev/tty"
         ],
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ],
         "post-update-cmd": [
-            "echo 'post-update-cmd event fired'",
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
             "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
             "bash scripts/composer/postinstall/aegir-user.sh  < /dev/tty",

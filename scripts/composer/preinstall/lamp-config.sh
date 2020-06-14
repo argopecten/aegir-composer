@@ -22,7 +22,8 @@ source "$CONFIGDIR/postfix.cfg"
 #  - PHP configurations: memory size, upload, ...
 #  - firewall settings
 # 4) configure Postfix
-# 5) clean up & reload services
+# 5) prepare aegir home
+# 6) clean up & reload services
 ###########################################################
 
 ###########################################################
@@ -116,14 +117,43 @@ sudo debconf-set-selections <<< "postfix postfix/mailname string $myhostname"
 sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
 ###########################################################
 
-# 5) clean up & reload services
+###########################################################
+# 5) prepare aegir home
+# current user needs write acces to aegir AEGIR_HOME,
+# in order to run "composer create-project $AEGIR_HOME"
+sudo mkdir -p $AEGIR_HOME
+sudo chown `whoami` $AEGIR_HOME
+
+# Because of GitHub's rate limits on their API it can happen that Composer prompts
+# for authentication asking your username and password so it can go ahead with its work.
+# Optionally set your personal token here, it will be stored in
+# "/var/aegir/.config/composer/auth.json" for future use by Composer.
+unset githubtoken
+read -sp "Set github personal token (or enter to continue): " githubtoken
+if [ -z $githubtoken ]; then
+    # githubtoken remains unset, do nothing
+    echo "ÆGIR | Github personal token has not been set for the acting user."
+    echo "ÆGIR | This may later interrupt the deployment process!"
+else
+    # githubtoken is set, will be used for aegir user as well!
+    composer config -g github-oauth.github.com $githubtoken
+    echo "ÆGIR | Github personal token has been set in .config/composer/auth.json"
+    unset githubtoken
+fi
+echo "ÆGIR | ------------------------------------------------------------------"
+###########################################################
+
+###########################################################
+# 6) clean up & reload services
 # - reload LAMP services
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Reloading LAMP services ..."
 # cron
+echo "ÆGIR | Reloading cron ..."
 sudo systemctl restart cron
 
 # database
+echo "ÆGIR | Reloading database ..."
 sudo systemctl restart mysql
 # Returns true once mysql can connect.
 while ! mysqladmin ping -h"$AEGIR_DB_HOST" --silent; do
@@ -133,15 +163,12 @@ done
 echo "ÆGIR | Database is active!"
 
 # webserver & PHP
+# do not restart webserver here, aegir.conf is not yet in place!
 case "$WEBSERVER" in
     nginx) echo "Reload Nginx..."
         sudo systemctl restart php$V-fpm
-        # not here, aegir.conf is not yet in place! sudo systemctl restart nginx
         ;;
     apache2)  echo "Reload Apache ..."
-        sudo systemctl restart apache2
-        # sudo apache2ctl graceful
-        # sudo apache2ctl configtest
         # TODO: php-fpm
         ;;
     *) echo "No webserver defined, aborting!"
@@ -150,9 +177,11 @@ case "$WEBSERVER" in
 esac
 
 # Postfix
+echo "ÆGIR | Reloading postfix ..."
 sudo systemctl reload postfix
 
 # - clean up
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Cleaning up ..."
 sudo apt autoremove -y 2>/dev/null
+echo "ÆGIR | ------------------------------------------------------------------"
