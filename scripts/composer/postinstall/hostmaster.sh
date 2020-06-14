@@ -100,7 +100,7 @@ sudo systemctl restart hosting-queued
 #  - Enable Aegir modules: hosting_civicrm, hosting_civicrm_cron, ...
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Enabling hosting modules for CiviCRM ..."
-drush @hostmaster en fix_ownership fix_permissions hosting_civicrm hosting_civicrm_cron -y
+sudo su - aegir -c "drush @hostmaster en fix_ownership fix_permissions hosting_civicrm hosting_civicrm_cron -y"
 
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Aegir $AEGIR_VERSION has been installed via Composer ..."
