@@ -45,9 +45,12 @@ while true; do
     [ "$dbpwd" = "$dbpwd2" ] && break
     echo "Please try again!"
 done
+echo "ÆGIR | Running mysql_secure_installation ..."
 echo -e "\n\n$dbpwd\n$dbpwd\n\n\nn\n\n " | sudo mysql_secure_installation 2>/dev/null
 unset dbpwd
 unset dbpwd2
+echo "ÆGIR | Database server secured."
+echo "ÆGIR | ------------------------------------------------------------------"
 
 ###########################################################
 # 3) configure webserver
@@ -69,7 +72,7 @@ echo "Server has $WEBSERVER as webserver."
 echo "WEBSERVER=$WEBSERVER" >> $CONFIGDIR/aegir.cfg
 
 case "$WEBSERVER" in
-  nginx)   echo "Setup Nginx..."
+  nginx)   echo "Setting up nginx..."
       sudo ln -s $AEGIR_ROOT/config/nginx.conf /etc/nginx/conf.d/aegir.conf
       # remove /etc/nginx/sites-enabled/default ???
 
@@ -152,4 +155,4 @@ sudo systemctl reload postfix
 # - clean up
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Cleaning up ..."
-sudo apt autoremove -y
+sudo apt autoremove -y 2>/dev/null
