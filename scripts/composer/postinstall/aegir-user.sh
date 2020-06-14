@@ -59,7 +59,6 @@ if [ -z $githubtoken ]; then
     read -sp "Enter your github personal token here (or take the risk and press enter to continue): " githubtoken
     echo
 fi
-else
 # githubtoken is set, store it for aegir user
 sudo su - aegir -c "composer config -g github-oauth.github.com $githubtoken"
 echo "ÆGIR | Github personal token has been set for aegir user in $AEGIR_HOME/.config/composer/auth.json"
