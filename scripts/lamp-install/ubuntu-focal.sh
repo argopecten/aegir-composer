@@ -86,11 +86,11 @@ sudo apt upgrade -y
 #    (https://git.drupalcode.org/project/provision/blob/7.x-3.x/debian/control)
 # sudo, adduser, ucf, curl, git-core, unzip, lsb-base, rsync, nfs-client
 # packages being part of the standard Focal 20.04 image:
-#    sudo, adduser, ucf, curl, git, unzip, ls-base, rsync
+#    sudo, adduser, ucf, curl, lsb-base, rsync
 
 # packages to be installed on Ubuntu Focal LTS 20.04:
 echo "ÆGIR | Installing packages for Aegir..."
-sudo apt install nfs-common ssl-cert unzip -y
+sudo apt install nfs-common ssl-cert unzip git-core -y
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | OS packages installed & upgraded."
 echo "ÆGIR | ------------------------------------------------------------------"
