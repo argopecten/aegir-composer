@@ -27,7 +27,8 @@ echo "ÆGIR | ------------------------------------------------------------------
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
 #  - move composer downloads into aegir home
-sudo mv $TMPDIR_AEGIR/aegir /var
+cd $TMPDIR_AEGIR
+sudo cp -R $TMPDIR_AEGIR/. $AEGIR_HOME/
 
 #  - create user if not yet there
 echo "ÆGIR | Creating user ..."

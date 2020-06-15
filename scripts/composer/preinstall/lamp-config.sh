@@ -157,6 +157,11 @@ sudo systemctl reload postfix
 # - clean up
 echo "ÆGIR | Cleaning up ..."
 sudo apt autoremove -y 2>/dev/null
+# fetch the running webserver
+if [ -d "$TMPDIR_AEGIR" ]; then
+    suro rm -rf $TMPDIR_AEGIR
+fi
+
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | LAMP/LEMP configuration has been done for Aegir."
 echo "ÆGIR | ------------------------------------------------------------------"
