@@ -57,14 +57,18 @@ FLAVOR=focal
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | 0) Setting hostname ..."
 echo "ÆGIR | ------------------------------------------------------------------"
-unset hn
+unset fqdn
+unset result
 echo "ÆGIR | Default hostname is $AEGIR_HOST ..."
-read -sp "Enter your FQDN hostname here (or press enter to continue with default): " hn
-if [ -z $hn ]; then
-    echo
+read -p "Enter your FQDN hostname here (or press enter to continue with default): " fqdn
+# check valid FQDN syntax: https://stackoverflow.com/questions/32909454/evaluation-of-a-valid-fqdn-on-bash-regex
+result=`echo $fqdn | grep -P '(?=^.{1,254}$)(^(?>(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)'`
+if [[ -z "$result" ]]
+then
+    echo "User error: $fqdn is NOT a FQDN. Exiting ..."
 else
-    AEGIR_HOST=$hn
-    unset hn
+    # $fqdn is a FQDN
+    AEGIR_HOST=$fqdn
 fi
 echo "ÆGIR | Continuing with hostname: $AEGIR_HOST"
 sudo hostnamectl set-hostname "$AEGIR_HOST"
