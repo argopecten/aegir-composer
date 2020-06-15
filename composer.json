@@ -70,9 +70,8 @@
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
             "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
             "bash scripts/composer/postinstall/aegir-user.sh  < /dev/tty",
-            "bash scripts/composer/postinstall/drush.sh",
-            "bash scripts/composer/postinstall/provision.sh",
-            "bash scripts/composer/postinstall/hostmaster.sh"
+            "bash scripts/composer/postinstall/backend.sh",
+            "bash scripts/composer/postinstall/frontend.sh"
         ],
         "post-create-project-cmd": [
             "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"

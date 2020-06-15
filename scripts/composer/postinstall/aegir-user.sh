@@ -32,6 +32,9 @@ fi
 #  - add to groups
 sudo adduser --quiet aegir www-data
 
+# - set user permissions on all directories installed via composer
+sudo chown aegir:aegir -R "$AEGIR_HOME"
+
 #  - grant sudo rights for everything
 # TODO: use config file from source
 echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
@@ -41,9 +44,6 @@ echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
 sudo chmod 0440 /tmp/aegir
 sudo chown root:root /tmp/aegir
 sudo mv /tmp/aegir /etc/sudoers.d/aegir
-
-# - set user permissions on installed directories
-sudo chown aegir:aegir -R "$AEGIR_HOME"
 
 # Because of GitHub's rate limits on their API it can happen that Composer prompts
 # for authentication asking your username and password so it can go ahead with its work.

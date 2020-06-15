@@ -14,6 +14,9 @@ source "$CONFIGDIR/postfix.cfg"
 
 ###########################################################
 # Configure LAMP for Aegir
+#
+#  only activies not relying on location of aegir home!
+#
 # 1) setting up a basic firewall
 # 2) securing database server
 # 3) configure webserver
@@ -22,8 +25,7 @@ source "$CONFIGDIR/postfix.cfg"
 #  - PHP configurations: memory size, upload, ...
 #  - firewall settings
 # 4) configure Postfix
-# 5) prepare aegir home
-# 6) clean up & reload services
+# 5) clean up & reload services
 ###########################################################
 
 ###########################################################
@@ -71,14 +73,12 @@ fi
 if [[ `ps -acx | grep nginx | wc -l` > 0 ]]; then
     WEBSERVER="nginx"
 fi
+# TODO: check variable and exit is empty
 echo "ÆGIR | Server has $WEBSERVER as webserver."
 echo "WEBSERVER=$WEBSERVER" >> $CONFIGDIR/aegir.cfg
 
 case "$WEBSERVER" in
-  nginx)   echo "ÆGIR | Setting up nginx..."
-      sudo ln -s $AEGIR_ROOT/config/nginx.conf /etc/nginx/conf.d/aegir.conf
-      # remove /etc/nginx/sites-enabled/default ???
-
+  nginx)   echo "ÆGIR | Configuring nginx..."
       # upload_max_filesize
       sudo sed -i -e "/^upload_max_filesize/s/^.*$/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/" /etc/php/$V/cli/php.ini
       sudo sed -i -e "/^upload_max_filesize/s/^.*$/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/" /etc/php/$V/fpm/php.ini
@@ -89,10 +89,7 @@ case "$WEBSERVER" in
       sudo sed -i -e "/^memory_limit/s/^.*$/memory_limit = $PHP_MEMORY_LIMIT/" /etc/php/$V/fpm/php.ini
       ;;
 
-  apache2)  echo "ÆGIR | Seting up Apache ..."
-      # enable aegir
-      sudo ln -s $AEGIR_ROOT/config/apache.conf /etc/apache2/conf-available/aegir.conf
-      sudo a2enconf aegir
+  apache2)  echo "ÆGIR | Configuring up Apache ..."
       # enable modules
       sudo a2enmod ssl rewrite
       # upload_max_filesize
@@ -120,16 +117,7 @@ sudo debconf-set-selections <<< "postfix postfix/mailname string $myhostname"
 sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
 
 ###########################################################
-# 5) prepare aegir home
-# current user needs write acces to aegir AEGIR_HOME,
-# in order to run "composer create-project $AEGIR_HOME"
-echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Prepare aegir home at $AEGIR_HOME ..."
-sudo mkdir -p $AEGIR_HOME
-sudo chown `whoami` $AEGIR_HOME
-
-###########################################################
-# 6) clean up & reload services
+# 5) clean up & reload services
 # - reload LAMP services
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Reloading LAMP services ..."
