@@ -24,10 +24,9 @@ echo "ÆGIR | ------------------------------------------------------------------
 
 ###########################################################
 #  - move downloaded stuff to aegir home
-echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
 #  - move composer downloads into aegir home
-cd $TMPDIR_AEGIR
+cd ~/$TMPDIR_AEGIR
 sudo cp -R $TMPDIR_AEGIR/. $AEGIR_HOME/
 
 #  - create user if not yet there
