@@ -6,6 +6,7 @@
 ###########################################################
 # Install required dependencies for Aegir
 #
+#   0) Setting hostname ...
 #   1) Update OS & install packages
 #   2) database server
 #   3) webserver
@@ -52,6 +53,22 @@ OS=ubuntu
 FLAVOR=focal
 
 
+# (re)set hostname
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | 0) Setting hostname ..."
+echo "ÆGIR | ------------------------------------------------------------------"
+unset hn
+echo "ÆGIR | Default hostname is $AEGIR_HOST ..."
+read -sp "Enter your FQDN hostname here (or press enter to continue with default): " hn
+if [ -z $hn ]; then
+    echo
+else
+    AEGIR_HOST=$hn
+    unset hn
+fi
+echo "ÆGIR | Continuing with hostname: $AEGIR_HOST"
+sudo hostnamectl set-hostname "$AEGIR_HOST"
+
 # Install required OS packages for Aegir
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | 1) Installing system packages ..."
@@ -69,21 +86,14 @@ sudo apt upgrade -y
 #    (https://git.drupalcode.org/project/provision/blob/7.x-3.x/debian/control)
 # sudo, adduser, ucf, curl, git-core, unzip, lsb-base, rsync, nfs-client
 # packages being part of the standard Focal 20.04 image:
-#    sudo, adduser, ucf, curl, git, unzip, ls-base, rsync
+#    sudo, adduser, ucf, curl, lsb-base, rsync
 
 # packages to be installed on Ubuntu Focal LTS 20.04:
 echo "ÆGIR | Installing packages for Aegir..."
-sudo apt install nfs-common ssl-cert -y
+sudo apt install nfs-common ssl-cert unzip git-core -y
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | OS packages installed & upgraded."
 echo "ÆGIR | ------------------------------------------------------------------"
-
-
-# (re)set hostname
-echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Setting hostname to $AEGIR_HOST ..."
-echo "ÆGIR | ------------------------------------------------------------------"
-sudo hostnamectl set-hostname "$AEGIR_HOST"
 
 
 # Install database server
