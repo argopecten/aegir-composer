@@ -10,17 +10,27 @@ source "$DIR/../../config/aegir.cfg"
 
 ###########################################################
 #  Create Aegir user with permission to restart webserver
-#  - create the user
+#  - move downloaded stuff to aegir home
+#  - create user if not yet there
 #  - add aegir user to webserver group
 #  - grant sudo rights
-#  - fix permissions on installed directories
+#  - grant user permissions on all directories
 #  - add github personal token
 ###########################################################
 
-#  - create user if not yet there
-echo "ÆGIR | ------------------------------------------------------------------"
+cho "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Creating aegir user ..."
 echo "ÆGIR | ------------------------------------------------------------------"
+
+###########################################################
+#  - move downloaded stuff to aegir home
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
+#  - move composer downloads into aegir home
+sudo mv $TMPDIR_AEGIR/aegir /var
+
+#  - create user if not yet there
+echo "ÆGIR | Creating user ..."
 if ! getent passwd aegir >/dev/null ; then
     sudo adduser --quiet --system --no-create-home --group \
         --home "$AEGIR_HOME" \
@@ -29,10 +39,10 @@ if ! getent passwd aegir >/dev/null ; then
         aegir
 fi
 
+echo "ÆGIR | Grand permissions ..."
 #  - add to groups
 sudo adduser --quiet aegir www-data
-
-# - set user permissions on all directories installed via composer
+# - grant user permissions on all directories installed via composer
 sudo chown aegir:aegir -R "$AEGIR_HOME"
 
 #  - grant sudo rights for everything

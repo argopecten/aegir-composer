@@ -10,7 +10,6 @@ source "$DIR/../../config/aegir.cfg"
 
 ###########################################################
 # Configure Drush, Provision and some more backend settings
-#  - move downloaded stuff to aegir home, adjust permissions
 #  - webserver settings to use aegir config
 #  - Drush configurations
 #  - Configure the Provision module
@@ -19,22 +18,24 @@ echo "ÆGIR | ------------------------------------------------------------------
 echo "ÆGIR | Initializing Aegir backend ..."
 echo "ÆGIR | ------------------------------------------------------------------"
 
-
-###########################################################
-#  - move downloaded stuff to aegir home, adjust permissions
-#
-echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Prepare aegir home at $AEGIR_HOME ..."
-
-exit 1
-
 ###########################################################
 #  - webserver settings to use aegir config
-sudo ln -s $AEGIR_ROOT/config/nginx.conf /etc/nginx/conf.d/aegir.conf
-# remove /etc/nginx/sites-enabled/default ???
-# enable aegir
-sudo ln -s $AEGIR_ROOT/config/apache.conf /etc/apache2/conf-available/aegir.conf
-sudo a2enconf aegir
+case "$WEBSERVER" in
+  nginx)   echo "ÆGIR | Enabling aegir configuration for Nginx..."
+      sudo ln -s $AEGIR_ROOT/config/nginx.conf /etc/nginx/conf.d/aegir.conf
+      # remove /etc/nginx/sites-enabled/default ???
+      # enable aegir
+      ;;
+
+  apache2)  echo "ÆGIR | ÆGIR | Enabling aegir configuration for Apache..."
+      sudo ln -s $AEGIR_ROOT/config/apache.conf /etc/apache2/conf-available/aegir.conf
+      sudo a2enconf aegir
+      ;;
+
+  *) echo "No webserver defined, aborting!"
+     exit 1
+     ;;
+esac
 
 
 ###########################################################
@@ -75,7 +76,7 @@ sudo su - aegir -c "drush status"
 #  - initialize: link provision module into drush paths
 ###########################################################
 echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Initializing Aegir backend ..."
+echo "ÆGIR | Configuring the Provision module ..."
 echo "ÆGIR | ------------------------------------------------------------------"
 #  - link provision module into drush paths
 DRUSH_COMMANDS=/usr/share/drush/commands
