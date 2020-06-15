@@ -90,7 +90,7 @@ sudo apt upgrade -y
 
 # packages to be installed on Ubuntu Focal LTS 20.04:
 echo "ÆGIR | Installing packages for Aegir..."
-sudo apt install nfs-common ssl-cert -y
+sudo apt install nfs-common ssl-cert unzip -y
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | OS packages installed & upgraded."
 echo "ÆGIR | ------------------------------------------------------------------"
