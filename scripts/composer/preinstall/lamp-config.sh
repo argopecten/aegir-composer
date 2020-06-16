@@ -79,6 +79,8 @@ echo "WEBSERVER=$WEBSERVER" >> $CONFIGDIR/aegir.cfg
 
 case "$WEBSERVER" in
   nginx)   echo "ÆGIR | Configuring nginx..."
+      # delete default config file
+      sudo rm /etc/nginx/sites-enabled/default
       # upload_max_filesize
       sudo sed -i -e "/^upload_max_filesize/s/^.*$/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/" /etc/php/$V/cli/php.ini
       sudo sed -i -e "/^upload_max_filesize/s/^.*$/upload_max_filesize = $PHP_UPLOAD_MAX_FILESIZE/" /etc/php/$V/fpm/php.ini
