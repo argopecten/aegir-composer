@@ -59,11 +59,10 @@ echo "ÆGIR | 0) Setting hostname ..."
 echo "ÆGIR | ------------------------------------------------------------------"
 unset fqdn
 unset result
-echo "ÆGIR | Default hostname is $AEGIR_HOST ..."
 # take new hostname from first argument
 if [[ -z "$1" ]]
 then
-    echo "No user input, using default hostname: $AEGIR_HOST"
+    echo "Using default hostname: $AEGIR_HOST"
 else
    # check valid FQDN syntax: https://stackoverflow.com/questions/32909454/evaluation-of-a-valid-fqdn-on-bash-regex
    result=`echo $1 | grep -P '(?=^.{1,254}$)(^(?>(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)'`
@@ -72,7 +71,8 @@ else
     echo "Error in user input: $1 is NOT a FQDN. Exiting ..."
     exit 1
    else
-       # $fqdn is a FQDN
+       # $1 is a FQDN
+       echo "ÆGIR | Hostname is $1 ..."
        AEGIR_HOST=$1
    fi
 fi
