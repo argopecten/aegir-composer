@@ -6,6 +6,7 @@
 ###########################################################
 # Install required dependencies for Aegir
 #
+#   0) Setting hostname ...
 #   1) Update OS & install packages
 #   2) database server
 #   3) webserver
@@ -52,6 +53,31 @@ OS=ubuntu
 FLAVOR=focal
 
 
+# (re)set hostname
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | 0) Setting hostname ..."
+echo "ÆGIR | ------------------------------------------------------------------"
+unset fqdn
+unset result
+# take new hostname from first argument
+if [[ -z "$1" ]]
+then
+    echo "Using default hostname: $AEGIR_HOST"
+else
+   # check valid FQDN syntax: https://stackoverflow.com/questions/32909454/evaluation-of-a-valid-fqdn-on-bash-regex
+   result=`echo $1 | grep -P '(?=^.{1,254}$)(^(?>(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)'`
+   if [[ -z "$result" ]]
+   then
+    echo "Error in user input: $1 is NOT a FQDN. Exiting ..."
+    exit 1
+   else
+       # $1 is a FQDN
+       echo "ÆGIR | Hostname is $1 ..."
+       AEGIR_HOST=$1
+   fi
+fi
+sudo hostnamectl set-hostname "$AEGIR_HOST"
+
 # Install required OS packages for Aegir
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | 1) Installing system packages ..."
@@ -69,21 +95,14 @@ sudo apt upgrade -y
 #    (https://git.drupalcode.org/project/provision/blob/7.x-3.x/debian/control)
 # sudo, adduser, ucf, curl, git-core, unzip, lsb-base, rsync, nfs-client
 # packages being part of the standard Focal 20.04 image:
-#    sudo, adduser, ucf, curl, git, unzip, ls-base, rsync
+#    sudo, adduser, ucf, curl, lsb-base, rsync
 
 # packages to be installed on Ubuntu Focal LTS 20.04:
 echo "ÆGIR | Installing packages for Aegir..."
-sudo apt install nfs-common ssl-cert -y
+sudo apt install nfs-common ssl-cert unzip git-core -y
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | OS packages installed & upgraded."
 echo "ÆGIR | ------------------------------------------------------------------"
-
-
-# (re)set hostname
-echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Setting hostname to $AEGIR_HOST ..."
-echo "ÆGIR | ------------------------------------------------------------------"
-sudo hostnamectl set-hostname "$AEGIR_HOST"
 
 
 # Install database server

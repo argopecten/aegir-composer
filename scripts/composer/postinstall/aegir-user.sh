@@ -10,17 +10,27 @@ source "$DIR/../../config/aegir.cfg"
 
 ###########################################################
 #  Create Aegir user with permission to restart webserver
-#  - create the user
+#  - move downloaded stuff to aegir home
+#  - create user if not yet there
 #  - add aegir user to webserver group
 #  - grant sudo rights
-#  - fix permissions on installed directories
+#  - grant user permissions on all directories
 #  - add github personal token
 ###########################################################
 
-#  - create user if not yet there
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Creating aegir user ..."
 echo "ÆGIR | ------------------------------------------------------------------"
+
+###########################################################
+#  - move downloaded stuff to aegir home
+echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
+#  - move composer downloads into aegir home
+cd ~/$TMPDIR_AEGIR
+sudo cp -R . $AEGIR_HOME/
+
+#  - create user if not yet there
+echo "ÆGIR | Creating user ..."
 if ! getent passwd aegir >/dev/null ; then
     sudo adduser --quiet --system --no-create-home --group \
         --home "$AEGIR_HOME" \
@@ -29,8 +39,11 @@ if ! getent passwd aegir >/dev/null ; then
         aegir
 fi
 
+echo "ÆGIR | Grand permissions ..."
 #  - add to groups
 sudo adduser --quiet aegir www-data
+# - grant user permissions on all directories installed via composer
+sudo chown aegir:aegir -R "$AEGIR_HOME"
 
 #  - grant sudo rights for everything
 # TODO: use config file from source
@@ -41,9 +54,6 @@ echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
 sudo chmod 0440 /tmp/aegir
 sudo chown root:root /tmp/aegir
 sudo mv /tmp/aegir /etc/sudoers.d/aegir
-
-# - set user permissions on installed directories
-sudo chown aegir:aegir -R "$AEGIR_HOME"
 
 # Because of GitHub's rate limits on their API it can happen that Composer prompts
 # for authentication asking your username and password so it can go ahead with its work.
