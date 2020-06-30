@@ -29,8 +29,7 @@ source "$CONFIGDIR/postfix.cfg"
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
 #  - move composer downloads into aegir home
-cd $TMPDIR_AEGIR
-sudo cp -R . $AEGIR_HOME/
+sudo cp -R $TMPDIR_AEGIR $AEGIR_HOME/
 # rename hostmaster directory
 sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
 
