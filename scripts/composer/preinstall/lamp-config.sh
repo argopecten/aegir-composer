@@ -36,7 +36,6 @@ source "$CONFIGDIR/postfix.cfg"
 # 2) securing database server
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Securing database server ..."
-echo "ÆGIR | ------------------------------------------------------------------"
 # Set root password in database, aegir still requires it in that way
 # prompt user for database root password
 unset dbpwd
@@ -60,7 +59,6 @@ echo "ÆGIR | ------------------------------------------------------------------
 # 3) configure webserver
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Configuring webserver & PHP ..."
-echo "ÆGIR | ------------------------------------------------------------------"
 
 # fetch PHP version
 V=`php -v | awk '/PHP 7/ {print $2}' |  cut -d. -f1-2`
@@ -123,7 +121,7 @@ sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer
 # - reload LAMP services
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Reloading LAMP services ..."
-echo "ÆGIR | ------------------------------------------------------------------"
+
 # cron
 echo "ÆGIR | Reloading cron ..."
 sudo systemctl restart cron
