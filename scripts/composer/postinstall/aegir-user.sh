@@ -25,7 +25,7 @@ echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
 cd $TMPDIR_AEGIR
 sudo cp -R . $AEGIR_HOME/
 # rename hostmaster directory, to allow future upgrades
-mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
+sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
 
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Creating aegir user ..."

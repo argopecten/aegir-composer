@@ -32,7 +32,7 @@ echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
 cd $TMPDIR_AEGIR
 sudo cp -R . $AEGIR_HOME/
 # rename hostmaster directory
-mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
+sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
 
 ACTUALDRUSHVERSION=`drush --version | awk '/Drush Version/ {print $4}' |  cut -d. -f1-3`
 echo "ÆGIR | Drush version before upgrade: $ACTUALDRUSHVERSION"
