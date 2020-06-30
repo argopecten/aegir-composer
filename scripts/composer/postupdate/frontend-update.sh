@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Aegir 3.x install scripts for Debian / Ubuntu
+# Aegir 3.x install/update scripts for Debian / Ubuntu
 #
 # on Github: https://github.com/argopecten/aegir-composer
 #
@@ -32,15 +32,24 @@ echo "ÆGIR | Hostmaster install..."
 #  - Deploy "fix ownership & permissions" scripts
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | deploy fix ownership & permissions scripts"
+sudo su -c "rm /usr/local/bin/fix-drupal-*.sh"
+sudo su -c "rm /etc/sudoers.d/fix-drupal-*"
 sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
 ls -la /usr/local/bin/fix-drupal-*.sh
 
-#  - Create db user for aegir
-# GRANT ALL ON *.* TO 'aegir_db_user'@'localhost' IDENTIFIED BY 'strongpassword' WITH GRANT OPTION;
-echo "GRANT ALL ON *.* TO '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' IDENTIFIED BY '$AEGIR_DB_PASS' WITH GRANT OPTION;" | sudo mysql
-echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | aegir_db_user is set"
-echo "select host, user, password from mysql.user;" |  sudo mysql
+
+# Check if @hostmaster is already set and accessible.
+sudo su - aegir -c "drush @hostmaster vget site_name > /dev/null 2>&1"
+if [ ${PIPESTATUS[0]} == 0 ]; then
+    echo "ÆGIR | Hostmaster site found. Upgrading ..."
+    echo "ÆGIR | Clear Hostmaster caches and migrate the site into the new platform ... "
+    echo "ÆGIR | Running 'drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER_ROOT -y'...!"
+    sudo su - aegir -c "drush @hostmaster cc all; drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER_ROOT -y -v"
+else
+  # if @hostmaster is not accessible, install it.
+  echo "ÆGIR | Hostmaster not found. Try composer install!"
+fi
+
 
 #  - Install Aegir frontend via drush hostmaster-install
 echo "ÆGIR | ------------------------------------------------------------------"
@@ -62,46 +71,13 @@ echo "ÆGIR | Hostmaster dir: $AEGIR_HOSTMASTER"
 echo "ÆGIR | Admin email:    $AEGIR_CLIENT_EMAIL"
 echo "ÆGIR | Aegir profile:  'hostmaster'"
 echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Running: drush hostmaster-install"
-sudo su - aegir -c " \
-drush hostmaster-install -y --strict=0 $SITE_URI \
-  --aegir_db_host=$AEGIR_DB_HOST \
-  --aegir_db_pass=$AEGIR_DB_PASS \
-  --aegir_db_port='3306' \
-  --aegir_db_user=$AEGIR_DB_USER \
-  --aegir_host=$AEGIR_HOST \
-  --aegir_root=$AEGIR_ROOT \
-  --client_name=$AEGIR_CLIENT_NAME \
-  --client_email=$AEGIR_CLIENT_EMAIL \
-  --http_service_type=$WEBSERVER \
-  --root=$AEGIR_HOSTMASTER \
-  --version=$AEGIR_VERSION \
-"
+
 # just to be sure :)
 sleep 3
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Flush the drush cache to find new commands ... "
 sudo su - aegir -c "drush cc drush"
 
-# install hosting-queued daemon
 echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Install hosting-queued daemon..."
-# Install the init script
-sudo cp $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
-sudo chmod 755 /etc/init.d/hosting-queued
-# reload the daemons and start hosting-queued
-sudo systemctl daemon-reload
-sudo systemctl enable hosting-queued
-# enable the Aegir frontend module
-sudo su - aegir -c "drush @hostmaster pm-enable -y hosting_queued"
-# restart queued daemon
-sudo systemctl restart hosting-queued
-
-#  - Enable Aegir modules: hosting_civicrm, hosting_civicrm_cron, ...
-echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Enabling hosting modules for CiviCRM ..."
-sudo su - aegir -c "drush @hostmaster en fix_ownership fix_permissions hosting_civicrm hosting_civicrm_cron -y"
-
-echo "ÆGIR | ------------------------------------------------------------------"
-echo "ÆGIR | Aegir $AEGIR_VERSION has been installed via Composer ..."
+echo "ÆGIR | Aegir has been updated to $AEGIR_VERSION via Composer ..."
 echo "ÆGIR | ------------------------------------------------------------------"

@@ -18,17 +18,18 @@ source "$DIR/../../config/aegir.cfg"
 #  - add github personal token
 ###########################################################
 
+#  - move downloaded stuff to aegir home
+echo "ÆGIR | ------------------------------------------------------------------"
+echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
+#  - move composer downloads into aegir home
+cd $TMPDIR_AEGIR
+sudo cp -R . $AEGIR_HOME/
+# rename hostmaster directory, to allow future upgrades
+mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
+
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Creating aegir user ..."
 echo "ÆGIR | ------------------------------------------------------------------"
-
-###########################################################
-#  - move downloaded stuff to aegir home
-echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
-#  - move composer downloads into aegir home
-cd ~/$TMPDIR_AEGIR
-sudo cp -R . $AEGIR_HOME/
-
 #  - create user if not yet there
 echo "ÆGIR | Creating user ..."
 if ! getent passwd aegir >/dev/null ; then

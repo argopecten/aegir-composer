@@ -22,13 +22,13 @@ echo "ÆGIR | ------------------------------------------------------------------
 #  - webserver settings to use aegir config
 case "$WEBSERVER" in
   nginx)   echo "ÆGIR | Enabling aegir configuration for Nginx..."
-      sudo ln -s $AEGIR_ROOT/config/nginx.conf /etc/nginx/conf.d/aegir.conf
+      sudo ln -s $AEGIR_HOME/config/nginx.conf /etc/nginx/conf.d/aegir.conf
       # remove /etc/nginx/sites-enabled/default ???
       # enable aegir
       ;;
 
   apache2)  echo "ÆGIR | ÆGIR | Enabling aegir configuration for Apache..."
-      sudo ln -s $AEGIR_ROOT/config/apache.conf /etc/apache2/conf-available/aegir.conf
+      sudo ln -s $AEGIR_HOME/config/apache.conf /etc/apache2/conf-available/aegir.conf
       sudo a2enconf aegir
       ;;
 

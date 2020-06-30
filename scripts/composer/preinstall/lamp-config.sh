@@ -159,7 +159,7 @@ echo "ÆGIR | Cleaning up ..."
 sudo apt autoremove -y 2>/dev/null
 # fetch the running webserver
 if [ -d "$TMPDIR_AEGIR" ]; then
-    sudo rm -rf $TMPDIR_AEGIR
+    rm -rf $TMPDIR_AEGIR
 fi
 
 echo "ÆGIR | ------------------------------------------------------------------"
