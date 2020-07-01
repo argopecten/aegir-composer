@@ -62,11 +62,11 @@ echo "ÆGIR | ------------------------------------------------------------------
 echo "ÆGIR | Configuring webserver & PHP ..."
 
 # fetch PHP version
-V=fetch_php_version()
+V= $(fetch_php_version)
 echo "ÆGIR | PHP version: $V"
 
 # fetch the running webserver
-WEBSERVER=fetch_webserver()
+WEBSERVER=$(fetch_webserver)
 echo "ÆGIR | Server has $WEBSERVER as webserver."
 
 case "$WEBSERVER" in

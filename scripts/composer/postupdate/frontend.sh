@@ -44,7 +44,7 @@ echo "ÆGIR | aegir_db_user is set"
 echo "select host, user, password from mysql.user;" |  sudo mysql
 
 # fetch the running webserver
-WEBSERVER=fetch_webserver()
+WEBSERVER=$(fetch_webserver)
 
 #  - Install Aegir frontend via drush hostmaster-install
 echo "ÆGIR | ------------------------------------------------------------------"

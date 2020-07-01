@@ -30,14 +30,12 @@ fetch_webserver() {
     WEBSERVER="nginx"
   fi
   # TODO: check variable and exit is empty
-  echo "ÆGIR | Server has $WEBSERVER webserver."
-  return $WEBSERVER
+  echo $WEBSERVER
 }
 
 ###########################################################
 # 2) fetch version of installed PHP
 fetch_php_version() {
   V=`php -v | awk '/PHP 7/ {print $2}' |  cut -d. -f1-2`
-  echo "ÆGIR | PHP version: $V"
-  return $V
+  echo $V
 }

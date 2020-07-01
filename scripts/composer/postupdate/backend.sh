@@ -21,7 +21,7 @@ echo "ÆGIR | ------------------------------------------------------------------
 
 ###########################################################
 #  - webserver settings to use aegir config
-case fetch_webserver() in
+case $(fetch_webserver) in
   nginx)   echo "ÆGIR | Enabling aegir configuration for Nginx..."
       sudo ln -s $AEGIR_HOME/config/nginx.conf /etc/nginx/conf.d/aegir.conf
       # remove /etc/nginx/sites-enabled/default ???
