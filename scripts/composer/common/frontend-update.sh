@@ -83,6 +83,8 @@ echo "ÆGIR | ------------------------------------------------------------------
 echo "ÆGIR | Flush the drush cache to find new commands ... "
 sudo su - aegir -c "drush cc drush"
 
+sudo systemctl restart hosting-queued
+
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Aegir $AEGIR_VERSION has been installed via Composer ..."
 echo "ÆGIR | ------------------------------------------------------------------"
