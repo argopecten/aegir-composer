@@ -17,28 +17,35 @@ source "$CONFIGDIR/postfix.cfg"
 # This script runs when the post-update-cmd event is fired by composer
 # functions:
 # - call subsequent scripts depending on which scenario is there:
-#   1) fresh install of Aegir, w/o composer.lock file, i.e. called via
+#   1) update existing Aegir setup, i.e. called via composer update
+#   2) fresh install of Aegir, w/o composer.lock file, i.e. called via
 #      composer create-project
-#   2) update existing Aegir setup, i.e. called via composer update
 #
 ###############################################################################
 
 echo "ÆGIR | ------------------------------------------------------------------"
-# check current setup
+# check current setup: if aegir home and aegir user exists --> it's an update
 if [ -d "$AEGIR_HOME" ] && getent passwd aegir >/dev/null ; then
-  # aegir home and aegir user exists --> it's an update scenario
+  # 1) update existing Aegir setup, i.e. called via composer update
   echo "ÆGIR | Updating existing Aegir setup ..."
+
+  # update Aegir backend
+  bash "$DIR/backend-update.sh"
+
+  # update Aegir frontend
+  bash "$DIR/frontend-update.sh"
+
 else
-  # no aegir home --> fresh install
-  echo "ÆGIR | Setting up the Aegir user ..."
+  # 2) fresh install of Aegir, w/o composer.lock file, i.e. called via composer create-project
+  echo "ÆGIR | Installing Aegir ..."
+
+  # setup aegir user & home
   bash "$DIR/aegir-user.sh" < /dev/tty
+
+  # install Aegir backend
+  bash "$DIR/backend-install.sh"
+
+  # install Aegir frontend
+  bash "$DIR/frontend-install.sh"
 fi
-
-# configure Aegir backend
-echo "ÆGIR | Setting up Aegir backend ..."
-bash "$DIR/backend.sh"
-
-# configure Aegir frontend
-echo "ÆGIR | Setting up the Aegir frontend ..."
-bash "$DIR/frontend.sh"
 echo "ÆGIR | ------------------------------------------------------------------"

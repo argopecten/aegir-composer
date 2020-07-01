@@ -26,7 +26,7 @@ echo "ÆGIR | ------------------------------------------------------------------
 ###########################################################
 #  - move downloaded stuff to aegir home
 echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
-#  - copy composer downloads into aegir home
+# copy composer downloads into aegir home
 sudo cp -R $TMPDIR_AEGIR $AEGIR_HOME/
 # rename hostmaster directory, to allow future upgrades
 sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER

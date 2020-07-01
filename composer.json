@@ -61,8 +61,8 @@
           "bash scripts/composer/preinstall/lamp-config.sh < /dev/tty"
         ],
         "pre-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
-            "bash scripts/composer/pre-update.sh < /dev/tty"
+          "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
+          "bash scripts/composer/pre-update.sh < /dev/tty"
         ],
         "post-install-cmd": [
           "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
@@ -71,12 +71,12 @@
           "bash scripts/composer/postinstall/frontend.sh"
         ],
         "post-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-            "bash scripts/composer/post-update.sh < /dev/tty"
+          "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+          "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
+          "bash scripts/composer/post-update.sh < /dev/tty"
         ],
         "post-create-project-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
+          "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
         ]
     },
     "extra": {
