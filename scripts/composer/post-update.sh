@@ -7,7 +7,7 @@
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
 source "$DIR/common/common-functions.sh"
-CONFIGDIR="$DIR/../config"
+CONFIGDIR="$DIR/../../config"
 source "$CONFIGDIR/aegir.cfg"
 source "$CONFIGDIR/mariadb.cfg"
 source "$CONFIGDIR/php.cfg"
@@ -23,17 +23,22 @@ source "$CONFIGDIR/postfix.cfg"
 #
 ###############################################################################
 
+echo "ÆGIR | ------------------------------------------------------------------"
 # check current setup
 if [ -d "$AEGIR_HOME" ] && getent passwd aegir >/dev/null ; then
   # aegir home and aegir user exists --> it's an update scenario
-
+  echo "ÆGIR | Updating existing Aegir setup ..."
 else
   # no aegir home --> fresh install
-  bash "$DIR/common/aegir-user.sh < /dev/tty"
+  echo "ÆGIR | Setting up the Aegir user ..."
+  bash "$DIR/aegir-user.sh" < /dev/tty
 fi
 
 # configure Aegir backend
-bash "$DIR/common/backend.sh"
+echo "ÆGIR | Setting up Aegir backend ..."
+bash "$DIR/backend.sh"
 
 # configure Aegir frontend
-bash "$DIR/common/frontend.sh"
+echo "ÆGIR | Setting up the Aegir frontend ..."
+bash "$DIR/frontend.sh"
+echo "ÆGIR | ------------------------------------------------------------------"

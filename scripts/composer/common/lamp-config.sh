@@ -62,7 +62,7 @@ echo "ÆGIR | ------------------------------------------------------------------
 echo "ÆGIR | Configuring webserver & PHP ..."
 
 # fetch PHP version
-V= $(fetch_php_version)
+V=$(fetch_php_version)
 echo "ÆGIR | PHP version: $V"
 
 # fetch the running webserver

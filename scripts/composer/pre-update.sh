@@ -7,7 +7,7 @@
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
 source "$DIR/common/common-functions.sh"
-CONFIGDIR="$DIR/../config"
+CONFIGDIR="$DIR/../../config"
 source "$CONFIGDIR/aegir.cfg"
 source "$CONFIGDIR/mariadb.cfg"
 source "$CONFIGDIR/php.cfg"
@@ -23,11 +23,14 @@ source "$CONFIGDIR/postfix.cfg"
 #
 ###############################################################################
 
+echo "ÆGIR | ------------------------------------------------------------------"
 # check current setup
 if [ -d "$AEGIR_HOME" ] && getent passwd aegir >/dev/null ; then
   # aegir home and aegir user exists --> it's an update scenario
-
+  echo "ÆGIR | Preparing to update an existing Aegir setup ..."
 else
   # no aegir home --> fresh install
-  bash "$DIR/common/lamp-config.sh < /dev/tty"
+  echo "ÆGIR | Preparing to install Aegir ..."
+  bash "$DIR/lamp-config.sh" < /dev/tty
 fi
+echo "ÆGIR | ------------------------------------------------------------------"
