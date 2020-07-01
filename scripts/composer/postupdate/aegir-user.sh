@@ -1,11 +1,12 @@
 #! /bin/bash
 #
-# Aegir 3.x install scripts for Debian / Ubuntu
+# Aegir 3.x install/update scripts for Debian / Ubuntu
 #
 # on Github: https://github.com/argopecten/aegir-composer
 #
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
+source "$DIR/../common/common-functions.sh"
 source "$DIR/../../config/aegir.cfg"
 
 ###########################################################
@@ -25,9 +26,10 @@ echo "ÆGIR | ------------------------------------------------------------------
 ###########################################################
 #  - move downloaded stuff to aegir home
 echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
-#  - move composer downloads into aegir home
-cd ~/$TMPDIR_AEGIR
-sudo cp -R . $AEGIR_HOME/
+#  - copy composer downloads into aegir home
+sudo cp -R $TMPDIR_AEGIR $AEGIR_HOME/
+# rename hostmaster directory, to allow future upgrades
+sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
 
 #  - create user if not yet there
 echo "ÆGIR | Creating user ..."

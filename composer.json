@@ -40,7 +40,7 @@
         "drush/drush": "^8.0",
         "symfony/filesystem": "~2.7|^3",
         "webflo/drupal-finder": "^1.0.0",
-        "argopecten/hostmaster": "dev-master"
+        "argopecten/hostmaster": "dev-7.x-3.185"
     },
     "conflict": {
         "drupal/core": "8.*"
@@ -57,21 +57,25 @@
     },
     "scripts": {
         "pre-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+          "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
+          "bash scripts/composer/preinstall/lamp-config.sh < /dev/tty"
         ],
         "pre-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
-            "bash scripts/composer/preinstall/lamp-config.sh < /dev/tty"
+            "bash scripts/composer/preupdate/lamp-config.sh < /dev/tty"
         ],
         "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+          "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+          "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
+          "bash scripts/composer/postinstall/backend.sh",
+          "bash scripts/composer/postinstall/frontend.sh"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
             "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-            "bash scripts/composer/postinstall/aegir-user.sh  < /dev/tty",
-            "bash scripts/composer/postinstall/backend.sh",
-            "bash scripts/composer/postinstall/frontend.sh"
+            "bash scripts/composer/postupdate/aegir-user.sh  < /dev/tty",
+            "bash scripts/composer/postupdate/backend.sh",
+            "bash scripts/composer/postupdate/frontend.sh"
         ],
         "post-create-project-cmd": [
             "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
