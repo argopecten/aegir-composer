@@ -36,6 +36,10 @@ echo "ÆGIR | deploy fix ownership & permissions scripts"
 sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
 ls -la /usr/local/bin/fix-drupal-*.sh
 
+# random database password for aegir user, will be stored in
+# /var/aegir/.drush/server_localhost.alias.drushrc.php
+AEGIR_DB_PASS=$(openssl rand -base64 12)
+
 #  - Create db user for aegir
 # GRANT ALL ON *.* TO 'aegir_db_user'@'localhost' IDENTIFIED BY 'strongpassword' WITH GRANT OPTION;
 echo "GRANT ALL ON *.* TO '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' IDENTIFIED BY '$AEGIR_DB_PASS' WITH GRANT OPTION;" | sudo mysql
