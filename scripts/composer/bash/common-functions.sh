@@ -6,7 +6,7 @@
 #
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
-CONFIGDIR="$DIR/../../config"
+CONFIGDIR="$DIR/../config"
 source "$CONFIGDIR/aegir.cfg"
 
 ###############################################################################

@@ -86,7 +86,7 @@ if [ $? -ne 0 ]; then
 
   #  - initialize Drush with Aegir home
   DRUSH=$AEGIR_HOME/vendor/bin/drush
-  sudo su - aegir -c "$DRUSH core:init  --add-path=$AEGIR_HOME --bg -y"
+  sudo su - aegir -c "$DRUSH core:init  --add-path=$AEGIR_HOME --bg -y >/dev/null 2>&1"
 
   #  - add drush path for all user
   echo '#!/bin/sh
