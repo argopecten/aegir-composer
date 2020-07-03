@@ -22,15 +22,15 @@ source "$CONFIGDIR/aegir.cfg"
 ###########################################################
 # 1) fetch the running webserver
 fetch_webserver() {
-  WEBSERVER="not known any"
+  WS="not known any"
   if [[ `ps -acx | grep apache | wc -l` > 0 ]]; then
-    WEBSERVER="apache2"
+    WS="apache"
   fi
   if [[ `ps -acx | grep nginx | wc -l` > 0 ]]; then
-    WEBSERVER="nginx"
+    WS="nginx"
   fi
   # TODO: check variable and exit is empty
-  echo $WEBSERVER
+  echo $WS
 }
 
 ###########################################################
