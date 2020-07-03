@@ -26,7 +26,7 @@ echo "ÆGIR | ------------------------------------------------------------------
 # check current setup
 if [ -d "$AEGIR_HOME" ] && getent passwd aegir >/dev/null ; then
   # aegir home and aegir user exists --> skip, it's an update scenario
-  echo "ÆGIR | Assuming all LÆMP components to be configured."
+  echo "ÆGIR | Assuming all LÆMP components are configured for Aegir."
 else
   # no aegir home --> fresh install, do something
   echo "ÆGIR | Configuring LÆMP for Aegir ..."
