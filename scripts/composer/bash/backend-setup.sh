@@ -33,13 +33,13 @@ WS=$(fetch_webserver)
 case "$WS" in
   nginx)
     echo "ÆGIR | Enabling aegir configuration for Nginx..."
-    AEGIR_CONF_FILE="$AEGIR_ROOT/config/$WS.conf"
+    AEGIR_CONF_FILE="$AEGIR_HOME/config/$WS.conf"
     WEBSERVER_CONF="/etc/$WS/conf.d/aegir.conf"
     ;;
 
   apache)
     echo "ÆGIR | Enabling aegir configuration for Apache..."
-    AEGIR_CONF_FILE=$AEGIR_ROOT/config/$WS.conf
+    AEGIR_CONF_FILE=$AEGIR_HOME/config/$WS.conf
     WEBSERVER_CONF=/etc/"$WS"2/conf.d/aegir.conf
     sudo a2disconf aegir 2>/dev/null aegir
     ;;

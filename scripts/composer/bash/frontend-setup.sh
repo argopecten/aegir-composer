@@ -63,14 +63,14 @@ else
   echo "ÆGIR | "
   echo "ÆGIR | Aegir URI:      $SITE_URI"
   echo "ÆGIR | Aegir server:   $AEGIR_HOST"
-  echo "ÆGIR | Aegir root:     $AEGIR_ROOT"
+  echo "ÆGIR | Aegir root:     $AEGIR_HOME"
   echo "ÆGIR | Admin name:     $AEGIR_CLIENT_NAME"
   echo "ÆGIR | Web group:      'www-data'"
   echo "ÆGIR | Webserver:      $WEBSERVER"
   echo "ÆGIR | Webserver port: '80'"
   echo "ÆGIR | Database host:  $AEGIR_DB_HOST"
   echo "ÆGIR | Database user:  $AEGIR_DB_USER"
-  echo "ÆGIR | Database pwd:   stored in $AEGIR_ROOT/.drush/server_localhost.alias.drushrc.php"
+  echo "ÆGIR | Database pwd:   stored in $AEGIR_HOME/.drush/server_localhost.alias.drushrc.php"
   echo "ÆGIR | Database port:  '3306'"
   echo "ÆGIR | Aegir version:  $AEGIR_VERSION"
   echo "ÆGIR | Hostmaster dir: $AEGIR_HOSTMASTER"
@@ -86,7 +86,7 @@ else
     --aegir_db_port='3306' \
     --aegir_db_user=$AEGIR_DB_USER \
     --aegir_host=$AEGIR_HOST \
-    --aegir_root=$AEGIR_ROOT \
+    --aegir_root=$AEGIR_HOME \
     --client_name=$AEGIR_CLIENT_NAME \
     --client_email=$AEGIR_CLIENT_EMAIL \
     --http_service_type=$WEBSERVER \
