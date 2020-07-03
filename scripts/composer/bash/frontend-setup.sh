@@ -35,12 +35,13 @@ sudo su - aegir -c "drush @hostmaster vget site_name > /dev/null 2>&1"
 if [ ${PIPESTATUS[0]} == 0 ]; then
   echo "ÆGIR | Hostmaster site found."
 
-  if [ substr(d()->root, -5) == "$AEGIR_VERSION" ]; then
+  HM_VERSION=`drush sa @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
+  if [ "$HM_VERSION" == "$AEGIR_VERSION" ]; then
     # it's just a drupal core and/or vendor package update
     echo "ÆGIR | Drupal core and/or vendor package updates."
 
     # Verify the upgraded platform.
-    PLATFORM=d()->platform
+    PLATFORM=`drush sa @hm | grep platform | cut -d"'" -f4`
     sudo su - aegir -c "drush $PLATFORM provision-verify"
     # Verify the Hostmaster site.
     sudo su - aegir -c "drush @hostmaster provision-verify"
