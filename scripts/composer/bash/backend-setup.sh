@@ -56,10 +56,9 @@ if [ $WS == "apache" ]; then sudo a2enconf aegir; fi
 #  - Prepare new hostmaster directory: if there is a new hostmaster directory,
 #    from any update activity, it has to be renamed like hostmaster-3.186,
 #    to allow future upgrades
-
 if [ -d "$AEGIR_HOSTMASTER" ]; then
   # this is one of the update scenarios: either aegir upgrade or drupal core & vendor update
-  HM_VERSION=`drush sa @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
+  HM_VERSION=`drush site-alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
   if [ "$HM_VERSION" == "$AEGIR_VERSION" ];  then
     # it's the drupal core and/or vendor package update scenario
     sudo mv $AEGIR_HOSTMASTER "$AEGIR_HOSTMASTER-old"

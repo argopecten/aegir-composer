@@ -31,21 +31,24 @@ source "$CONFIGDIR/mariadb.cfg"
 echo "ÆGIR | ------------------------------------------------------------------"
 
 # Check if @hostmaster is already set and accessible.
-sudo su - aegir -c "drush @hostmaster vget site_name > /dev/null 2>&1"
+sudo su - aegir -c "drush site-alias @hostmaster > /dev/null 2>&1"
 if [ ${PIPESTATUS[0]} == 0 ]; then
   echo "ÆGIR | Hostmaster site found."
 
-  HM_VERSION=`drush sa @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
+  HM_VERSION=`drush site-alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
   if [ "$HM_VERSION" == "$AEGIR_VERSION" ]; then
     # it's just a drupal core and/or vendor package update
     echo "ÆGIR | Drupal core and/or vendor package updates."
 
     # Verify the upgraded platform.
-    PLATFORM=`drush sa @hm | grep platform | cut -d"'" -f4`
-    sudo su - aegir -c "drush $PLATFORM provision-verify"
+    PLATFORM="@platform_hostmaster"
+    echo "PLATFORM = @platform_hostmaster"
+    sudo su - aegir -c "drush $PLATFORM provision-verify -vv"
     # Verify the Hostmaster site.
+    echo "Verify the Hostmaster site"
     sudo su - aegir -c "drush @hostmaster provision-verify"
     # Run database updates
+    echo "Run database updates"
     sudo su - aegir -c "drush @hostmaster updatedb"
 
   else
