@@ -43,12 +43,12 @@ if [ ${PIPESTATUS[0]} == 0 ]; then
     # Verify the upgraded platform.
     PLATFORM="@platform_hostmaster"
     echo "PLATFORM = @platform_hostmaster"
-    sudo su - aegir -c "drush $PLATFORM provision-verify -vv"
+    sudo su - aegir -c "drush $PLATFORM provision-verify"
     # Verify the Hostmaster site.
-    echo "Verify the Hostmaster site"
+    echo -e '\nVerify the Hostmaster site\n'
     sudo su - aegir -c "drush @hostmaster provision-verify"
     # Run database updates
-    echo "Run database updates"
+    echo -e '\nRun database updates\n'
     sudo su - aegir -c "drush @hostmaster updatedb"
 
   else
