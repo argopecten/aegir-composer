@@ -60,9 +60,10 @@ if [ -d "$AEGIR_HOSTMASTER" ]; then
   # this is one of the update scenarios: either aegir upgrade or drupal core & vendor update
   HM_VERSION=`drush site-alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
   if [ "$HM_VERSION" == "$AEGIR_VERSION" ];  then
-    # it's the drupal core and/or vendor package update scenario
-    # sudo su - aegir -c "cp -r $AEGIR_HOSTMASTER/sites/$SITE_URI $AEGIR_HOME/hostmaster/sites"
-    sudo mv $AEGIR_HOSTMASTER "$AEGIR_HOSTMASTER-old"
+    # drupal core and/or vendor package update scenario
+    # update everything except hostmaster sites directory
+    sudo su - aegir -c "cp -r $AEGIR_HOSTMASTER/sites/$SITE_URI $AEGIR_HOME/hostmaster/sites"
+    sudo mv $AEGIR_HOSTMASTER "$AEGIR_HOSTMASTER-backup"
   fi
 fi
 echo "ÆGIR | Actual hostmaster directory is $AEGIR_HOSTMASTER"

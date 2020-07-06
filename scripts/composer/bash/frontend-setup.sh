@@ -33,11 +33,23 @@ echo "ÆGIR | ------------------------------------------------------------------
 # Check if @hostmaster is already set.
 sudo su - aegir -c "drush site-alias @hostmaster > /dev/null 2>&1"
 if [ ${PIPESTATUS[0]} == 0 ]; then
+  # this is one of the update scenarios: either aegir upgrade or drupal core & vendor update
   echo "ÆGIR | Hostmaster site found. Upgrading ..."
   sudo su - aegir -c "drush @hostmaster cc all"
   sudo su - aegir -c "drush cache-clear drush"
-  # sudo su - aegir -c "drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER -y"
+
+  HM_VERSION=`drush site-alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
+  if [ "$HM_VERSION" == "$AEGIR_VERSION" ];  then
+    # drupal core and/or vendor package update scenario
+    sudo su - aegir -c "drush @platform_hostmaster provision-verify"
+    sudo su - aegir -c "drush @hostmaster provision-verify"
+    sudo su - aegir -c "drush @hostmaster updatedb"
+  else
+    # migrate hostmaster into new hostmaster platform
+    sudo su - aegir -c "drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER -y"
+  fi
   echo "ÆGIR | $SITE_URI has been updated, and runs now on Aegir $AEGIR_VERSION."
+
 else
   # if @hostmaster is not accessible, install it.
   echo "ÆGIR | Hostmaster install ..."
