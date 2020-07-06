@@ -61,7 +61,7 @@ if [ -d "$AEGIR_HOSTMASTER" ]; then
   HM_VERSION=`drush site-alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
   if [ "$HM_VERSION" == "$AEGIR_VERSION" ];  then
     # it's the drupal core and/or vendor package update scenario
-    sudo su - aegir -c "cp -r $AEGIR_HOSTMASTER/sites/$SITE_URI $AEGIR_HOME/hostmaster/sites"
+    # sudo su - aegir -c "cp -r $AEGIR_HOSTMASTER/sites/$SITE_URI $AEGIR_HOME/hostmaster/sites"
     sudo mv $AEGIR_HOSTMASTER "$AEGIR_HOSTMASTER-old"
   fi
 fi

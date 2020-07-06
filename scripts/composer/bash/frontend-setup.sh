@@ -30,20 +30,17 @@ source "$CONFIGDIR/mariadb.cfg"
 
 echo "ÆGIR | ------------------------------------------------------------------"
 
-# Check if @hostmaster is already set and accessible.
+# Check if @hostmaster is already set.
 sudo su - aegir -c "drush site-alias @hostmaster > /dev/null 2>&1"
 if [ ${PIPESTATUS[0]} == 0 ]; then
-  echo "ÆGIR | Hostmaster site found."
-  sudo su - aegir -c "drush @hostmaster cc all; drush cache-clear drush"
-
-  echo "ÆGIR | Running 'drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER -y'...!"
-  sudo su - aegir -c "drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER -y -v"
-
+  echo "ÆGIR | Hostmaster site found. Upgrading ..."
+  sudo su - aegir -c "drush @hostmaster cc all"
+  sudo su - aegir -c "drush cache-clear drush"
+  # sudo su - aegir -c "drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER -y"
   echo "ÆGIR | $SITE_URI has been updated, and runs now on Aegir $AEGIR_VERSION."
-
 else
   # if @hostmaster is not accessible, install it.
-  echo "ÆGIR | Hostmaster install..."
+  echo "ÆGIR | Hostmaster install ..."
 
   # set random database password for aegir user
   # it will be stored in /var/aegir/.drush/server_localhost.alias.drushrc.php
