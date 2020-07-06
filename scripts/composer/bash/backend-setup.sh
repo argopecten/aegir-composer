@@ -53,21 +53,20 @@ sudo ln -s $AEGIR_CONF_FILE $WEBSERVER_CONF
 if [ $WS == "apache" ]; then sudo a2enconf aegir; fi
 
 ###############################################################################
-#  - Prepare new hostmaster directory: if there is a new hostmaster directory,
-#    from any update activity, it has to be renamed like hostmaster-3.186,
-#    to allow future upgrades
+#  - Prepare new hostmaster directory
 if [ -d "$AEGIR_HOSTMASTER" ]; then
   # this is one of the update scenarios: either aegir upgrade or drupal core & vendor update
-  HM_VERSION=`drush site-alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
+  HM_VERSION=`drush site:alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
   if [ "$HM_VERSION" == "$AEGIR_VERSION" ];  then
-    # drupal core and/or vendor package update scenario
-    # update everything except hostmaster sites directory
+    # drupal core and/or vendor package update scenario: update everything in
+    # place, but maintain content of hostmaster site directory
     sudo su - aegir -c "cp -r $AEGIR_HOSTMASTER/sites/$SITE_URI $AEGIR_HOME/hostmaster/sites"
     sudo mv $AEGIR_HOSTMASTER "$AEGIR_HOSTMASTER-backup"
   fi
 fi
-echo "ÆGIR | Actual hostmaster directory is $AEGIR_HOSTMASTER"
+# the new hostmaster directory has to be renamed like hostmaster-3.186
 sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
+echo "ÆGIR | Actual hostmaster directory is $AEGIR_HOSTMASTER"
 
 ###############################################################################
 #  - Deploy "fix ownership & permissions" scripts
@@ -104,11 +103,11 @@ if [ $? -ne 0 ]; then
   #  - link drush into /usr/local/bin/drush
   # otherwise hosting-queued is not running
   sudo su -c "ln -s $AEGIR_HOME/vendor/bin/drush /usr/local/bin"
+else
+  echo "ÆGIR | Drush setup is OK."
 fi
-
 # drush status
-echo "ÆGIR | Drush setup is OK."
-sudo su - aegir -c "drush status"
+sudo su - aegir -c "drush core:status"
 
 ###############################################################################
 # Configure the Provision module https://www.drupal.org/project/provision/
@@ -127,6 +126,6 @@ sudo mkdir -p $DRUSH_COMMANDS
 sudo ln -s $AEGIR_HOSTMASTER/sites/all/drush/provision $DRUSH_COMMANDS
 
 # refresh drush cache to see provisions drush commands
-sudo su - aegir -c "drush cc drush"
+sudo su - aegir -c "drush cache:clear drush"
 
 echo "ÆGIR | ------------------------------------------------------------------"

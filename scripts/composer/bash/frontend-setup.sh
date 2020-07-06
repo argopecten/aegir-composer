@@ -30,20 +30,20 @@ source "$CONFIGDIR/mariadb.cfg"
 
 echo "ÆGIR | ------------------------------------------------------------------"
 
-# Check if @hostmaster is already set.
-sudo su - aegir -c "drush site-alias @hostmaster > /dev/null 2>&1"
+# Check if @hostmaster is already there.
+sudo su - aegir -c "drush site:alias @hostmaster > /dev/null 2>&1"
 if [ ${PIPESTATUS[0]} == 0 ]; then
   # this is one of the update scenarios: either aegir upgrade or drupal core & vendor update
   echo "ÆGIR | Hostmaster site found. Upgrading ..."
-  sudo su - aegir -c "drush @hostmaster cc all"
-  sudo su - aegir -c "drush cache-clear drush"
+  sudo su - aegir -c "drush @hostmaster cache:clear all"
 
-  HM_VERSION=`drush site-alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
+  HM_VERSION=`drush site:alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
   if [ "$HM_VERSION" == "$AEGIR_VERSION" ];  then
     # drupal core and/or vendor package update scenario
     sudo su - aegir -c "drush @platform_hostmaster provision-verify"
     sudo su - aegir -c "drush @hostmaster provision-verify"
     sudo su - aegir -c "drush @hostmaster updatedb"
+    sudo su - aegir -c "drush @platform_hostmaster provision-verify"
   else
     # migrate hostmaster into new hostmaster platform
     sudo su - aegir -c "drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER -y"
@@ -60,7 +60,6 @@ else
 
   #  Create db user for aegir: GRANT ALL ON *.* TO 'aegir_db_user'@'localhost' IDENTIFIED BY 'strongpassword' WITH GRANT OPTION;
   echo "GRANT ALL ON *.* TO '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' IDENTIFIED BY '$AEGIR_DB_PASS' WITH GRANT OPTION;" | sudo mysql
-  # echo "select host, user, password from mysql.user;" |  sudo mysql
 
   # fetch the running webserver
   WEBSERVER=$(fetch_webserver)
@@ -103,23 +102,22 @@ else
 
   # just to be sure :)
   sleep 3
-  echo "ÆGIR | Flush the drush cache to find new commands ... "
-  sudo su - aegir -c "drush cc drush"
+  # Flush the drush cache to find new commands
+  sudo su - aegir -c "drush cache:clear drush"
 
   # install hosting-queued daemon
   echo "ÆGIR | Install hosting-queued daemon..."
   # Install the init script
   sudo cp $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
   sudo chmod 755 /etc/init.d/hosting-queued
-  # reload the daemons and start hosting-queued
   sudo systemctl daemon-reload
   sudo systemctl enable hosting-queued
 
   #  - Enable Aegir modules: hosting_civicrm, hosting_civicrm_cron, ...
   echo "ÆGIR | Enabling hosting modules for CiviCRM ..."
-  sudo su - aegir -c "drush @hostmaster pm-enable -y hosting_queued"
-  sudo su - aegir -c "drush @hostmaster pm-enable -y fix_ownership fix_permissions"
-  sudo su - aegir -c "drush @hostmaster pm-enable -y hosting_civicrm hosting_civicrm_cron"
+  sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_queued"
+  sudo su - aegir -c "drush @hostmaster pm:enable -y fix_ownership fix_permissions"
+  sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_civicrm hosting_civicrm_cron"
 
   echo "ÆGIR | Aegir $AEGIR_VERSION has been installed via Composer ..."
 fi
