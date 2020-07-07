@@ -36,11 +36,9 @@
         "cweagans/composer-patches": "^1.6.5",
         "drupal-composer/preserve-paths": "^0.1",
         "drupal/composer_autoloader": "^1.0",
-        "drupal/drupal": "7.71",
-        "drush/drush": "^8.0",
         "symfony/filesystem": "~2.7|^3",
         "webflo/drupal-finder": "^1.0.0",
-        "argopecten/hostmaster": "dev-master"
+        "argopecten/hostmaster": "dev-composer"
     },
     "conflict": {
         "drupal/core": "8.*"
@@ -57,24 +55,28 @@
     },
     "scripts": {
         "pre-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+          "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
+          "bash scripts/composer/bash/aegir-backup.sh"
         ],
         "pre-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
-            "bash scripts/composer/preinstall/lamp-config.sh < /dev/tty"
+          "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
+          "bash scripts/composer/bash/lamp-config.sh < /dev/tty"
         ],
         "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+          "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+          "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
+          "bash scripts/composer/bash/backend-setup.sh",
+          "bash scripts/composer/bash/frontend-setup.sh"
         ],
         "post-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-            "bash scripts/composer/postinstall/aegir-user.sh  < /dev/tty",
-            "bash scripts/composer/postinstall/backend.sh",
-            "bash scripts/composer/postinstall/frontend.sh"
+          "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+          "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
+          "bash scripts/composer/bash/aegir-user.sh < /dev/tty",
+          "bash scripts/composer/bash/backend-setup.sh",
+          "bash scripts/composer/bash/frontend-setup.sh"
         ],
         "post-create-project-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
+          "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
         ]
     },
     "extra": {
