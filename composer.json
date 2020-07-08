@@ -10,6 +10,19 @@
         }
     ],
     "repositories": {
+        "provision": {
+            "type": "package",
+            "package": {
+                "name": "drupal/provision",
+                "version": "3.18.6",
+                "type": "drupal-drush",
+                "source": {
+                    "url":  "https://git.drupalcode.org/project/provision",
+                    "type": "git",
+                    "reference": "7.x-3.18.x"
+                }
+            }
+        },
         "drupal": {
               "type": "composer",
               "url": "https://packages.drupal.org/7"
@@ -38,7 +51,7 @@
         "drupal/composer_autoloader": "^1.0",
         "symfony/filesystem": "~2.7|^3",
         "webflo/drupal-finder": "^1.0.0",
-        "argopecten/hostmaster": "dev-7.x-3.185"
+        "argopecten/hostmaster": "dev-7.x-3.186"
     },
     "conflict": {
         "drupal/core": "8.*"
