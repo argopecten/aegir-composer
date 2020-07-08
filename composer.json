@@ -38,7 +38,7 @@
         "drupal/composer_autoloader": "^1.0",
         "symfony/filesystem": "~2.7|^3",
         "webflo/drupal-finder": "^1.0.0",
-        "argopecten/hostmaster": "dev-composer"
+        "argopecten/hostmaster": "dev-7.x-3.185"
     },
     "conflict": {
         "drupal/core": "8.*"
@@ -71,7 +71,7 @@
         "post-update-cmd": [
           "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
           "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-          "bash scripts/composer/bash/aegir-user.sh < /dev/tty",
+          "bash scripts/composer/bash/aegir-user.sh",
           "bash scripts/composer/bash/backend-setup.sh",
           "bash scripts/composer/bash/frontend-setup.sh"
         ],

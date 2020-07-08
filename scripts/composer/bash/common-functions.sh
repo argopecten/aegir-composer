@@ -39,3 +39,13 @@ fetch_php_version() {
   V=`php -v | awk '/PHP 7/ {print $2}' |  cut -d. -f1-2`
   echo $V
 }
+
+###########################################################
+# 3) fetch new aegir version
+fetch_new_version() {
+  # called during aegir install and update scenarios by various users
+  HM_DIR="$HOME/$INSTALL_DIR"
+  if [ `whoami` == "aegir" ]; then HM_DIR="$AEGIR_HOME"; fi
+  V=`grep "version=" $HM_DIR/hostmaster/sites/all/drush/provision/provision.info | cut -d- -f2-3`
+  echo $V | tee $HM_DIR/aegir_version
+}

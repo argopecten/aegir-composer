@@ -16,8 +16,8 @@ source "$CONFIGDIR/aegir.cfg"
 #
 # functions: configure Drush, Provision and some more backend settings
 #
+#  - Prepare hostmaster directory
 #  - Manage webserver config to use aegir settings
-#  - Prepare new hostmaster directory
 #  - Deploy "fix ownership & permissions" scripts
 #  - Drush configurations
 #  - Configure the Provision module of Aegir
@@ -26,8 +26,42 @@ source "$CONFIGDIR/aegir.cfg"
 
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Setting up Aegir backend ..."
-AEGIR_VERSION=`cat $AEGIR_HOME/aegir_version`
-AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$AEGIR_VERSION"
+
+###############################################################################
+#  - Prepare new hostmaster directory
+if [ -f "$AEGIR_HOME/aegir_version" ]; then
+  # this is one of the update scenarios: either aegir upgrade or drupal core & vendor update
+  echo "ÆGIR | Updating aegir home at $AEGIR_HOME ..."
+
+  # fetch latest aegir version
+  AEGIR_VERSION=$(fetch_new_version)
+  AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$AEGIR_VERSION"
+
+  HM_VERSION=`drush site:alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
+  if [ "$HM_VERSION" == "$AEGIR_VERSION" ];  then
+    # drupal core and/or vendor package update scenario: update everything in
+    # place, but maintain content of hostmaster site directory
+    sudo su - aegir -c "cp -r $AEGIR_HOSTMASTER/sites/$SITE_URI $AEGIR_HOME/hostmaster/sites"
+    # TBD: move to backups directory
+    sudo mv $AEGIR_HOSTMASTER "$AEGIR_HOSTMASTER-backup"
+  fi
+else
+  # fresh aegir install: log aegir version, prepare directories and set permissions
+  echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
+  AEGIR_VERSION=$(fetch_new_version)
+  TMPDIR="$HOME/$INSTALL_DIR"
+  AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$AEGIR_VERSION"
+
+  #  - move downloaded stuff to aegir home and set permissions
+  # copy composer downloads into aegir home
+  sudo cp -R $TMPDIR $AEGIR_HOME/
+  # - grant user permissions on all directories installed via composer
+  sudo chown aegir:aegir -R "$AEGIR_HOME"
+
+fi
+# the new hostmaster directory has to be renamed like hostmaster-3.186
+sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
+echo "ÆGIR | Actual hostmaster directory is $AEGIR_HOSTMASTER"
 
 ###############################################################################
 #  - webserver config to use aegir settings
@@ -53,22 +87,6 @@ esac
 if [ -f "$WEBSERVER_CONF" ]; then sudo su -c "rm $WEBSERVER_CONF"; fi
 sudo ln -s $AEGIR_CONF_FILE $WEBSERVER_CONF
 if [ $WS == "apache" ]; then sudo a2enconf aegir; fi
-
-###############################################################################
-#  - Prepare new hostmaster directory
-if [ -d "$AEGIR_HOSTMASTER" ]; then
-  # this is one of the update scenarios: either aegir upgrade or drupal core & vendor update
-  HM_VERSION=`drush site:alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
-  if [ "$HM_VERSION" == "$AEGIR_VERSION" ];  then
-    # drupal core and/or vendor package update scenario: update everything in
-    # place, but maintain content of hostmaster site directory
-    sudo su - aegir -c "cp -r $AEGIR_HOSTMASTER/sites/$SITE_URI $AEGIR_HOME/hostmaster/sites"
-    sudo mv $AEGIR_HOSTMASTER "$AEGIR_HOSTMASTER-backup"
-  fi
-fi
-# the new hostmaster directory has to be renamed like hostmaster-3.186
-sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
-echo "ÆGIR | Actual hostmaster directory is $AEGIR_HOSTMASTER"
 
 ###############################################################################
 #  - Deploy "fix ownership & permissions" scripts
