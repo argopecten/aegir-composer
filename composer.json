@@ -19,7 +19,7 @@
                 "source": {
                     "url":  "https://git.drupalcode.org/project/provision",
                     "type": "git",
-                    "reference": "7.x-3.18.x"
+                    "reference": "7.x-3.186"
                 }
             }
         },

@@ -50,6 +50,7 @@ if [ ${PIPESTATUS[0]} == 0 ]; then
     # migrate hostmaster into new hostmaster platform
     sudo su - aegir -c "drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER -y"
   fi
+  echo "ÆGIR | -----------------------------------------------------------------"
   echo "ÆGIR | $SITE_URI has been updated, and runs now on Aegir $AEGIR_VERSION."
 
 else
@@ -121,8 +122,10 @@ else
   sudo su - aegir -c "drush @hostmaster pm:enable -y fix_ownership fix_permissions"
   sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_civicrm hosting_civicrm_cron"
 
+  echo "ÆGIR | -----------------------------------------------------------------"
   echo "ÆGIR | Aegir $AEGIR_VERSION has been installed via Composer ..."
 fi
 
 # restart queued daemon
 sudo systemctl restart hosting-queued
+echo "ÆGIR | -----------------------------------------------------------------"

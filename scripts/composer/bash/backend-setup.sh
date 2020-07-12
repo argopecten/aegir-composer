@@ -33,17 +33,17 @@ if [ -f "$AEGIR_HOME/aegir_version" ]; then
   # this is one of the update scenarios: either aegir upgrade or drupal core & vendor update
   echo "ÆGIR | Updating aegir home at $AEGIR_HOME ..."
 
-  # fetch latest aegir version
+  # fetch new aegir version
   AEGIR_VERSION=$(fetch_new_version)
-  AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$AEGIR_VERSION"
-
+  # fetch actual aegir version
   HM_VERSION=`drush site:alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
+  AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$AEGIR_VERSION"
   if [ "$HM_VERSION" == "$AEGIR_VERSION" ];  then
     # drupal core and/or vendor package update scenario: update everything in
     # place, but maintain content of hostmaster site directory
     sudo su - aegir -c "cp -r $AEGIR_HOSTMASTER/sites/$SITE_URI $AEGIR_HOME/hostmaster/sites"
-    # TBD: move to backups directory
-    sudo mv $AEGIR_HOSTMASTER "$AEGIR_HOSTMASTER-backup"
+    # move old hostmaster into backups directory
+    sudo mv $AEGIR_HOSTMASTER "$AEGIR_HOME/backups/hostmaster-$HM_VERSION-`date +'%Y-%m-%d'`"
   fi
 else
   # fresh aegir install: log aegir version, prepare directories and set permissions
@@ -147,5 +147,4 @@ sudo ln -s $AEGIR_HOSTMASTER/sites/all/drush/provision $DRUSH_COMMANDS
 
 # refresh drush cache to see provisions drush commands
 sudo su - aegir -c "drush cache:clear drush"
-
 echo "ÆGIR | ------------------------------------------------------------------"
