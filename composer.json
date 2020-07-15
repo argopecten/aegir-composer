@@ -19,7 +19,7 @@
                 "source": {
                     "url":  "https://git.drupalcode.org/project/provision",
                     "type": "git",
-                    "reference": "7.x-3.186"
+                    "reference": "7.x-3.x"
                 }
             }
         },
@@ -51,7 +51,7 @@
         "drupal/composer_autoloader": "^1.0",
         "symfony/filesystem": "~2.7|^3",
         "webflo/drupal-finder": "^1.0.0",
-        "argopecten/hostmaster": "dev-7.x-3.186"
+        "argopecten/hostmaster": "dev-comp-3.x"
     },
     "conflict": {
         "drupal/core": "8.*"
