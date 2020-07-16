@@ -12,11 +12,11 @@ source "$CONFIGDIR/aegir.cfg"
 ###############################################################################
 # Common bash functions for Aegir install/update via composer
 #
-#  only activies not relying on location of aegir home!
-#
 # 1) fetch the running webserver
 # 2) fetch version of installed PHP
-# 3)
+# 3) fetch new aegir version
+# 4) checks whether Aegir is installed or not
+#
 ###############################################################################
 
 ###########################################################
@@ -42,10 +42,22 @@ fetch_php_version() {
 
 ###########################################################
 # 3) fetch new aegir version
-fetch_new_version() {
+new_aegir_version() {
   # called during aegir install and update scenarios by various users
   HM_DIR="$HOME/$INSTALL_DIR"
   if [ `whoami` == "aegir" ]; then HM_DIR="$AEGIR_HOME"; fi
   V=`grep "version=" $HM_DIR/hostmaster/sites/all/drush/provision/provision.info | cut -d- -f2-3`
   echo $V | tee $HM_DIR/aegir_version
+}
+
+###########################################################
+# 4) checks whether Aegir is installed or not
+aegir_is_there() {
+  if [ -d "$AEGIR_HOME" ] && getent passwd aegir >/dev/null ; then
+    # aegir home and aegir user exists
+    return 0
+  else
+    # something from Aegir is missing
+    return 1
+  fi
 }

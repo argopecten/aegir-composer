@@ -69,24 +69,21 @@
     "scripts": {
         "pre-install-cmd": [
           "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
+          "bash scripts/composer/bash/lamp-config.sh < /dev/tty",
           "bash scripts/composer/bash/aegir-backup.sh"
         ],
         "pre-update-cmd": [
-          "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
-          "bash scripts/composer/bash/lamp-config.sh < /dev/tty"
+          "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
         "post-install-cmd": [
           "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
           "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-          "bash scripts/composer/bash/backend-setup.sh",
-          "bash scripts/composer/bash/frontend-setup.sh"
+          "bash scripts/composer/bash/aegir-setup.sh"
         ],
         "post-update-cmd": [
           "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
           "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-          "bash scripts/composer/bash/aegir-user.sh",
-          "bash scripts/composer/bash/backend-setup.sh",
-          "bash scripts/composer/bash/frontend-setup.sh"
+          "bash scripts/composer/bash/vendor-update.sh"
         ],
         "post-create-project-cmd": [
           "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"

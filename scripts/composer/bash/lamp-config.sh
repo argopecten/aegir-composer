@@ -14,7 +14,9 @@ source "$CONFIGDIR/php.cfg"
 source "$CONFIGDIR/postfix.cfg"
 
 ###############################################################################
-# This script runs when the pre-update-cmd event is fired by composer
+# This script runs when the post-install-cmd event is fired by composer via
+# "composer create-project" or "composer install".
+#
 # functions:
 # - call subsequent scripts depending on which scenario is there:
 #   1) There is an existing Aegir setup, no configuration is necessary
@@ -24,11 +26,13 @@ source "$CONFIGDIR/postfix.cfg"
 
 echo "ÆGIR | ------------------------------------------------------------------"
 # check current setup
-if [ -d "$AEGIR_HOME" ] && getent passwd aegir >/dev/null ; then
+if aegir_is_there ; then
   # aegir home and aegir user exists --> skip, it's an update scenario
+  # we assume the first Aegir install has configured these components properly
+  echo "ÆGIR | Aegir user & home exists."
   echo "ÆGIR | Assuming all LÆMP components are configured for Aegir."
 else
-  # no aegir home --> fresh install, do something
+  # no aegir home --> fresh install
   echo "ÆGIR | Configuring LÆMP for Aegir ..."
 
   ###########################################################
