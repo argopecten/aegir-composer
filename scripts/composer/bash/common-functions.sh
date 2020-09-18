@@ -17,6 +17,9 @@ source "$CONFIGDIR/aegir.cfg"
 # 3) fetch new aegir version
 # 4) checks whether Aegir is installed or not
 # 5) fetch the running database server
+# 6) deploy "fix ownership & permissions" scripts
+# 7) setup Drush
+# 8) webserver configuragtion for Aegir
 #
 ###############################################################################
 
@@ -83,4 +86,57 @@ fetch_dbserver() {
   # check variable and exit if not supported
   [[ ${DBSERVER} =~ ${SUPPORTED_DBSERVER_FLAVORS} ]] && echo $DBSERVER \
      || (echo "It needs to be one of $SUPPORTED_DBSERVER_FLAVORS, but none of these has been found!" && exit 1)
+}
+
+###############################################################################
+# 6) deploy "fix ownership & permissions" scripts
+deploy_fix_scripts() {
+    # aegir hostmaster directory is a parameter
+    AEGIR_HOSTMASTER=$1
+
+    echo "ÆGIR | deploy fix ownership & permissions scripts"
+    sudo su -c "rm /usr/local/bin/fix-drupal-*.sh 2>/dev/null"
+    sudo su -c "rm /etc/sudoers.d/fix-drupal-* 2>/dev/null"
+    sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
+
+    # uncomment to see result
+    # ls -la /usr/local/bin/fix-drupal-*.sh
+}
+
+###############################################################################
+# 7) setup Drush
+setup_drush() {
+    DRUSH=$AEGIR_HOME/vendor/bin/drush
+
+    echo "ÆGIR | Initializing Drush ..."
+    # initialize Drush with Aegir home
+    sudo su - aegir -c "$DRUSH core:init  --add-path=$AEGIR_HOME --bg -y >/dev/null 2>&1"
+
+    # add drush path for all user
+    echo '#!/bin/sh
+    export PATH="$PATH:$AEGIR_HOME/vendor/bin"' | sudo tee /etc/profile.d/drush.sh
+    sudo su -c "chmod +x /etc/profile.d/drush.sh"
+
+    # link drush into /usr/local/bin/drush, otherwise hosting-queued is not running
+    sudo su -c "ln -s $AEGIR_HOME/vendor/bin/drush /usr/local/bin"
+}
+
+
+###############################################################################
+# 8) webserver configuragtion for Aegir
+config_webserver() {
+    WEBSERVER=$(fetch_webserver)
+    echo "ÆGIR | Enabling aegir configuration for $WEBSERVER..."
+    AEGIR_CONF="$AEGIR_HOME/config/$WEBSERVER.conf"
+    case "$WEBSERVER" in
+        nginx)
+            WEBSERVER_CONF="/etc/nginx/conf.d/aegir.conf"
+            ;;
+        apache)
+            sudo a2disconf aegir 2>/dev/null
+            WEBSERVER_CONF="/etc/apache2/conf-available/aegir.conf"
+            ;;
+    esac
+    [[ -f "$WEBSERVER_CONF" ]] && sudo su -c "rm $WEBSERVER_CONF"
+    sudo su -c "ln -s $AEGIR_CONF $WEBSERVER_CONF"
 }

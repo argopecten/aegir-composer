@@ -12,16 +12,13 @@ source "$CONFIGDIR/aegir.cfg"
 source "$CONFIGDIR/mariadb.cfg"
 
 ###############################################################################
-# This script runs when the post-install-cmd event is fired by composer via
-# "composer create-project" or "composer install".
+# This script runs when the post-update-cmd event is fired by composer:
 #
 # Functionality:
-#   - on a fresh OS it installs Aegir
-#   - if Aegir is there, it upgrades Aegir to a newer version, if available
-
-# Create Aegir user and grant permissions, prepare Aegir home
-#  - create user and add to webserver group
-#  - grant passwordless sudo rights for everything
+#   - composer create-project: install Aegir on fresh OS
+#   - composer update: update the vendor packages and drupal core to their
+#      latest supported version, acoording to composer.json
+#   - composer install: upgrades Aegir to a newer version
 ###############################################################################
 
 # fetch the running webserver
@@ -37,90 +34,87 @@ if aegir_is_there ; then
   # fetch current aegir version
   HM_VERSION=`drush site:alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
   if [ "$HM_VERSION" != "$AEGIR_VERSION" ];  then
-    # aegir upgrade scenario
-    echo "ÆGIR | Upgrading Aegir from $HM_VERSION to $AEGIR_VERSION ..."
-    echo "ÆGIR | New hostmaster directory will be: $AEGIR_HOSTMASTER"
-    sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
+      # composer install: upgrades Aegir to a newer version
+      SCENARIO="aegir-upgrade"
   else
-    # drupal core and/or vendor package update scenario: do nothing here
-    echo "ÆGIR | There is no new Aegir version to upgrade."
-    echo "ÆGIR | Current version: $AEGIR_VERSION"
-    echo "ÆGIR | Use composer update to update vendor packages and drupal core!"
-    echo "ÆGIR | ------------------------------------------------------------------"
-    exit 0
+      # composer update: update the vendor packages and drupal core
+      SCENARIO="vendor-update"
   fi
 else
-  # no aegir home --> fresh install, do something
-  echo "ÆGIR | Installing Aegir $AEGIR_VERSION ..."
-
-  #  create user and add to webserver group
-    echo "ÆGIR | Setting up the Aegir user ..."
-  if ! getent passwd aegir >/dev/null ; then
-    sudo adduser --quiet --system --no-create-home --group \
-      --home "$AEGIR_HOME" \
-      --shell '/bin/bash' \
-      --gecos 'Aegir user,,,' \
-      aegir
-    sudo adduser --quiet aegir www-data
-  fi
-  #  grant passwordless sudo rights for everything
-  echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
-  sudo chmod 0440 /tmp/aegir
-  sudo chown root:root /tmp/aegir
-  sudo mv /tmp/aegir /etc/sudoers.d/aegir
-  echo "ÆGIR | The aegir user and its permsisions have been setup."
-
-  # prepare directories and set permissions in fresh install case
-  echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
-  TMPDIR="$HOME/$INSTALL_DIR"
-  # move downloaded stuff to aegir home and set permissions
-  sudo cp -R $TMPDIR $AEGIR_HOME/
-  # grant user permissions on all directories downloaded by composer
-  sudo chown aegir:aegir -R "$AEGIR_HOME"
-  # the new hostmaster directory has to be renamed like hostmaster-3.186
-  sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
-  echo "ÆGIR | Hostmaster directory is $AEGIR_HOSTMASTER"
-
-  #  - webserver config to use aegir settings
-  echo "ÆGIR | Enabling aegir configuration for $WEBSERVER..."
-  AEGIR_CONF_FILE="$AEGIR_HOME/config/$WEBSERVER.conf"
-  case "$WEBSERVER" in
-    nginx)
-      WEBSERVER_CONF="/etc/nginx/conf.d/aegir.conf"
-      [[ -f "$WEBSERVER_CONF" ]] && sudo su -c "rm $WEBSERVER_CONF"
-      sudo ln -s $AEGIR_CONF_FILE $WEBSERVER_CONF
-      ;;
-    apache)
-      sudo a2disconf aegir 2>/dev/null
-      WEBSERVER_CONF="/etc/apache2/conf-available/aegir.conf"
-      [[ -f "$WEBSERVER_CONF" ]] && sudo su -c "rm $WEBSERVER_CONF"
-      sudo su -c "ln -s $AEGIR_CONF_FILE $WEBSERVER_CONF"
-      ;;
-    *) echo "ÆGIR | No webserver found, aborting!"
-       exit 1
-       ;;
-  esac
-
-  # setup drush
-  echo "ÆGIR | Initializing Drush ..."
-  # initialize Drush with Aegir home
-  DRUSH=$AEGIR_HOME/vendor/bin/drush
-  sudo su - aegir -c "$DRUSH core:init  --add-path=$AEGIR_HOME --bg -y >/dev/null 2>&1"
-  # add drush path for all user
-  echo '#!/bin/sh
-  export PATH="$PATH:$AEGIR_HOME/vendor/bin"' | sudo tee /etc/profile.d/drush.sh
-  sudo su -c "chmod +x /etc/profile.d/drush.sh"
-  # link drush into /usr/local/bin/drush, otherwise hosting-queued is not running
-  sudo su -c "ln -s $AEGIR_HOME/vendor/bin/drush /usr/local/bin"
+    # no aegir home --> fresh install, do something
+    echo "ÆGIR | Installing Aegir $AEGIR_VERSION ..."
+    SCENARIO="fresh-install"
 fi
 
-###############################################################################
+# the 3 scenarios: install or update Aegir
+case $SCENARIO in
+    fresh-install) # composer create-project: install Aegir on fresh OS
+
+        #  create user and add to webserver group
+        echo "ÆGIR | Setting up the Aegir user ..."
+        if ! getent passwd aegir >/dev/null ; then
+            sudo adduser --quiet --system --no-create-home --group \
+                --home "$AEGIR_HOME" \
+                --shell '/bin/bash' \
+                --gecos 'Aegir user,,,' \
+                aegir
+            sudo adduser --quiet aegir www-data
+        fi
+
+        #  grant passwordless sudo rights for everything
+        echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
+        sudo chmod 0440 /tmp/aegir
+        sudo chown root:root /tmp/aegir
+        sudo mv /tmp/aegir /etc/sudoers.d/aegir
+        echo "ÆGIR | The aegir user and its permsisions have been setup."
+
+        # prepare directories and set permissions
+        echo "ÆGIR | Preparing aegir home at $AEGIR_HOME ..."
+        TMPDIR="$HOME/$INSTALL_DIR"
+        # move downloaded stuff to aegir home and set permissions
+        sudo cp -R $TMPDIR $AEGIR_HOME/
+        # grant user permissions on all directories downloaded by composer
+        sudo chown aegir:aegir -R "$AEGIR_HOME"
+        # the new hostmaster directory has to be renamed like hostmaster-3.186
+        sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
+        echo "ÆGIR | Hostmaster directory is $AEGIR_HOSTMASTER"
+
+        #  - webserver config to use aegir settings
+        config_webserver
+
+        # setup drush
+        setup_drush
+
+        ;;
+
+    vendor-update) # composer update: update vendor packages and drupal core
+        echo "ÆGIR | There is no new Aegir version to upgrade."
+        echo "ÆGIR | Current version: $AEGIR_VERSION"
+        echo "ÆGIR | Updating Aegir vendor packages and drupal core ..."
+        # maintain content of hostmaster site directory
+        sudo su - aegir -c "cp -r $AEGIR_HOSTMASTER/sites/$SITE_URI $AEGIR_HOME/hostmaster/sites"
+        # move old hostmaster into backups directory
+        sudo mv $AEGIR_HOSTMASTER "$AEGIR_HOME/backups/hostmaster-$HM_VERSION-`date +'%y%m%d-%H%M'`"
+        # the new hostmaster directory has to be renamed like hostmaster-3.186
+        sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
+
+        # update database for drupal core modules, if necessary
+        sudo su - aegir -c "drush @platform_hostmaster provision-verify"
+        sudo su - aegir -c "drush @hostmaster provision-verify"
+        sudo su - aegir -c "drush @hostmaster updatedb"
+        sudo su - aegir -c "drush @platform_hostmaster provision-verify"
+        echo "ÆGIR | ------------------------------------------------------------------"
+        ;;
+
+    aegir-upgrade) # composer install: upgrades Aegir to a newer version
+        echo "ÆGIR | Upgrading Aegir from $HM_VERSION to $AEGIR_VERSION ..."
+        echo "ÆGIR | New hostmaster directory will be: $AEGIR_HOSTMASTER"
+        sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
+        ;;
+esac
+
 #  Deploy "fix ownership & permissions" scripts
-echo "ÆGIR | deploy fix ownership & permissions scripts"
-sudo su -c "rm /usr/local/bin/fix-drupal-*.sh 2>/dev/null"
-sudo su -c "rm /etc/sudoers.d/fix-drupal-* 2>/dev/null"
-sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
-# ls -la /usr/local/bin/fix-drupal-*.sh
+deploy_fix_scripts "$AEGIR_HOSTMASTER"
 
 ###############################################################################
 # Configure the Provision module https://www.drupal.org/project/provision/
