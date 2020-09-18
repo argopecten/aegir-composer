@@ -83,23 +83,23 @@ else
 
   #  - webserver config to use aegir settings
   echo "ÆGIR | Enabling aegir configuration for $WEBSERVER..."
+  AEGIR_CONF_FILE="$AEGIR_HOME/config/$WEBSERVER.conf"
   case "$WEBSERVER" in
     nginx)
-      AEGIR_CONF_FILE="$AEGIR_HOME/config/$WEBSERVER.conf"
-      WEBSERVER_CONF="/etc/$WEBSERVER/conf.d/aegir.conf"
+      WEBSERVER_CONF="/etc/nginx/conf.d/aegir.conf"
+      [[ -f "$WEBSERVER_CONF" ]] && sudo su -c "rm $WEBSERVER_CONF"
+      sudo ln -s $AEGIR_CONF_FILE $WEBSERVER_CONF
       ;;
     apache)
-      AEGIR_CONF_FILE=$AEGIR_HOME/config/$WEBSERVER.conf
-      WEBSERVER_CONF=/etc/"$WEBSERVER"2/conf.d/aegir.conf
-      sudo a2disconf aegir 2>/dev/null aegir
+      sudo a2disconf aegir 2>/dev/null
+      WEBSERVER_CONF="/etc/apache2/conf-available/aegir.conf"
+      [[ -f "$WEBSERVER_CONF" ]] && sudo su -c "rm $WEBSERVER_CONF"
+      sudo su -c "ln -s $AEGIR_CONF_FILE $WEBSERVER_CONF"
       ;;
     *) echo "ÆGIR | No webserver found, aborting!"
        exit 1
        ;;
   esac
-  if [ -f "$WEBSERVER_CONF" ]; then sudo su -c "rm $WEBSERVER_CONF"; fi
-  sudo ln -s $AEGIR_CONF_FILE $WEBSERVER_CONF
-  if [ $WEBSERVER == "apache" ]; then sudo a2enconf aegir; fi
 
   # setup drush
   echo "ÆGIR | Initializing Drush ..."
@@ -151,8 +151,11 @@ else
   # set random database password for aegir user
   # it will be stored in /var/aegir/.drush/server_localhost.alias.drushrc.php
   AEGIR_DB_PASS=$(openssl rand -base64 12)
-  #  Create db user for aegir: GRANT ALL ON *.* TO 'aegir_db_user'@'localhost' IDENTIFIED BY 'strongpassword' WITH GRANT OPTION;
-  echo "GRANT ALL ON *.* TO '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' IDENTIFIED BY '$AEGIR_DB_PASS' WITH GRANT OPTION;" | sudo mysql
+  # Create db-user for Aegir, aligned to changes in MySQL 8.0
+  # https://www.drupal.org/project/provision/issues/3145881
+  sudo /usr/bin/mysql -e "CREATE USER IF NOT EXISTS '$AEGIR_DB_USER'@'$AEGIR_DB_HOST'"
+  sudo /usr/bin/mysql -e "ALTER USER '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' IDENTIFIED BY '$AEGIR_DB_PASS'"
+  sudo /usr/bin/mysql -e "GRANT ALL ON *.* TO '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' WITH GRANT OPTION"
 
   #  Install Aegir frontend via drush hostmaster-install
   echo "ÆGIR | We will install Aegir frontend with the following options:"
@@ -194,6 +197,18 @@ else
   sleep 3
   # Flush the drush cache to find new commands
   sudo su - aegir -c "drush cache:clear drush"
+
+  # restart webserver now, after aegir.conf file has been generated
+  case $WEBSERVER in
+      nginx)
+          sudo systemctl restart nginx
+          ;;
+      apache)
+          # Apache 2.4
+          sudo a2enconf aegir
+          ssudo systemctl restart apache2
+          ;;
+  esac
 
   # install hosting-queued daemon
   echo "ÆGIR | Install hosting-queued daemon..."
