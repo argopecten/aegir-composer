@@ -101,7 +101,7 @@ deploy_fix_scripts() {
     # remove old scripts, if any
     sudo su -c "rm /usr/local/bin/fix-drupal-*.sh 2>/dev/null"
     sudo su -c "rm /etc/sudoers.d/fix-drupal-* 2>/dev/null"
-    
+
     # deploy scripts
     sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
 
@@ -113,7 +113,7 @@ deploy_fix_scripts() {
 # 7) setup Drush
 setup_drush() {
     # only if not yet setup
-    [[ -f "/usr/local/bin/drush" ]] && exit
+    [[ -f "/usr/local/bin/drush" ]] && return 0
 
     echo "ÆGIR | Initializing Drush ..."
     # initialize Drush with Aegir home
