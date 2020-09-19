@@ -9,7 +9,7 @@ if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
 source "$DIR/common-functions.sh"
 CONFIGDIR="$DIR/../config"
 source "$CONFIGDIR/aegir.cfg"
-source "$CONFIGDIR/mariadb.cfg"
+source "$CONFIGDIR/database.cfg"
 source "$CONFIGDIR/php.cfg"
 source "$CONFIGDIR/postfix.cfg"
 

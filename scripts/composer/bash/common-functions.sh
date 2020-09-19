@@ -53,7 +53,9 @@ fetch_php_version() {
 new_aegir_version() {
   # called during aegir install and update scenarios by various users
   HM_DIR="$HOME/$INSTALL_DIR"
-  if [ `whoami` == "aegir" ]; then HM_DIR="$AEGIR_HOME"; fi
+  [[ `whoami` == "aegir" ]] && HM_DIR="$AEGIR_HOME"
+
+  # fetch and log Aegir version from provision.info
   V=`grep "version=" $HM_DIR/hostmaster/sites/all/drush/provision/provision.info | cut -d- -f2-3`
   echo $V | tee $HM_DIR/aegir_version
 }
@@ -91,8 +93,8 @@ fetch_dbserver() {
 ###############################################################################
 # 6) deploy "fix ownership & permissions" scripts
 deploy_fix_scripts() {
-    # aegir hostmaster directory is a parameter
-    AEGIR_HOSTMASTER=$1
+    # hostmaster directory
+    AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$(new_aegir_version)"
 
     echo "ÆGIR | deploy fix ownership & permissions scripts"
     sudo su -c "rm /usr/local/bin/fix-drupal-*.sh 2>/dev/null"
@@ -106,10 +108,12 @@ deploy_fix_scripts() {
 ###############################################################################
 # 7) setup Drush
 setup_drush() {
-    DRUSH=$AEGIR_HOME/vendor/bin/drush
+    # only if not yet setup
+    [[ -f "/usr/local/bin/drush" ]] && exit
 
     echo "ÆGIR | Initializing Drush ..."
     # initialize Drush with Aegir home
+    DRUSH=$AEGIR_HOME/vendor/bin/drush
     sudo su - aegir -c "$DRUSH core:init  --add-path=$AEGIR_HOME --bg -y >/dev/null 2>&1"
 
     # add drush path for all user
@@ -133,10 +137,29 @@ config_webserver() {
             WEBSERVER_CONF="/etc/nginx/conf.d/aegir.conf"
             ;;
         apache)
-            sudo a2disconf aegir 2>/dev/null
-            WEBSERVER_CONF="/etc/apache2/conf-available/aegir.conf"
+            WEBSERVER_CONF="/etc/apache2/conf-enabled/aegir.conf"
             ;;
     esac
     [[ -f "$WEBSERVER_CONF" ]] && sudo su -c "rm $WEBSERVER_CONF"
     sudo su -c "ln -s $AEGIR_CONF $WEBSERVER_CONF"
+}
+
+###############################################################################
+# 9) configure Provision module
+config_provision() {
+    echo "ÆGIR | Configuring the Provision module ..."
+    DRUSH_COMMANDS=/usr/share/drush/commands
+
+    # hostmaster directory
+    AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$(new_aegir_version)"
+
+    # remove old version, if any
+    [[ -d "$DRUSH_COMMANDS" ]] && sudo rm -rf $DRUSH_COMMANDS
+
+    # link provision drush commands to site/all/drush directory
+    sudo mkdir -p $DRUSH_COMMANDS
+    sudo ln -s $AEGIR_HOSTMASTER/sites/all/drush/provision $DRUSH_COMMANDS
+
+    # refresh drush cache to see provisions drush commands
+    sudo su - aegir -c "drush cache:clear drush"
 }

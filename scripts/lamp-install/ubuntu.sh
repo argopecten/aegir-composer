@@ -4,13 +4,16 @@
 # Aegir 3.x install scripts for Debian / Ubuntu
 # on Github: https://github.com/argopecten/aegir-composer
 ################################################################################
-### Install required dependencies for Aegir on Debian 10 (buster)
+### Install required dependencies for Aegir
+#   - Ubuntu 20.04 (focal)
+#   - Ubuntu 18.04 (bionic)
+#
 #   use it with default values:
-#     bash debian-buster.sh
+#     bash ubuntu.sh
 #   or change any of these default settings via command line:
-#     bash debian-buster.sh -w nginx -p fpm -d mariadb -n aegir.local
+#     bash ubuntu.sh -w nginx -p fpm -d mariadb -n aegir.local
 #   usage tips:
-#     bash debian-buster.sh -h
+#     bash ubuntu.sh -h
 #
 ### The script does the following:
 #   0) Change default settings like hostname, webserver & PHP run.mode, database
@@ -25,18 +28,18 @@
 ### Defauls settings for the script
 ### Hostname (and Aegir frontend)
 #   any FQDN name, default is aegir.example.com
-HOSTNAME="aegir.buster.local"
+HOSTNAME="aegir.ubuntu.local"
 
 ### Database:
 #   supported database flavors: mariadb or mysql
 SUPPORTED_DATABASE_FLAVORS="mariadb|mysql"
-#   default database in Buster is mariadb
-DATABASE="mariadb"
+#   default database in Ubuntu is mysql
+DATABASE="mysql"
 
 ### Webserver
 #   supported webserver flavors: nginx or apache2
 SUPPORTED_WEBSERVER_FLAVORS="apache2|nginx"
-#   default webserver flavor in Buster is apache2
+#   default webserver flavor in Ubuntu is apache2
 WEBSERVER="apache2"
 
 ### PHP run mode, must be aligned to the webserver!
@@ -53,10 +56,6 @@ COMPOSER_VERSION="55e3ac0516cf01802649468315cd863bcd46a73f"   # 2020-08-03 build
 
 # Postfix mailer type
 mailer_type='Internet Site'
-
-################################################################################
-### Run it as root: check root privileges and abort if not given
-[[ `whoami` != "root" ]] && echo "You'll need root privileges to run this script!" && exit 1
 
 ################################################################################
 ### Parse command line arguments to change the default settings
@@ -115,40 +114,39 @@ echo "ÆGIR | ------------------------------------------------------------------
 
 ################################################################################
 # (re)set hostname
-hostnamectl set-hostname "$HOSTNAME"
-echo "127.0.1.1   $HOSTNAME" | tee -a /etc/hosts
+sudo hostnamectl set-hostname "$HOSTNAME"
 
 ################################################################################
 # Install required OS packages for Aegir, except LAMP
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | 1) Installing & upgrading OS packages ..."
-apt update -y
-apt upgrade -y
+sudo apt update -y
+sudo apt upgrade -y
 
 # all aegir dependencies as per control file
 #    (https://git.drupalcode.org/project/provision/blob/7.x-3.x/debian/control)
 # sudo, adduser, ucf, curl, git-core, unzip, lsb-base, rsync, nfs-client
-# packages being part of the standard Buster (Debian 10) image:
-#    adduser, ucf, lsb-base, openssl
-# packages to be installed on Buster:
+# packages being part of the standard Ubuntu image:
+#    sudo, adduser, ucf, curl, lsb-base, rsync, git-core, openssl
+# packages to be installed on Ubuntu:
 echo "ÆGIR | Installing packages for Aegir..."
-apt install sudo curl rsync git-core unzip  -y
+sudo apt install unzip  -y
 echo "ÆGIR | OS packages installed & upgraded."
 
 # Install database server
 echo "ÆGIR | 2) Installing database server for Aegir ..."
-apt install -y "$DATABASE-server" "$DATABASE-client"
+sudo apt install -y "$DATABASE-server" "$DATABASE-client"
 
 # Install webserver
 echo "ÆGIR | 3) Installing the webserver for Aegir ..."
-apt install -y $WEBSERVER
+sudo apt install -y $WEBSERVER
 
 # Postfix install
 echo "ÆGIR | 4) Postfix install & config ..."
 # TBC: move to lamp config
-debconf-set-selections <<< "postfix postfix/mailname string $HOSTNAME"
-debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
-apt install postfix -y
+sudo debconf-set-selections <<< "postfix postfix/mailname string $HOSTNAME"
+sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
+sudo apt install postfix -y
 
 ################################################################################
 # Install and configure PHP packages for Drupal & Aegir
@@ -172,7 +170,7 @@ case "$WEBSERVER" in
     ;;
   apache2) # Apache with mod_php
     PHP_PKG=libapache2-mod-php
-    a2enmod rewrite
+    sudo a2enmod rewrite
     ;;
   apache2-php-fpm) # Apache with PHP-FPM
     # TBC: not yet tested
@@ -180,33 +178,33 @@ case "$WEBSERVER" in
     # https://tecadmin.net/install-apache-php-fpm-ubuntu-18-04/
     # enable PHP FPM in Apache2
     PHP_PKG=php-fpm
-    apt install -y libapache2-mod-fcgid
-    a2enmod proxy_fcgi rewrite
-    # TBD: move it after php-fpm install, into lamp-config: a2enconf php-fpm
+    sudo apt install -y libapache2-mod-fcgid
+    sudo a2enmod proxy_fcgi rewrite
+    # TBD: move it after php-fpm install, into lamp-config: sudo a2enconf php-fpm
     ;;
 esac
 
 # install PHP libraries for Drupal & Aegir
-apt install php-mysql php-xml php-gd $PHP_PKG -y
+sudo apt install php-mysql php-xml php-gd $PHP_PKG -y
 # install PHP libraries for CiviCRM
-apt install php-mbstring php-curl php-zip -y
+sudo apt install php-mbstring php-curl php-zip -y
 echo "ÆGIR | PHP libraries installed."
 
 # Install Composer
 echo "ÆGIR | 6) Installing PHP Composer ..."
 curl -s https://raw.githubusercontent.com/composer/getcomposer.org/$COMPOSER_VERSION/web/installer | php -- --quiet > ./composer.phar
-mv ./composer.phar /usr/bin/composer
+sudo mv ./composer.phar /usr/bin/composer
 
 ################################################################################
 # clean up
-apt autoremove -y
+sudo apt autoremove -y
 echo "ÆGIR | ------------------------------------------------------------------"
 echo "ÆGIR | Hostname is now: $HOSTNAME"
 echo "ÆGIR | LAMP components installed for Aegir:"
 echo "ÆGIR |    webserver:     $WEBSERVER"
 echo "ÆGIR |    PHP run-mode:  $PHP_RUNMODE"
 echo "ÆGIR |    database:      $DATABASE-server"
-V=`php -v | awk '/PHP 7/ {print $2}' |  cut -d. -f1-3 | cut -d- -f1`
+V=`php -v | awk '/PHP 7/ {print $2}' |  cut -d. -f1-3`
 echo "ÆGIR |    PHP version:   $V"
 echo "ÆGIR |    Composer:"
 composer --version
