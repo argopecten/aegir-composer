@@ -93,12 +93,16 @@ fetch_dbserver() {
 ###############################################################################
 # 6) deploy "fix ownership & permissions" scripts
 deploy_fix_scripts() {
-    # hostmaster directory
-    AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$(new_aegir_version)"
-
     echo "ÆGIR | deploy fix ownership & permissions scripts"
+
+    # hostmaster directory from parameter
+    AEGIR_HOSTMASTER="$1"
+
+    # remove old scripts, if any
     sudo su -c "rm /usr/local/bin/fix-drupal-*.sh 2>/dev/null"
     sudo su -c "rm /etc/sudoers.d/fix-drupal-* 2>/dev/null"
+    
+    # deploy scripts
     sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
 
     # uncomment to see result
@@ -150,8 +154,8 @@ config_provision() {
     echo "ÆGIR | Configuring the Provision module ..."
     DRUSH_COMMANDS=/usr/share/drush/commands
 
-    # hostmaster directory
-    AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$(new_aegir_version)"
+    # hostmaster directory from parameter
+    AEGIR_HOSTMASTER="$1"
 
     # remove old version, if any
     [[ -d "$DRUSH_COMMANDS" ]] && sudo rm -rf $DRUSH_COMMANDS

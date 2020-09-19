@@ -108,13 +108,13 @@ echo "ÆGIR | New hostmaster directory is: $AEGIR_HOSTMASTER"
 config_webserver
 
 #  Deploy "fix ownership & permissions" scripts
-deploy_fix_scripts
+deploy_fix_scripts "$AEGIR_HOSTMASTER"
 
 # setup drush
 setup_drush
 
 # Configure the Provision module https://www.drupal.org/project/provision/
-config_provision
+config_provision "$AEGIR_HOSTMASTER"
 
 ###############################################################################
 # setup Aegir frontend
