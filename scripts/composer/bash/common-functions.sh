@@ -91,12 +91,43 @@ fetch_dbserver() {
 }
 
 ###############################################################################
-# 6) deploy "fix ownership & permissions" scripts
+# 6) webserver configuration for Aegir
+config_webserver() {
+    WEBSERVER=$(fetch_webserver)
+    echo "ÆGIR | Enabling aegir configuration for $WEBSERVER..."
+    AEGIR_CONF="$AEGIR_HOME/config/$WEBSERVER.conf"
+    case "$WEBSERVER" in
+        nginx)
+            WEBSERVER_CONF="/etc/nginx/conf.d/aegir.conf"
+            ;;
+        apache)
+            WEBSERVER_CONF="/etc/apache2/conf-enabled/aegir.conf"
+            ;;
+    esac
+    [[ -f "$WEBSERVER_CONF" ]] && sudo su -c "rm $WEBSERVER_CONF"
+    sudo su -c "ln -s $AEGIR_CONF $WEBSERVER_CONF"
+}
+
+###############################################################################
+# 7) get hostmaster directory
+get_hostmaster_dir() {
+    if [ -f "$AEGIR_HOME/aegir_version" ] ; then
+      AEGIR_VERSION=`cat $AEGIR_HOME/aegir_version`
+    else
+      # fetch new aegir version
+      AEGIR_VERSION=$(new_aegir_version)
+    fi
+    AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$AEGIR_VERSION"
+    echo "$AEGIR_HOSTMASTER"
+}
+
+###############################################################################
+# 8) deploy "fix ownership & permissions" scripts
 deploy_fix_scripts() {
     echo "ÆGIR | deploy fix ownership & permissions scripts"
 
-    # hostmaster directory from parameter
-    AEGIR_HOSTMASTER="$1"
+    # get hostmaster directory
+    AEGIR_HOSTMASTER=$(get_hostmaster_dir)
 
     # remove old scripts, if any
     sudo su -c "rm /usr/local/bin/fix-drupal-*.sh 2>/dev/null"
@@ -110,7 +141,7 @@ deploy_fix_scripts() {
 }
 
 ###############################################################################
-# 7) setup Drush
+# 9) setup Drush
 setup_drush() {
     # only if not yet setup
     [[ -f "/usr/local/bin/drush" ]] && return 0
@@ -129,33 +160,14 @@ setup_drush() {
     sudo su -c "ln -s $AEGIR_HOME/vendor/bin/drush /usr/local/bin"
 }
 
-
 ###############################################################################
-# 8) webserver configuragtion for Aegir
-config_webserver() {
-    WEBSERVER=$(fetch_webserver)
-    echo "ÆGIR | Enabling aegir configuration for $WEBSERVER..."
-    AEGIR_CONF="$AEGIR_HOME/config/$WEBSERVER.conf"
-    case "$WEBSERVER" in
-        nginx)
-            WEBSERVER_CONF="/etc/nginx/conf.d/aegir.conf"
-            ;;
-        apache)
-            WEBSERVER_CONF="/etc/apache2/conf-enabled/aegir.conf"
-            ;;
-    esac
-    [[ -f "$WEBSERVER_CONF" ]] && sudo su -c "rm $WEBSERVER_CONF"
-    sudo su -c "ln -s $AEGIR_CONF $WEBSERVER_CONF"
-}
-
-###############################################################################
-# 9) configure Provision module
+# 10) configure Provision module
 config_provision() {
     echo "ÆGIR | Configuring the Provision module ..."
     DRUSH_COMMANDS=/usr/share/drush/commands
 
-    # hostmaster directory from parameter
-    AEGIR_HOSTMASTER="$1"
+    # get hostmaster directory
+    AEGIR_HOSTMASTER=$(get_hostmaster_dir)
 
     # remove old version, if any
     [[ -d "$DRUSH_COMMANDS" ]] && sudo rm -rf $DRUSH_COMMANDS

@@ -12,13 +12,16 @@ source "$CONFIGDIR/aegir.cfg"
 source "$CONFIGDIR/database.cfg"
 
 ###############################################################################
-# This script runs when the post-update-cmd event is fired by composer:
+# The script runs when the post-update-cmd event is fired by composer:
+# This is the case when:
+#  - "composer create-project" is executed, which implies a "composer install"
+#    without a composer.lock file), or
+#  - "composer update" is executed
 #
 # Functionality:
 #   - composer create-project: install Aegir on fresh OS
 #   - composer update: update the vendor packages and drupal core to their
 #      latest supported version, acoording to composer.json
-#   - composer install: upgrades Aegir to a newer version
 ###############################################################################
 
 # fetch the running webserver
@@ -26,20 +29,27 @@ WEBSERVER=$(fetch_webserver)
 # fetch new aegir version
 AEGIR_VERSION=$(new_aegir_version)
 # new hostmaster directory
-AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$AEGIR_VERSION"
+AEGIR_HOSTMASTER=$(get_hostmaster_dir)
 
 echo "ÆGIR | ------------------------------------------------------------------"
 # check current Aegir setup
 if aegir_is_there ; then
-  # fetch current aegir version
-  HM_VERSION=`drush site:alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
-  if [ "$HM_VERSION" != "$AEGIR_VERSION" ];  then
-      # composer install: upgrades Aegir to a newer version
-      SCENARIO="aegir-upgrade"
-  else
-      # composer update: update the vendor packages and drupal core
-      SCENARIO="vendor-update"
-  fi
+    # update vendor and drupal core, but remain on actual Aegir version
+    # fetch current aegir version
+    HM_VERSION=`drush site:alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
+    if [ "$HM_VERSION" != "$AEGIR_VERSION" ];  then
+        # there is a new Aegir version
+        # notify user to upgrade Aegir via 'composer install'
+        echo "ÆGIR | There is a new Aegir version to upgrade."
+        echo "ÆGIR |   - current version: $HM_VERSION"
+        echo "ÆGIR |   - new version: $AEGIR_VERSION"
+        echo "ÆGIR | Run later 'composer install' to upgrade Aegir to $AEGIR_VERSION!"
+        echo "ÆGIR | Aegir version now remains $HM_VERSION, but vendor packages are being updated."
+        echo "ÆGIR | ------------------------------------------------------------------"
+    fi
+    # composer update: update the vendor packages and drupal core
+    echo "ÆGIR | Updating vendor packages and drupal core ..."
+    SCENARIO="vendor-update"
 else
     # no aegir home --> fresh install, do something
     echo "ÆGIR | Installing Aegir $AEGIR_VERSION ..."
@@ -78,9 +88,7 @@ case $SCENARIO in
         ;;
 
     vendor-update) # composer update: update vendor packages and drupal core
-        echo "ÆGIR | Updating Aegir vendor packages and drupal core ..."
-        echo "ÆGIR | There is no new Aegir version to upgrade."
-        echo "ÆGIR | Current version: $AEGIR_VERSION"
+        echo "ÆGIR | Preparing folders in Aegir home directory ..."
 
         # maintain content of hostmaster "sites" directory
         sudo su - aegir -c "cp -r $AEGIR_HOSTMASTER/sites/$SITE_URI $AEGIR_HOME/hostmaster/sites"
@@ -89,13 +97,10 @@ case $SCENARIO in
         sudo mv $AEGIR_HOSTMASTER "$AEGIR_HOME/backups/hostmaster-$HM_VERSION-`date +'%y%m%d-%H%M'`"
         ;;
 
-    aegir-upgrade) # composer install: upgrades Aegir to a newer version
-        echo "ÆGIR | Upgrading Aegir from $HM_VERSION to $AEGIR_VERSION ..."
-        ;;
 esac
 # the new hostmaster directory has to be renamed like hostmaster-3.186
 sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
-echo "ÆGIR | New hostmaster directory is: $AEGIR_HOSTMASTER"
+echo "ÆGIR | Hostmaster directory is: $AEGIR_HOSTMASTER"
 
 ###############################################################################
 # (re)configure Aegir backend:
@@ -108,13 +113,13 @@ echo "ÆGIR | New hostmaster directory is: $AEGIR_HOSTMASTER"
 config_webserver
 
 #  Deploy "fix ownership & permissions" scripts
-deploy_fix_scripts "$AEGIR_HOSTMASTER"
+deploy_fix_scripts
 
 # setup drush
 setup_drush
 
-# Configure the Provision module https://www.drupal.org/project/provision/
-config_provision "$AEGIR_HOSTMASTER"
+# Configure the Provision module
+config_provision
 
 ###############################################################################
 # setup Aegir frontend
@@ -195,16 +200,12 @@ case $SCENARIO in
         sudo su - aegir -c "drush @hostmaster provision-verify"
         sudo su - aegir -c "drush @hostmaster updatedb"
         sudo su - aegir -c "drush @platform_hostmaster provision-verify"
-        echo "ÆGIR | ------------------------------------------------------------------"
+        echo "ÆGIR | -----------------------------------------------------------------"
+        echo "ÆGIR | Vendor packages and Drupal core of $SITE_URI has been updated."
+        echo "ÆGIR | Site still runs on Aegir $AEGIR_VERSION."
+        echo "ÆGIR | -----------------------------------------------------------------"
         ;;
 
-    aegir-upgrade) # composer install: upgrades Aegir to a newer version
-        # we'll upgrade Aegir frontend by migrating into new hostmaster platform
-        sudo su - aegir -c "drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER -y"
-        echo "ÆGIR | -----------------------------------------------------------------"
-        echo "ÆGIR | $SITE_URI has been updated, and now runs on Aegir $AEGIR_VERSION."
-        echo "ÆGIR | ------------------------------------------------------------------"
-        ;;
 esac
 
 # restart webserver now, after aegir.conf file has been generated

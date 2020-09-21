@@ -70,12 +70,13 @@
         ],
         "post-install-cmd": [
           "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-          "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
+          "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
+          "bash scripts/composer/bash/aegir-upgrade.sh"          
         ],
         "post-update-cmd": [
           "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
           "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-          "bash scripts/composer/bash/aegir-setup.sh"
+          "bash scripts/composer/bash/aegir-install-update.sh"
         ],
         "post-create-project-cmd": [
           "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
