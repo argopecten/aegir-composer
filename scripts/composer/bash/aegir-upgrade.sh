@@ -22,46 +22,52 @@ source "$CONFIGDIR/aegir.cfg"
 #
 ###############################################################################
 
-echo "ÆGIR | ------------------------------------------------------------------"
 ###############################################################################
 #  - Prepare new hostmaster directory
 AEGIR_VERSION=$(new_aegir_version)
 AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$AEGIR_VERSION"
 
-if [ -f "$AEGIR_HOME/aegir_version" ]; then
-    # this is one of the update scenarios: either aegir upgrade or drupal core & vendor update
-    # fetch current aegir version
-    HM_VERSION=`drush site:alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
-    if [ "$HM_VERSION" == "$AEGIR_VERSION" ];  then
-        # drupal core and/or vendor package update scenario
-        sudo rm -rf $AEGIR_HOME/hostmaster
+# exit if there is no aegir install on server
+[[ -f "$AEGIR_HOME/aegir_version" ]] || exit 0
 
-        echo "ÆGIR | There is no new Aegir version to upgrade."
-        echo "ÆGIR |   - current version: $HM_VERSION"
-        echo "ÆGIR | Run 'composer update' to update vendor packages and drupal core!"
-        echo "ÆGIR | Aegir version now remains $HM_VERSION, nothing has changed."
-        echo "ÆGIR | ------------------------------------------------------------------"
-    else
-        # composer install: upgrades Aegir to a newer version
-        echo "ÆGIR | New Aegir version ($AEGIR_VERSION) has been found."
-        echo "ÆGIR | Current version is: $HM_VERSION"
-        echo "ÆGIR | Use composer install to upgrade Aegir!"
-        exit 0
+echo "ÆGIR | ------------------------------------------------------------------"
+# there in an Aegir on server, so this is one of the update scenarios:
+# either aegir upgrade or drupal core & vendor update
 
-        # the new hostmaster directory has to be renamed like hostmaster-3.186
-        sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
-        echo "ÆGIR | New hostmaster directory is: $AEGIR_HOSTMASTER"
+# fetch current aegir version
+HM_VERSION=`drush site:alias @hm | grep root | cut -d"'" -f4 | awk -F \- {'print $2'}`
 
-        # we'll upgrade Aegir frontend by migrating into new hostmaster platform
-        sudo su - aegir -c "drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER -y"
+if [ "$HM_VERSION" == "$AEGIR_VERSION" ];  then
+    # this is the vendor package update scenario, we do nothing here
 
-        # refresh drush cache to see provisions drush commands
-        sudo su - aegir -c "drush cache:clear drush"
-        # restart queued daemon
-        sudo systemctl restart hosting-queued
+    # remove the new hostmaster directory downloaded by composer
+    sudo rm -rf $AEGIR_HOME/hostmaster
 
-        echo "ÆGIR | -----------------------------------------------------------------"
-        echo "ÆGIR | $SITE_URI has been updated, and now runs on Aegir $AEGIR_VERSION."
-        echo "ÆGIR | ------------------------------------------------------------------"
-    fi
+    # inform user
+    echo "ÆGIR | Aegir runs on latest version ($HM_VERSION) and won't be upgraded."
+    echo "ÆGIR | Run 'composer update' to update vendor packages and drupal core!"
+    echo "ÆGIR | ------------------------------------------------------------------"
+else
+    # upgrades Aegir to a newer version
+    echo "ÆGIR | There is a new Aegir version to upgrade."
+    echo "ÆGIR |   - current version: $HM_VERSION"
+    echo "ÆGIR |   - new version: $AEGIR_VERSION"
+    echo "ÆGIR | Upgrading Aegir to $AEGIR_VERSION ..."
+
+    # the new hostmaster directory has to be renamed like hostmaster-3.186
+    sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
+    echo "ÆGIR | New hostmaster directory is: $AEGIR_HOSTMASTER"
+
+    # upgrade Aegir frontend by migrating into new hostmaster platform
+    sudo su - aegir -c "drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER -y"
+
+    # refresh drush cache to see provisions drush commands
+    sudo su - aegir -c "drush cache:clear drush"
+
+    # restart queued daemon
+    sudo systemctl restart hosting-queued
+
+    echo "ÆGIR | -----------------------------------------------------------------"
+    echo "ÆGIR | $SITE_URI has been updated, and now runs on Aegir $AEGIR_VERSION."
+    echo "ÆGIR | ------------------------------------------------------------------"
 fi

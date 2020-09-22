@@ -44,7 +44,7 @@ if aegir_is_there ; then
         echo "ÆGIR |   - current version: $HM_VERSION"
         echo "ÆGIR |   - new version: $AEGIR_VERSION"
         echo "ÆGIR | Run later 'composer install' to upgrade Aegir to $AEGIR_VERSION!"
-        echo "ÆGIR | Aegir version now remains $HM_VERSION, but vendor packages are being updated."
+        echo "ÆGIR | Aegir version now remains $HM_VERSION, only vendor packages are being updated."
         echo "ÆGIR | ------------------------------------------------------------------"
     fi
     # composer update: update the vendor packages and drupal core
