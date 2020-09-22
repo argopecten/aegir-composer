@@ -9,21 +9,27 @@ if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
 CONFIGDIR="$DIR/../config"
 source "$CONFIGDIR/aegir.cfg"
 
+# show debug info by setting AEGIR_DEBUG="show"
+if [ "$AEGIR_DEBUG" = "show" ]; then
+    set -x
+fi
+
 ###############################################################################
 # Common bash functions for Aegir install/update via composer
 #
 # 1) fetch the running webserver
-# 2) fetch version of installed PHP
+# 2) fetch version of installed PHP: 7.4
 # 3) fetch new aegir version
-# 4) checks whether Aegir is installed or not
+# 4) check whether Aegir is installed or not
 # 5) fetch the running database server
-# 6) deploy "fix ownership & permissions" scripts
-# 7) setup Drush
-# 8) webserver configuragtion for Aegir
-#
-###############################################################################
+# 6) webserver configuration for Aegir
+# 7) get hostmaster directory
+# 8) deploy "fix ownership & permissions" scripts
+# 9) setup Drush
+# 10) configure Provision module
+# 11) check hostmaster status via drush
 
-###########################################################
+###############################################################################
 # 1) fetch the running webserver
 fetch_webserver() {
   #   supported webserver flavors: nginx or apache2
@@ -41,14 +47,14 @@ fetch_webserver() {
      || (echo "It needs to be one of $SUPPORTED_WEBSERVER_FLAVORS, but none of these has been found!" && exit 1)
 }
 
-###########################################################
-# 2) fetch version of installed PHP
+###############################################################################
+# 2) fetch version of installed PHP: 7.4
 fetch_php_version() {
   V=`php -v | awk '/PHP 7/ {print $2}' |  cut -d. -f1-2`
   echo $V
 }
 
-###########################################################
+###############################################################################
 # 3) fetch new aegir version
 new_aegir_version() {
   # called during aegir install and update scenarios by various users
@@ -60,8 +66,8 @@ new_aegir_version() {
   echo $V | tee $HM_DIR/aegir_version
 }
 
-###########################################################
-# 4) checks whether Aegir is installed or not
+###############################################################################
+# 4) check whether Aegir is installed or not
 aegir_is_there() {
   if [ -d "$AEGIR_HOME" ] && getent passwd aegir >/dev/null ; then
     # aegir home and aegir user exists
@@ -72,7 +78,7 @@ aegir_is_there() {
   fi
 }
 
-###########################################################
+###############################################################################
 # 5) fetch the running database server
 fetch_dbserver() {
   #   supported database server flavors: mysql or mariadb
@@ -178,4 +184,11 @@ config_provision() {
 
     # refresh drush cache to see provisions drush commands
     sudo su - aegir -c "drush cache:clear drush"
+}
+
+###############################################################################
+# 11) check hostmaster status via drush
+site_status_is_ok() {
+    # this will ensure that this script aborts if the site can't be bootstrapped
+    return `sudo su - aegir -c "drush @hostmaster status 2>&1 | grep -q 'Drupal bootstrap.*Successful'" ]`
 }

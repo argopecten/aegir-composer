@@ -11,6 +11,11 @@ CONFIGDIR="$DIR/../config"
 source "$CONFIGDIR/aegir.cfg"
 source "$CONFIGDIR/database.cfg"
 
+# show debug info by setting AEGIR_DEBUG="show"
+if [ "$AEGIR_DEBUG" = "show" ]; then
+    set -x
+fi
+
 ###############################################################################
 # The script runs when the post-update-cmd event is fired by composer:
 # This is the case when:
@@ -184,14 +189,13 @@ case $SCENARIO in
         sudo systemctl enable hosting-queued
 
         #  - Enable Aegir modules: hosting_civicrm, hosting_civicrm_cron, ...
-        echo "ÆGIR | Enabling hosting modules for CiviCRM ..."
+        echo "ÆGIR | Enabling hosting modules: hosting-queued daemon, fix ownership & permissions ..."
         sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_queued"
         sudo su - aegir -c "drush @hostmaster pm:enable -y fix_ownership fix_permissions"
         # sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_civicrm hosting_civicrm_cron"
 
-        echo "ÆGIR | -----------------------------------------------------------------"
-        echo "ÆGIR | Aegir $AEGIR_VERSION has been installed via Composer ..."
-        echo "ÆGIR | -----------------------------------------------------------------"
+        # user message if status is OK
+        RESULT="ÆGIR | Aegir $AEGIR_VERSION has been installed via Composer ..."
         ;;
 
     vendor-update) # composer update: update vendor packages and drupal core
@@ -200,10 +204,9 @@ case $SCENARIO in
         sudo su - aegir -c "drush @hostmaster provision-verify"
         sudo su - aegir -c "drush @hostmaster updatedb"
         sudo su - aegir -c "drush @platform_hostmaster provision-verify"
-        echo "ÆGIR | -----------------------------------------------------------------"
-        echo "ÆGIR | Vendor packages and Drupal core of $SITE_URI has been updated."
-        echo "ÆGIR | Site still runs on Aegir $AEGIR_VERSION."
-        echo "ÆGIR | -----------------------------------------------------------------"
+
+        # user message if status is OK
+        RESULT="ÆGIR | Vendor packages and Drupal core of $SITE_URI has been updated."
         ;;
 
 esac
@@ -219,3 +222,13 @@ case $WEBSERVER in
 esac
 # restart queued daemon
 sudo systemctl restart hosting-queued
+
+echo "ÆGIR | -----------------------------------------------------------------"
+if site_status_is_ok ; then
+    echo $RESULT
+else
+    echo "ÆGIR | Something went wrong!"
+    echo "ÆGIR | Look at the log above for clues or run with AEGIR_DEBUG=show"
+    exit 1
+fi
+echo "ÆGIR | -----------------------------------------------------------------"

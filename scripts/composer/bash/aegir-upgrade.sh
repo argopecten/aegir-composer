@@ -11,6 +11,11 @@ CONFIGDIR="$DIR/../config"
 source "$CONFIGDIR/aegir.cfg"
 
 
+# show debug info by setting AEGIR_DEBUG="show"
+if [ "$AEGIR_DEBUG" = "show" ]; then
+    set -x
+fi
+
 ###############################################################################
 # The script runs when the post-install-cmd event is fired by composer.
 # This is the case when "composer install" is executed having a composer.lock
@@ -22,8 +27,7 @@ source "$CONFIGDIR/aegir.cfg"
 #
 ###############################################################################
 
-###############################################################################
-#  - Prepare new hostmaster directory
+# set version and hostmaster directory
 AEGIR_VERSION=$(new_aegir_version)
 AEGIR_HOSTMASTER="$AEGIR_HOME/hostmaster-$AEGIR_VERSION"
 
@@ -58,16 +62,25 @@ else
     sudo mv $AEGIR_HOME/hostmaster $AEGIR_HOSTMASTER
     echo "ÆGIR | New hostmaster directory is: $AEGIR_HOSTMASTER"
 
+    # stop hosting queued daemon
+    sudo systemctl stop hosting-queued
+
     # upgrade Aegir frontend by migrating into new hostmaster platform
-    sudo su - aegir -c "drush @hostmaster hostmaster-migrate $HOSTNAME $AEGIR_HOSTMASTER -y"
+    sudo su - aegir -c "drush @hostmaster hostmaster-migrate $SITE_URI $AEGIR_HOSTMASTER -y"
 
     # refresh drush cache to see provisions drush commands
     sudo su - aegir -c "drush cache:clear drush"
 
-    # restart queued daemon
-    sudo systemctl restart hosting-queued
+    # start queued daemon
+    sudo systemctl start hosting-queued
 
     echo "ÆGIR | -----------------------------------------------------------------"
-    echo "ÆGIR | $SITE_URI has been updated, and now runs on Aegir $AEGIR_VERSION."
+    if site_status_is_ok ; then
+        echo "ÆGIR | $SITE_URI has been updated, and now runs on Aegir $AEGIR_VERSION."
+    else
+        echo "ÆGIR | Something went wrong!"
+        echo "ÆGIR | Look at the log above for clues or run with AEGIR_DEBUG=show"
+        exit 1
+    fi
     echo "ÆGIR | ------------------------------------------------------------------"
 fi
