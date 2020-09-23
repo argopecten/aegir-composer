@@ -10,6 +10,10 @@
         }
     ],
     "repositories": {
+        "aegir": {
+            "type": "vcs",
+            "url":  "https://github.com/argopecten/aegir-composer"
+        },
         "provision": {
             "type": "vcs",
             "url":  "https://github.com/argopecten/aegir-provision"
@@ -71,7 +75,7 @@
         "post-install-cmd": [
           "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
           "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-          "bash scripts/composer/bash/aegir-upgrade.sh"          
+          "bash scripts/composer/bash/aegir-upgrade.sh"
         ],
         "post-update-cmd": [
           "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
