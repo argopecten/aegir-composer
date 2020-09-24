@@ -48,7 +48,7 @@
         "drupal/composer_autoloader": "^1.0",
         "symfony/filesystem": "~2.7|^3",
         "webflo/drupal-finder": "^1.0.0",
-        "argopecten/hostmaster": "dev-own/3.186.1"
+        "argopecten/hostmaster": "^3.182.1"
     },
     "conflict": {
         "drupal/core": "8.*"
