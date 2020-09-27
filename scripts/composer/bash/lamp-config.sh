@@ -9,19 +9,20 @@ if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
 source "$DIR/common-functions.sh"
 CONFIGDIR="$DIR/../config"
 source "$CONFIGDIR/aegir.cfg"
-source "$CONFIGDIR/mariadb.cfg"
+source "$CONFIGDIR/database.cfg"
 source "$CONFIGDIR/php.cfg"
 source "$CONFIGDIR/postfix.cfg"
 
 ###############################################################################
-# This script runs when the post-install-cmd event is fired by composer via
-# "composer create-project" or "composer install".
+# This script runs on fresh installs only, when the pre-install-cmd event
+# is fired by composer via "composer create-project" or "composer install".
 #
 # functions:
-# - call subsequent scripts depending on which scenario is there:
-#   1) There is an existing Aegir setup, no configuration is necessary
-#   2) fresh install of Aegir, configure LÆMP accordingly for Aegir
-#
+#   1) setting up a basic firewall
+#   2) securing database server
+#   3) configure webserver & PHP
+#   4) configure Postfix
+#   5) clean up & reload services
 ###############################################################################
 
 echo "ÆGIR | ------------------------------------------------------------------"
@@ -42,26 +43,24 @@ else
   ###########################################################
   # 2) securing database server
   echo "ÆGIR | Securing database server ..."
-  # Set root password in database, aegir still requires it in that way
-  # prompt user for database root password
-  unset dbpwd
-  unset dbpwd2
-  while true; do
-      read -sp "Set database root password: " dbpwd
-      echo
-      read -sp "Database root password (again): " dbpwd2
-      echo
-      [ "$dbpwd" = "$dbpwd2" ] && break
-      echo "Please try again!"
-  done
-  echo "ÆGIR | Running mysql_secure_installation ..."
-  echo -e "\n\n$dbpwd\n$dbpwd\n\n\nn\n\n " | sudo mysql_secure_installation &>/dev/null
-  unset dbpwd
-  unset dbpwd2
+  # fetch the running database server
+  DBSERVER=$(fetch_dbserver)
+  echo "ÆGIR | Server has $DBSERVER as database server."
+  case "$DBSERVER" in
+    mariadb)   echo "ÆGIR | Securing MariaDB..."
+        # no root password is set, use sudo mysql instead
+        echo -e "\nn\n\n\n\n\n " | sudo mysql_secure_installation &>/dev/null
+        ;;
+    mysql)   echo "ÆGIR | Securing MySQL..."
+      # does not work in this way, skip it for now
+      # ROOT_DB_PASS=$(openssl rand -base64 12)
+      # echo -e "y\n0\n$ROOT_DB_PASS\n$ROOT_DB_PASS\n\y\n\y\n\y\n\y\n\y\n" | sudo mysql_secure_installation &>/dev/null
+        ;;
+  esac
   echo "ÆGIR | Database server secured."
 
   ###########################################################
-  # 3) configure webserver
+  # 3) configure webserver & PHP
   echo "ÆGIR | Configuring webserver & PHP ..."
 
   # fetch PHP version and the running webserver
@@ -106,8 +105,6 @@ else
   # 4) configure Postfix
   echo "ÆGIR | Postfix config ..."
   # TBD
-  sudo debconf-set-selections <<< "postfix postfix/mailname string $myhostname"
-  sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string $mailer_type"
 
   ###########################################################
   # 5) clean up & reload services
@@ -130,17 +127,6 @@ else
 
   # webserver & PHP
   # do not restart webserver here, aegir.conf is not yet in place!
-  case "$WEBSERVER" in
-      nginx) echo "ÆGIR | Reloading Nginx..."
-          sudo systemctl restart php$V-fpm
-          ;;
-      apache)  echo "ÆGIR | Reloading  Apache ..."
-          # TODO: php-fpm
-          ;;
-      *) echo "No webserver defined, aborting!"
-          exit 1
-          ;;
-  esac
 
   # Postfix
   echo "ÆGIR | Reloading postfix ..."

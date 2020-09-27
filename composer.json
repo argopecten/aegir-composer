@@ -10,18 +10,13 @@
         }
     ],
     "repositories": {
+        "aegir": {
+            "type": "vcs",
+            "url":  "https://github.com/argopecten/aegir-composer"
+        },
         "provision": {
-            "type": "package",
-            "package": {
-                "name": "drupal/provision",
-                "version": "3.18.6",
-                "type": "drupal-drush",
-                "source": {
-                    "url":  "https://git.drupalcode.org/project/provision",
-                    "type": "git",
-                    "reference": "7.x-3.x"
-                }
-            }
+            "type": "vcs",
+            "url":  "https://github.com/argopecten/aegir-provision"
         },
         "drupal": {
               "type": "composer",
@@ -29,7 +24,7 @@
         },
         "hostmaster": {
             "type": "vcs",
-            "url":  "https://github.com/argopecten/hostmaster"
+            "url":  "https://github.com/argopecten/aegir-hostmaster"
         },
         "hosting_deploy": {
             "type": "vcs",
@@ -41,17 +36,19 @@
         "ext-curl": "*",
         "ext-gd": "*",
         "ext-json": "*",
+        "ext-mbstring": "*",
         "ext-openssl": "*",
         "ext-pdo": "*",
         "ext-xml": "*",
+        "ext-zip": "*",
         "composer/installers": "^1.2",
         "composer/semver": "^1.4",
         "cweagans/composer-patches": "^1.6.5",
-        "drupal-composer/preserve-paths": "^0.1",
+        "drupal-composer/preserve-paths": "dev-master#4c5f62",
         "drupal/composer_autoloader": "^1.0",
         "symfony/filesystem": "~2.7|^3",
         "webflo/drupal-finder": "^1.0.0",
-        "argopecten/hostmaster": "dev-comp-3.x"
+        "argopecten/hostmaster": "^3.182.1"
     },
     "conflict": {
         "drupal/core": "8.*"
@@ -68,22 +65,22 @@
     },
     "scripts": {
         "pre-install-cmd": [
+          "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "pre-update-cmd": [
           "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
           "bash scripts/composer/bash/lamp-config.sh < /dev/tty",
           "bash scripts/composer/bash/aegir-backup.sh"
         ],
-        "pre-update-cmd": [
-          "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ],
         "post-install-cmd": [
           "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
           "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-          "bash scripts/composer/bash/aegir-setup.sh"
+          "bash scripts/composer/bash/aegir-upgrade.sh"
         ],
         "post-update-cmd": [
           "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
           "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-          "bash scripts/composer/bash/vendor-update.sh"
+          "bash scripts/composer/bash/aegir-install-update.sh"
         ],
         "post-create-project-cmd": [
           "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
@@ -101,6 +98,9 @@
         "patches": {
             "cweagans/composer-patches": {
                 "Call the preserve paths hooks" : "https://github.com/SebCorbin/composer-patches/commit/1cb9bacba51f8bba0c5f3f322c3bb61e4ceae974.patch"
+            },
+            "drupal/drupal": {
+                "Mysql8 support in Drupal7 core" : "https://www.drupal.org/files/issues/2020-08-14/2978575-218.patch"
             }
         },
         "preserve-paths": [
