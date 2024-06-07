@@ -4,8 +4,145 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d0b05d558671bc773ce014699eecc92",
+    "content-hash": "41000c7c24b07b6be6be236264c1e04b",
     "packages": [
+        {
+            "name": "aegir/drush8",
+            "version": "dev-dev/aegir",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/argopecten/aegir-drush8.git",
+                "reference": "6e844f0ef837a9cb7efca9a7068ca83b2b158bf0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/argopecten/aegir-drush8/zipball/6e844f0ef837a9cb7efca9a7068ca83b2b158bf0",
+                "reference": "6e844f0ef837a9cb7efca9a7068ca83b2b158bf0",
+                "shasum": ""
+            },
+            "require": {
+                "consolidation/annotated-command": "^2.12.0",
+                "consolidation/output-formatters": "~3",
+                "pear/console_table": "~1.3.1",
+                "php": ">=5.4.5",
+                "psr/log": "~1.0",
+                "psy/psysh": "~0.6",
+                "symfony/console": "~2.7|^3|^4.4",
+                "symfony/event-dispatcher": "~2.7|^3|^4.4",
+                "symfony/finder": "~2.7|^3|^4.4",
+                "symfony/process": "~2.7|^3|^4.4",
+                "symfony/var-dumper": "~2.7|^3|^4.4|^5",
+                "symfony/yaml": "~2.3|^3|^4.4",
+                "webflo/drupal-finder": "^1.1.0",
+                "webmozart/path-util": "~2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4 || ^7.5.20 || ^9",
+                "squizlabs/php_codesniffer": "^3",
+                "symfony/console": "~2.7",
+                "symfony/event-dispatcher": "~2.7",
+                "symfony/finder": "~2.7",
+                "symfony/process": "2.7.*",
+                "symfony/var-dumper": "~2.7",
+                "symfony/yaml": "~2.3",
+                "yoast/phpunit-polyfills": "^1"
+            },
+            "suggest": {
+                "drush/config-extra": "Provides configuration workflow commands, such as config-merge.",
+                "ext-pcntl": "*"
+            },
+            "bin": [
+                "drush",
+                "drush.launcher",
+                "drush.php",
+                "drush.complete.sh"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "8.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Drush\\": "lib/",
+                    "Consolidation\\": "lib/"
+                },
+                "psr-4": {
+                    "Drush\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-0": {
+                    "Unish": "tests/"
+                }
+            },
+            "scripts": {
+                "phar:install-tools": [
+                    "curl -L https://github.com/box-project/box/releases/download/4.3.7/box.phar --output box.phar"
+                ],
+                "phar:build": [
+                    "composer install -n --no-dev && php box.phar compile"
+                ],
+                "lint": [
+                    "find includes -name '*.inc' -print0 | xargs -0 -n1 php -l",
+                    "find lib/Drush -name '*.php' -print0 | xargs -0 -n1 php -l"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Moshe Weitzman",
+                    "email": "weitzman@tejasa.com"
+                },
+                {
+                    "name": "Owen Barton",
+                    "email": "drupal@owenbarton.com"
+                },
+                {
+                    "name": "Mark Sonnabaum",
+                    "email": "marksonnabaum@gmail.com"
+                },
+                {
+                    "name": "Antoine Beaupré",
+                    "email": "anarcat@koumbit.org"
+                },
+                {
+                    "name": "Greg Anderson",
+                    "email": "greg.1.anderson@greenknowe.org"
+                },
+                {
+                    "name": "Jonathan Araña Cruz",
+                    "email": "jonhattan@faita.net"
+                },
+                {
+                    "name": "Jonathan Hedstrom",
+                    "email": "jhedstrom@gmail.com"
+                },
+                {
+                    "name": "Christopher Gervais",
+                    "email": "chris@ergonlogic.com"
+                },
+                {
+                    "name": "Dave Reid",
+                    "email": "dave@davereid.net"
+                },
+                {
+                    "name": "Damian Lee",
+                    "email": "damiankloip@googlemail.com"
+                }
+            ],
+            "description": "BOA fork of Drush 8.x compatible with Drupal 10",
+            "homepage": "http://www.drush.org",
+            "support": {
+                "forum": "http://drupal.stackexchange.com/questions/tagged/drush",
+                "irc": "irc://irc.freenode.org/drush",
+                "source": "https://github.com/argopecten/aegir-drush8/tree/dev/aegir"
+            },
+            "time": "2024-06-07T08:34:53+00:00"
+        },
         {
             "name": "aegir/hosting",
             "version": "dev-dev/composer",
@@ -47,24 +184,43 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-hostmaster.git",
-                "reference": "76d766c35f3cccf5cf3ab4ea9b3ef2a3c1b93d90"
+                "reference": "63c9f4904a1b4a2a0bd4b070053a3a2413016348"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/76d766c35f3cccf5cf3ab4ea9b3ef2a3c1b93d90",
-                "reference": "76d766c35f3cccf5cf3ab4ea9b3ef2a3c1b93d90",
+                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/63c9f4904a1b4a2a0bd4b070053a3a2413016348",
+                "reference": "63c9f4904a1b4a2a0bd4b070053a3a2413016348",
                 "shasum": ""
             },
             "require": {
+                "aegir/drush8": "dev-dev/aegir",
                 "aegir/hosting": "dev-dev/composer",
                 "aegir/provision": "dev-backport/boa",
-                "composer/installers": "^1.9",
-                "composer/semver": "^1.4",
-                "cweagans/composer-patches": "^1.7",
-                "drupal-composer/preserve-paths": "^0.1.6",
-                "drupal/composer_autoloader": "^1.0",
-                "drupal/drupal": "^7.100",
-                "drush/drush": "dev-dev/aegir",
+                "drupal/admin_menu": "3.0-rc7",
+                "drupal/aegir_objects": "3.190",
+                "drupal/betterlogin": "1.5",
+                "drupal/ctools": "1.21",
+                "drupal/eldir": "3.190",
+                "drupal/entity": "1.10",
+                "drupal/features": "2.15",
+                "drupal/hosting_civicrm": "3.190",
+                "drupal/hosting_deploy": "dev-3.x",
+                "drupal/hosting_git": "3.190",
+                "drupal/hosting_https": "3.190",
+                "drupal/hosting_logs": "3.190",
+                "drupal/hosting_remote_import": "3.190",
+                "drupal/hosting_site_backup_manager": "3.190",
+                "drupal/hosting_tasks_extra": "3.191",
+                "drupal/libraries": "2.5",
+                "drupal/module_filter": "2.3",
+                "drupal/openidadmin": "1.0",
+                "drupal/overlay_paths": "1.3",
+                "drupal/r4032login": "1.8",
+                "drupal/tfa": "2.3",
+                "drupal/tfa_basic": "1.2",
+                "drupal/timeago": "2.3",
+                "drupal/views": "3.29",
+                "drupal/views_bulk_operations": "3.7",
                 "ext-curl": "*",
                 "ext-gd": "*",
                 "ext-json": "*",
@@ -73,9 +229,7 @@
                 "ext-pdo": "*",
                 "ext-xml": "*",
                 "ext-zip": "*",
-                "php": ">=8.1",
-                "symfony/filesystem": "~2.7 || ^3",
-                "webflo/drupal-finder": "^1.2.1"
+                "php": ">=8.1"
             },
             "conflict": {
                 "drupal/core": "8.*"
@@ -95,7 +249,7 @@
                 "source": "https://github.com/argopecten/aegir-hostmaster/tree/dev/composer",
                 "issues": "https://github.com/argopecten/aegir-hostmaster/issues"
             },
-            "time": "2024-05-28T15:53:06+00:00"
+            "time": "2024-06-07T08:54:21+00:00"
         },
         {
             "name": "aegir/provision",
@@ -710,62 +864,189 @@
             "time": "2017-01-20T21:14:22+00:00"
         },
         {
-            "name": "drupal-composer/preserve-paths",
-            "version": "0.1.6",
+            "name": "drupal/admin_menu",
+            "version": "3.0.0-rc7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/drupal-composer/preserve-paths.git",
-                "reference": "2f86a503f1f7838f5f7f399a17edd4d16eb95034"
+                "url": "https://git.drupalcode.org/project/admin_menu.git",
+                "reference": "7.x-3.0-rc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal-composer/preserve-paths/zipball/2f86a503f1f7838f5f7f399a17edd4d16eb95034",
-                "reference": "2f86a503f1f7838f5f7f399a17edd4d16eb95034",
-                "shasum": ""
+                "url": "https://ftp.drupal.org/files/projects/admin_menu-7.x-3.0-rc7.zip",
+                "reference": "7.x-3.0-rc7",
+                "shasum": "ab4778b6daeea00329ac31a4ed79ee68de9770bd"
             },
             "require": {
-                "composer-plugin-api": "^1.0 || ^2.0"
+                "drupal/drupal": "^7.11"
             },
-            "require-dev": {
-                "composer/composer": "^2.0",
-                "derhasi/tempdirectory": "0.1.*",
-                "escapestudios/symfony2-coding-standard": "2.*",
-                "phpunit/phpunit": "4.*",
-                "squizlabs/php_codesniffer": "2.*"
-            },
-            "type": "composer-plugin",
+            "type": "drupal-module",
             "extra": {
-                "class": "DrupalComposer\\PreservePaths\\Plugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "DrupalComposer\\PreservePaths\\": "src/"
+                "drupal": {
+                    "version": "7.x-3.0-rc7",
+                    "datestamp": "1685019870",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "RC releases are not covered by Drupal security advisories."
+                    }
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "https://packages.drupal.org/7/downloads",
             "license": [
                 "GPL-2.0-or-later"
             ],
             "authors": [
                 {
-                    "name": "Johannes Haseitl",
-                    "email": "johannes@undpaul.de",
-                    "homepage": "http://www.undpaul.de"
+                    "name": "Dave Reid",
+                    "homepage": "https://www.drupal.org/user/53892"
+                },
+                {
+                    "name": "HongPong",
+                    "homepage": "https://www.drupal.org/user/60005"
+                },
+                {
+                    "name": "RenatoG",
+                    "homepage": "https://www.drupal.org/user/3326031"
+                },
+                {
+                    "name": "sun",
+                    "homepage": "https://www.drupal.org/user/54136"
+                },
+                {
+                    "name": "thalles",
+                    "homepage": "https://www.drupal.org/user/3589086"
+                },
+                {
+                    "name": "truls1502",
+                    "homepage": "https://www.drupal.org/user/325866"
                 }
             ],
-            "description": "Composer plugin for preserving custom paths and supporting nested packages",
-            "homepage": "https://github.com/drupal-composer/preserve-paths",
-            "keywords": [
-                "composer-plugin",
-                "custom path",
-                "installer",
-                "nested package"
-            ],
+            "description": "Provides a dropdown menu to most administrative tasks and other common destinations (to users with the proper permissions).",
+            "homepage": "https://www.drupal.org/project/admin_menu",
             "support": {
-                "issues": "https://github.com/drupal-composer/preserve-paths/issues",
-                "source": "https://github.com/drupal-composer/preserve-paths/tree/0.1.6"
+                "source": "https://git.drupalcode.org/project/admin_menu"
+            }
+        },
+        {
+            "name": "drupal/aegir_objects",
+            "version": "3.190.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/aegir_objects.git",
+                "reference": "7.x-3.190"
             },
-            "time": "2020-11-14T20:28:03+00:00"
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/aegir_objects-7.x-3.190.zip",
+                "reference": "7.x-3.190",
+                "shasum": "8f75058e1a367c6a766712eac95554cdfcb7bfdd"
+            },
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489910",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                }
+            ],
+            "description": "API helpers to simplify interacting with Drupal 7 in an object-oriented fashion.",
+            "homepage": "https://www.drupal.org/project/aegir_objects",
+            "support": {
+                "source": "https://git.drupalcode.org/project/aegir_objects"
+            }
+        },
+        {
+            "name": "drupal/betterlogin",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/betterlogin.git",
+                "reference": "7.x-1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/betterlogin-7.x-1.5.zip",
+                "reference": "7.x-1.5",
+                "shasum": "611adc4b02b4eee7b27879e554d3b14512733058"
+            },
+            "require": {
+                "drupal/drupal": "~7.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-1.5",
+                    "datestamp": "1525940284",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "theamoeba",
+                    "homepage": "https://www.drupal.org/user/251700"
+                },
+                {
+                    "name": "yogeshmpawar",
+                    "homepage": "https://www.drupal.org/user/2922907"
+                }
+            ],
+            "description": "Make the login screens better :)",
+            "homepage": "https://www.drupal.org/project/betterlogin",
+            "support": {
+                "source": "https://git.drupalcode.org/project/betterlogin"
+            }
         },
         {
             "name": "drupal/composer_autoloader",
@@ -817,24 +1098,114 @@
             }
         },
         {
-            "name": "drupal/drupal",
-            "version": "7.100.0",
+            "name": "drupal/ctools",
+            "version": "1.21.0",
             "source": {
                 "type": "git",
-                "url": "https://git.drupalcode.org/project/drupal.git",
-                "reference": "7.100"
+                "url": "https://git.drupalcode.org/project/ctools.git",
+                "reference": "7.x-1.21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/drupal-7.100.zip",
-                "reference": "7.100",
-                "shasum": "8ee53d0a8df6c1df389a8f1cd7f5399681fc7e41"
+                "url": "https://ftp.drupal.org/files/projects/ctools-7.x-1.21.zip",
+                "reference": "7.x-1.21",
+                "shasum": "005d39917737407efd1a730ef2e2e082227e13c7"
+            },
+            "require": {
+                "drupal/drupal": "~7.0"
+            },
+            "require-dev": {
+                "drupal/advanced_help": "*",
+                "drupal/page_manager": "*",
+                "drupal/panels": "*",
+                "drupal/views": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-1.21",
+                    "datestamp": "1675152415",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "damiankloip",
+                    "homepage": "https://www.drupal.org/user/1037976"
+                },
+                {
+                    "name": "dawehner",
+                    "homepage": "https://www.drupal.org/user/99340"
+                },
+                {
+                    "name": "EclipseGc",
+                    "homepage": "https://www.drupal.org/user/61203"
+                },
+                {
+                    "name": "esmerel",
+                    "homepage": "https://www.drupal.org/user/164022"
+                },
+                {
+                    "name": "japerry",
+                    "homepage": "https://www.drupal.org/user/45640"
+                },
+                {
+                    "name": "joelpittet",
+                    "homepage": "https://www.drupal.org/user/160302"
+                },
+                {
+                    "name": "merlinofchaos",
+                    "homepage": "https://www.drupal.org/user/26979"
+                },
+                {
+                    "name": "neclimdul",
+                    "homepage": "https://www.drupal.org/user/48673"
+                },
+                {
+                    "name": "sdboyer",
+                    "homepage": "https://www.drupal.org/user/146719"
+                },
+                {
+                    "name": "sun",
+                    "homepage": "https://www.drupal.org/user/54136"
+                },
+                {
+                    "name": "tim.plunkett",
+                    "homepage": "https://www.drupal.org/user/241634"
+                }
+            ],
+            "description": "A library of helpful tools by Merlin of Chaos.",
+            "homepage": "https://www.drupal.org/project/ctools",
+            "support": {
+                "source": "https://git.drupalcode.org/project/ctools"
+            }
+        },
+        {
+            "name": "drupal/drupal",
+            "version": "7.101.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/drupal.git",
+                "reference": "7.101"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/drupal-7.101.zip",
+                "reference": "7.101",
+                "shasum": "fca285b26eff9a342f41e75b6e36a656531577a2"
             },
             "type": "drupal-core",
             "extra": {
                 "drupal": {
-                    "version": "7.100",
-                    "datestamp": "1709735575",
+                    "version": "7.101",
+                    "datestamp": "1717606635",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -929,141 +1300,2334 @@
             }
         },
         {
-            "name": "drush/drush",
-            "version": "dev-dev/aegir",
+            "name": "drupal/eldir",
+            "version": "3.190.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/argopecten/aegir-drush8.git",
-                "reference": "15e5f5434aaf3273355977ed4f3bb2ec64af9c06"
+                "url": "https://git.drupalcode.org/project/eldir.git",
+                "reference": "7.x-3.190"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-drush8/zipball/15e5f5434aaf3273355977ed4f3bb2ec64af9c06",
-                "reference": "15e5f5434aaf3273355977ed4f3bb2ec64af9c06",
-                "shasum": ""
+                "url": "https://ftp.drupal.org/files/projects/eldir-7.x-3.190.zip",
+                "reference": "7.x-3.190",
+                "shasum": "698c2826a89e7714a1e2c891b3c94439330cf41a"
             },
             "require": {
-                "consolidation/annotated-command": "^2.12.0",
-                "consolidation/output-formatters": "~3",
-                "pear/console_table": "~1.3.1",
-                "php": ">=5.4.5",
-                "psr/log": "~1.0",
-                "psy/psysh": "~0.6",
-                "symfony/console": "~2.7|^3|^4.4",
-                "symfony/event-dispatcher": "~2.7|^3|^4.4",
-                "symfony/finder": "~2.7|^3|^4.4",
-                "symfony/process": "~2.7|^3|^4.4",
-                "symfony/var-dumper": "~2.7|^3|^4.4|^5",
-                "symfony/yaml": "~2.3|^3|^4.4",
-                "webflo/drupal-finder": "^1.1.0",
-                "webmozart/path-util": "~2"
+                "drupal/drupal": "~7.0"
             },
-            "require-dev": {
-                "phpunit/phpunit": "^4 || ^7.5.20 || ^9",
-                "squizlabs/php_codesniffer": "^3",
-                "symfony/console": "~2.7",
-                "symfony/event-dispatcher": "~2.7",
-                "symfony/finder": "~2.7",
-                "symfony/process": "2.7.*",
-                "symfony/var-dumper": "~2.7",
-                "symfony/yaml": "~2.3",
-                "yoast/phpunit-polyfills": "^1"
-            },
-            "suggest": {
-                "drush/config-extra": "Provides configuration workflow commands, such as config-merge.",
-                "ext-pcntl": "*"
-            },
-            "bin": [
-                "drush",
-                "drush.launcher",
-                "drush.php",
-                "drush.complete.sh"
-            ],
-            "type": "library",
+            "type": "drupal-theme",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "8.3.x-dev"
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489689",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
                 }
             },
-            "autoload": {
-                "psr-0": {
-                    "Drush\\": "lib/",
-                    "Consolidation\\": "lib/"
-                },
-                "psr-4": {
-                    "Drush\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-0": {
-                    "Unish": "tests/"
-                }
-            },
-            "scripts": {
-                "phar:install-tools": [
-                    "curl -L https://github.com/box-project/box/releases/download/4.3.7/box.phar --output box.phar"
-                ],
-                "phar:build": [
-                    "composer install -n --no-dev && php box.phar compile"
-                ],
-                "lint": [
-                    "find includes -name '*.inc' -print0 | xargs -0 -n1 php -l",
-                    "find lib/Drush -name '*.php' -print0 | xargs -0 -n1 php -l"
-                ]
-            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
             "license": [
                 "GPL-2.0-or-later"
             ],
             "authors": [
                 {
-                    "name": "Moshe Weitzman",
-                    "email": "weitzman@tejasa.com"
+                    "name": "adrian",
+                    "homepage": "https://www.drupal.org/user/1337"
                 },
                 {
-                    "name": "Owen Barton",
-                    "email": "drupal@owenbarton.com"
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
                 },
                 {
-                    "name": "Mark Sonnabaum",
-                    "email": "marksonnabaum@gmail.com"
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
                 },
                 {
-                    "name": "Antoine Beaupré",
-                    "email": "anarcat@koumbit.org"
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
                 },
                 {
-                    "name": "Greg Anderson",
-                    "email": "greg.1.anderson@greenknowe.org"
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
                 },
                 {
-                    "name": "Jonathan Araña Cruz",
-                    "email": "jonhattan@faita.net"
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
                 },
                 {
-                    "name": "Jonathan Hedstrom",
-                    "email": "jhedstrom@gmail.com"
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
                 },
                 {
-                    "name": "Christopher Gervais",
-                    "email": "chris@ergonlogic.com"
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
                 },
                 {
-                    "name": "Dave Reid",
-                    "email": "dave@davereid.net"
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
                 },
                 {
-                    "name": "Damian Lee",
-                    "email": "damiankloip@googlemail.com"
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                },
+                {
+                    "name": "yhahn",
+                    "homepage": "https://www.drupal.org/user/264833"
                 }
             ],
-            "description": "BOA fork of Drush 8.x compatible with Drupal 10",
-            "homepage": "http://www.drush.org",
+            "description": "Companion theme for the Aegir hosting system.",
+            "homepage": "https://www.drupal.org/project/eldir",
             "support": {
-                "forum": "http://drupal.stackexchange.com/questions/tagged/drush",
-                "irc": "irc://irc.freenode.org/drush",
-                "source": "https://github.com/argopecten/aegir-drush8/tree/dev/aegir"
+                "source": "https://git.drupalcode.org/project/eldir"
+            }
+        },
+        {
+            "name": "drupal/entity",
+            "version": "1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/entity.git",
+                "reference": "7.x-1.10"
             },
-            "time": "2024-05-28T08:42:53+00:00"
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/entity-7.x-1.10.zip",
+                "reference": "7.x-1.10",
+                "shasum": "0c1ae0b551403231a089426d098b3dd09107910f"
+            },
+            "require": {
+                "drupal/drupal": "~7.0"
+            },
+            "require-dev": {
+                "drupal/i18n_string": "*",
+                "drupal/rules": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-1.10",
+                    "datestamp": "1637434456",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Berdir",
+                    "homepage": "https://www.drupal.org/user/214652"
+                },
+                {
+                    "name": "bojanz",
+                    "homepage": "https://www.drupal.org/user/86106"
+                },
+                {
+                    "name": "dawehner",
+                    "homepage": "https://www.drupal.org/user/99340"
+                },
+                {
+                    "name": "dixon_",
+                    "homepage": "https://www.drupal.org/user/239911"
+                },
+                {
+                    "name": "fago",
+                    "homepage": "https://www.drupal.org/user/16747"
+                },
+                {
+                    "name": "mglaman",
+                    "homepage": "https://www.drupal.org/user/2416470"
+                },
+                {
+                    "name": "TR",
+                    "homepage": "https://www.drupal.org/user/202830"
+                }
+            ],
+            "description": "Enables modules to work with any entity type and to provide entities.",
+            "homepage": "https://www.drupal.org/project/entity",
+            "support": {
+                "source": "https://git.drupalcode.org/project/entity"
+            }
+        },
+        {
+            "name": "drupal/features",
+            "version": "2.15.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/features.git",
+                "reference": "7.x-2.15"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/features-7.x-2.15.zip",
+                "reference": "7.x-2.15",
+                "shasum": "d136e820a20f71c0797f6254f477897da70708b6"
+            },
+            "require": {
+                "drupal/drupal": "~7.0"
+            },
+            "require-dev": {
+                "drupal/strongarm": "*",
+                "drupal/views": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-2.15",
+                    "datestamp": "1691595136",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Reid",
+                    "homepage": "https://www.drupal.org/user/53892"
+                },
+                {
+                    "name": "dawehner",
+                    "homepage": "https://www.drupal.org/user/99340"
+                },
+                {
+                    "name": "donquixote",
+                    "homepage": "https://www.drupal.org/user/459338"
+                },
+                {
+                    "name": "e2thex",
+                    "homepage": "https://www.drupal.org/user/189123"
+                },
+                {
+                    "name": "febbraro",
+                    "homepage": "https://www.drupal.org/user/43670"
+                },
+                {
+                    "name": "flocondetoile",
+                    "homepage": "https://www.drupal.org/user/2006064"
+                },
+                {
+                    "name": "jmiccolis",
+                    "homepage": "https://www.drupal.org/user/31731"
+                },
+                {
+                    "name": "joseph.olstad",
+                    "homepage": "https://www.drupal.org/user/1321830"
+                },
+                {
+                    "name": "matthand",
+                    "homepage": "https://www.drupal.org/user/171527"
+                },
+                {
+                    "name": "mpotter",
+                    "homepage": "https://www.drupal.org/user/616192"
+                }
+            ],
+            "description": "Provides feature management for Drupal.",
+            "homepage": "https://www.drupal.org/project/features",
+            "support": {
+                "source": "https://git.drupalcode.org/project/features"
+            }
+        },
+        {
+            "name": "drupal/fix_ownership",
+            "version": "3.191.0",
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting_site": "*",
+                "drupal/hosting_tasks_extra": "^3"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.191",
+                    "datestamp": "1674283416",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "dsnopek",
+                    "homepage": "https://www.drupal.org/user/266527"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                }
+            ],
+            "description": "Fix file ownership of Drupal platforms and sites.",
+            "homepage": "https://www.drupal.org/project/hosting_tasks_extra",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting_tasks_extra"
+            }
+        },
+        {
+            "name": "drupal/fix_permissions",
+            "version": "3.191.0",
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting_site": "*",
+                "drupal/hosting_tasks_extra": "^3"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.191",
+                    "datestamp": "1674283416",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "dsnopek",
+                    "homepage": "https://www.drupal.org/user/266527"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                }
+            ],
+            "description": "Fix file permissions of Drupal platforms and sites.",
+            "homepage": "https://www.drupal.org/project/hosting_tasks_extra",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting_tasks_extra"
+            }
+        },
+        {
+            "name": "drupal/hosting",
+            "version": "3.190.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/hosting.git",
+                "reference": "7.x-3.190"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/hosting-7.x-3.190.zip",
+                "reference": "7.x-3.190",
+                "shasum": "51f7a41cb6964a1b7779c989866757ad8f3b9edc"
+            },
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/views": "*",
+                "drupal/views_bulk_operations": "*"
+            },
+            "require-dev": {
+                "drupal/hosting_alias": "*",
+                "drupal/hosting_client": "*",
+                "drupal/hosting_migrate": "*",
+                "drupal/hosting_nginx": "*",
+                "drupal/hosting_package": "*",
+                "drupal/hosting_server": "*",
+                "drupal/hosting_site": "*",
+                "drupal/hosting_ssl": "*",
+                "drupal/hosting_web_server": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489599",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "adrian",
+                    "homepage": "https://www.drupal.org/user/1337"
+                },
+                {
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
+                },
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                }
+            ],
+            "description": "Allow this Drupal site to deploy hosted sites.",
+            "homepage": "https://www.drupal.org/project/hosting",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting"
+            }
+        },
+        {
+            "name": "drupal/hosting_certificate",
+            "version": "3.190.0",
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting": "*",
+                "drupal/hosting_https": "^3"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489877",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                }
+            ],
+            "description": "A service to generate HTTPS certificates for Aegir-hosted sites.",
+            "homepage": "https://www.drupal.org/project/hosting_https",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting_https"
+            }
+        },
+        {
+            "name": "drupal/hosting_civicrm",
+            "version": "3.190.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/hosting_civicrm.git",
+                "reference": "7.x-3.190"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/hosting_civicrm-7.x-3.190.zip",
+                "reference": "7.x-3.190",
+                "shasum": "de5c443301fe4661b4507061b190680d2ef10861"
+            },
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/fix_ownership": "*",
+                "drupal/fix_permissions": "*",
+                "drupal/hosting": "*",
+                "symfony/process": "^3.1"
+            },
+            "require-dev": {
+                "drupal/drush": "*",
+                "drupal/hosting": "*",
+                "drush/drush": "^8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489708",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "autoload-dev": {
+                "psr-0": {
+                    "HostingCiviTest": "tests/"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                }
+            ],
+            "description": "Enables installation and maintenance of CiviCRM on sites.",
+            "homepage": "https://www.drupal.org/project/hosting_civicrm",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting_civicrm"
+            }
+        },
+        {
+            "name": "drupal/hosting_client",
+            "version": "3.190.0",
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting": "*"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489599",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "adrian",
+                    "homepage": "https://www.drupal.org/user/1337"
+                },
+                {
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
+                },
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                }
+            ],
+            "description": "Allow Hostmaster to configure clients.",
+            "homepage": "https://www.drupal.org/project/hosting",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting"
+            }
+        },
+        {
+            "name": "drupal/hosting_composer",
+            "version": "dev-3.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/hosting_composer.git",
+                "reference": "396f9fe6a2cb852050bb1269c766221676ad5632"
+            },
+            "require": {
+                "drupal/aegir_objects": "*",
+                "drupal/drupal": "~7.0",
+                "drupal/hosting_platform": "*"
+            },
+            "require-dev": {
+                "drupal/aegir_objects": "*",
+                "drupal/features": "*",
+                "drupal/hosting_deploy": "*",
+                "drupal/hosting_platform": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-3.x": "3.x-dev"
+                },
+                "drupal": {
+                    "version": "7.x-3.x-dev",
+                    "datestamp": "1513375685",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                }
+            ],
+            "description": "Adds support for building platform dependencies using Composer.",
+            "homepage": "https://www.drupal.org/project/hosting_composer",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting_composer"
+            }
+        },
+        {
+            "name": "drupal/hosting_deploy",
+            "version": "dev-3.x",
+            "require": {
+                "drupal/aegir_objects": "*",
+                "drupal/drupal": "*",
+                "drupal/features": "*",
+                "drupal/hosting_composer": "^3",
+                "drupal/hosting_platform": "*"
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-3.x": "3.x-dev"
+                },
+                "drupal": {
+                    "version": "7.x-3.x-dev",
+                    "datestamp": "1513375685",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                }
+            ],
+            "description": "Improve the UI for selecting the Aegir platform deployment strategy.",
+            "homepage": "https://www.drupal.org/project/hosting_composer",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting_composer"
+            }
+        },
+        {
+            "name": "drupal/hosting_git",
+            "version": "3.190.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/hosting_git.git",
+                "reference": "7.x-3.190"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/hosting_git-7.x-3.190.zip",
+                "reference": "7.x-3.190",
+                "shasum": "f1735bf727cc7bc79322a1c5b14c467f2c47b7c0"
+            },
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting_site": "*"
+            },
+            "require-dev": {
+                "drupal/hosting_site": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489729",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                },
+                {
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                }
+            ],
+            "description": "Allows Hostmaster managed sites and platforms to use Git.",
+            "homepage": "https://www.drupal.org/project/hosting_git",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting_git"
+            }
+        },
+        {
+            "name": "drupal/hosting_https",
+            "version": "3.190.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/hosting_https.git",
+                "reference": "7.x-3.190"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/hosting_https-7.x-3.190.zip",
+                "reference": "7.x-3.190",
+                "shasum": "164f3ceb3930277bb6d6a1b7cdb7efea6aefa3cd"
+            },
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting_certificate": "*",
+                "drupal/hosting_web_server": "*"
+            },
+            "require-dev": {
+                "drupal/hosting": "*",
+                "drupal/hosting_certificate": "*",
+                "drupal/hosting_nginx": "*",
+                "drupal/hosting_web_server": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489877",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                }
+            ],
+            "description": "Adds HTTPS support to Aegir sites.",
+            "homepage": "https://www.drupal.org/project/hosting_https",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting_https"
+            }
+        },
+        {
+            "name": "drupal/hosting_logs",
+            "version": "3.190.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/hosting_logs.git",
+                "reference": "7.x-3.190"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/hosting_logs-7.x-3.190.zip",
+                "reference": "7.x-3.190",
+                "shasum": "fc55660046661161456f102bff63271b256f00d4"
+            },
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting_site": "*"
+            },
+            "require-dev": {
+                "drupal/hosting_site": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489766",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "fastangel",
+                    "homepage": "https://www.drupal.org/user/348228"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                }
+            ],
+            "description": "Provides a site's error and watchdog logs to hostmaster front end.",
+            "homepage": "https://www.drupal.org/project/hosting_logs",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting_logs"
+            }
+        },
+        {
+            "name": "drupal/hosting_package",
+            "version": "3.190.0",
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting": "*"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489599",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "adrian",
+                    "homepage": "https://www.drupal.org/user/1337"
+                },
+                {
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
+                },
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                }
+            ],
+            "description": "Allow Hostmaster to keep track which packages have been installed.",
+            "homepage": "https://www.drupal.org/project/hosting",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting"
+            }
+        },
+        {
+            "name": "drupal/hosting_platform",
+            "version": "3.190.0",
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting": "*",
+                "drupal/hosting_package": "*"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489599",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "adrian",
+                    "homepage": "https://www.drupal.org/user/1337"
+                },
+                {
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
+                },
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                }
+            ],
+            "description": "Allow Hostmaster to keep track of multiple instances of Drupal.",
+            "homepage": "https://www.drupal.org/project/hosting",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting"
+            }
+        },
+        {
+            "name": "drupal/hosting_remote_import",
+            "version": "3.190.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/hosting_remote_import.git",
+                "reference": "7.x-3.190"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/hosting_remote_import-7.x-3.190.zip",
+                "reference": "7.x-3.190",
+                "shasum": "4b9c63f3433830ca4d552d5df93935d31bf466eb"
+            },
+            "require": {
+                "drupal/drupal": "~7.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489788",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "josephleon",
+                    "homepage": "https://www.drupal.org/user/1891828"
+                }
+            ],
+            "description": "Helps to import sites from remote Hostmasters",
+            "homepage": "https://www.drupal.org/project/hosting_remote_import",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting_remote_import"
+            }
+        },
+        {
+            "name": "drupal/hosting_site",
+            "version": "3.190.0",
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting": "*",
+                "drupal/hosting_client": "*"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489599",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "adrian",
+                    "homepage": "https://www.drupal.org/user/1337"
+                },
+                {
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
+                },
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                }
+            ],
+            "description": "Allow Aegir to manage of hosted sites.",
+            "homepage": "https://www.drupal.org/project/hosting",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting"
+            }
+        },
+        {
+            "name": "drupal/hosting_site_backup_manager",
+            "version": "3.190.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/hosting_site_backup_manager.git",
+                "reference": "7.x-3.190"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/hosting_site_backup_manager-7.x-3.190.zip",
+                "reference": "7.x-3.190",
+                "shasum": "aa18b089cf87aac5b9ead68f57a71d86634f977e"
+            },
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting_site": "*",
+                "drupal/hosting_task": "*"
+            },
+            "require-dev": {
+                "drupal/hosting_backup_queue": "*",
+                "drupal/hosting_site": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489813",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Gerben Spil",
+                    "homepage": "https://www.drupal.org/user/728030"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                },
+                {
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "miechiel",
+                    "homepage": "https://www.drupal.org/user/195893"
+                },
+                {
+                    "name": "mig5",
+                    "homepage": "https://www.drupal.org/user/153206"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                }
+            ],
+            "description": "Provides a user interface to manage site backups.",
+            "homepage": "https://www.drupal.org/project/hosting_site_backup_manager",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting_site_backup_manager"
+            }
+        },
+        {
+            "name": "drupal/hosting_task",
+            "version": "3.190.0",
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting": "*"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489599",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "adrian",
+                    "homepage": "https://www.drupal.org/user/1337"
+                },
+                {
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
+                },
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                }
+            ],
+            "description": "Allow Hostmaster to keep track of tasks that have been processed on the servers.",
+            "homepage": "https://www.drupal.org/project/hosting",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting"
+            }
+        },
+        {
+            "name": "drupal/hosting_tasks_extra",
+            "version": "3.191.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/hosting_tasks_extra.git",
+                "reference": "7.x-3.191"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/hosting_tasks_extra-7.x-3.191.zip",
+                "reference": "7.x-3.191",
+                "shasum": "77d49528a314b11ebafa5604cde889b3f3e0588d"
+            },
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting_site": "*"
+            },
+            "require-dev": {
+                "drupal/hosting": "*",
+                "drupal/hosting_site": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.191",
+                    "datestamp": "1674283416",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "dsnopek",
+                    "homepage": "https://www.drupal.org/user/266527"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                }
+            ],
+            "description": "Adds additional tasks to Aegir.",
+            "homepage": "https://www.drupal.org/project/hosting_tasks_extra",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting_tasks_extra"
+            }
+        },
+        {
+            "name": "drupal/hosting_web_server",
+            "version": "3.190.0",
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/hosting": "*"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.190",
+                    "datestamp": "1606489599",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "adrian",
+                    "homepage": "https://www.drupal.org/user/1337"
+                },
+                {
+                    "name": "anarcat",
+                    "homepage": "https://www.drupal.org/user/1274"
+                },
+                {
+                    "name": "bgm",
+                    "homepage": "https://www.drupal.org/user/89461"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "cweagans",
+                    "homepage": "https://www.drupal.org/user/404732"
+                },
+                {
+                    "name": "ergonlogic",
+                    "homepage": "https://www.drupal.org/user/368613"
+                },
+                {
+                    "name": "gboudrias",
+                    "homepage": "https://www.drupal.org/user/918342"
+                },
+                {
+                    "name": "helmo",
+                    "homepage": "https://www.drupal.org/user/449000"
+                },
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "memtkmcc",
+                    "homepage": "https://www.drupal.org/user/92646"
+                },
+                {
+                    "name": "omega8cc",
+                    "homepage": "https://www.drupal.org/user/539502"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                }
+            ],
+            "description": "Allow hostmaster to configure web servers.",
+            "homepage": "https://www.drupal.org/project/hosting",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hosting"
+            }
+        },
+        {
+            "name": "drupal/libraries",
+            "version": "2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/libraries.git",
+                "reference": "7.x-2.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/libraries-7.x-2.5.zip",
+                "reference": "7.x-2.5",
+                "shasum": "e4968b817f2f443d874a30069b764d3a7ab7d482"
+            },
+            "require": {
+                "drupal/drupal": "^7.11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-2.5",
+                    "datestamp": "1569052574",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "joseph.olstad",
+                    "homepage": "https://www.drupal.org/user/1321830"
+                },
+                {
+                    "name": "podarok",
+                    "homepage": "https://www.drupal.org/user/116002"
+                },
+                {
+                    "name": "Pol",
+                    "homepage": "https://www.drupal.org/user/47194"
+                },
+                {
+                    "name": "rjacobs",
+                    "homepage": "https://www.drupal.org/user/422459"
+                },
+                {
+                    "name": "sun",
+                    "homepage": "https://www.drupal.org/user/54136"
+                },
+                {
+                    "name": "tstoeckler",
+                    "homepage": "https://www.drupal.org/user/107158"
+                }
+            ],
+            "description": "Allows version-dependent and shared usage of external libraries.",
+            "homepage": "https://www.drupal.org/project/libraries",
+            "support": {
+                "source": "https://git.drupalcode.org/project/libraries"
+            }
+        },
+        {
+            "name": "drupal/module_filter",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/module_filter.git",
+                "reference": "7.x-2.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/module_filter-7.x-2.3.zip",
+                "reference": "7.x-2.3",
+                "shasum": "ddbe67ca3f43aa4ca0660910b9f271903a5e711d"
+            },
+            "require": {
+                "drupal/drupal": "~7.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-2.3",
+                    "datestamp": "1704471416",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "andrey.troeglazov",
+                    "homepage": "https://www.drupal.org/user/3145389"
+                },
+                {
+                    "name": "greenSkin",
+                    "homepage": "https://www.drupal.org/user/173855"
+                },
+                {
+                    "name": "smustgrave",
+                    "homepage": "https://www.drupal.org/user/3252890"
+                }
+            ],
+            "description": "Filter the modules list.",
+            "homepage": "https://www.drupal.org/project/module_filter",
+            "support": {
+                "source": "https://git.drupalcode.org/project/module_filter"
+            }
+        },
+        {
+            "name": "drupal/openidadmin",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/openidadmin.git",
+                "reference": "7.x-1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/openidadmin-7.x-1.0.zip",
+                "reference": "7.x-1.0",
+                "shasum": "e24cd21ea0225864b0aa478468081abbd4288dae"
+            },
+            "require": {
+                "drupal/drupal": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-1.0",
+                    "datestamp": "1284569743",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "febbraro",
+                    "homepage": "https://www.drupal.org/user/43670"
+                },
+                {
+                    "name": "jmiccolis",
+                    "homepage": "https://www.drupal.org/user/31731"
+                },
+                {
+                    "name": "yhahn",
+                    "homepage": "https://www.drupal.org/user/264833"
+                }
+            ],
+            "description": "Allows bulk operations for OpenID administration.",
+            "homepage": "https://www.drupal.org/project/openidadmin",
+            "support": {
+                "source": "https://git.drupalcode.org/project/openidadmin"
+            }
+        },
+        {
+            "name": "drupal/overlay_paths",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/overlay_paths.git",
+                "reference": "7.x-1.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/overlay_paths-7.x-1.3.zip",
+                "reference": "7.x-1.3",
+                "shasum": "b58b6b146f16cbd2487221e4b92dd4762e68b8e4"
+            },
+            "require": {
+                "drupal/drupal": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-1.3",
+                    "datestamp": "1388699905",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Pugh",
+                    "homepage": "https://www.drupal.org/user/17028"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
+                },
+                {
+                    "name": "james.williams",
+                    "homepage": "https://www.drupal.org/user/592268"
+                }
+            ],
+            "description": "Allows other developers to define paths that should use the overlay, but not an admin theme",
+            "homepage": "https://www.drupal.org/project/overlay_paths",
+            "support": {
+                "source": "https://git.drupalcode.org/project/overlay_paths"
+            }
+        },
+        {
+            "name": "drupal/r4032login",
+            "version": "1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/r4032login.git",
+                "reference": "7.x-1.8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/r4032login-7.x-1.8.zip",
+                "reference": "7.x-1.8",
+                "shasum": "756d9d16f37771e087d13b528dc3afee2b573ed2"
+            },
+            "require": {
+                "drupal/drupal": "~7.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-1.8",
+                    "datestamp": "1407782028",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "bdone",
+                    "homepage": "https://www.drupal.org/user/687670"
+                },
+                {
+                    "name": "Bevan",
+                    "homepage": "https://www.drupal.org/user/49989"
+                },
+                {
+                    "name": "deekayen",
+                    "homepage": "https://www.drupal.org/user/972"
+                },
+                {
+                    "name": "Grayle",
+                    "homepage": "https://www.drupal.org/user/3145497"
+                },
+                {
+                    "name": "lotyrin",
+                    "homepage": "https://www.drupal.org/user/216580"
+                },
+                {
+                    "name": "markdorison",
+                    "homepage": "https://www.drupal.org/user/346106"
+                },
+                {
+                    "name": "ms2011",
+                    "homepage": "https://www.drupal.org/user/108440"
+                },
+                {
+                    "name": "Nixou",
+                    "homepage": "https://www.drupal.org/user/2304734"
+                },
+                {
+                    "name": "pwolanin",
+                    "homepage": "https://www.drupal.org/user/49851"
+                },
+                {
+                    "name": "RobLoach",
+                    "homepage": "https://www.drupal.org/user/61114"
+                },
+                {
+                    "name": "shrop",
+                    "homepage": "https://www.drupal.org/user/14767"
+                },
+                {
+                    "name": "Sk8erPeter",
+                    "homepage": "https://www.drupal.org/user/1441344"
+                }
+            ],
+            "description": "Redirect anonymous users from 403 Access Denied pages to the /user/login page.",
+            "homepage": "https://www.drupal.org/project/r4032login",
+            "support": {
+                "source": "https://git.drupalcode.org/project/r4032login"
+            }
+        },
+        {
+            "name": "drupal/tfa",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/tfa.git",
+                "reference": "7.x-2.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/tfa-7.x-2.3.zip",
+                "reference": "7.x-2.3",
+                "shasum": "f098b757140ed741b3b15a1539a1f875d477ebbc"
+            },
+            "require": {
+                "drupal/drupal": "~7.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-2.3",
+                    "datestamp": "1669504624",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "cmlara",
+                    "homepage": "https://www.drupal.org/user/1790054"
+                },
+                {
+                    "name": "coltrane",
+                    "homepage": "https://www.drupal.org/user/91990"
+                },
+                {
+                    "name": "daggerhart",
+                    "homepage": "https://www.drupal.org/user/167806"
+                },
+                {
+                    "name": "greggles",
+                    "homepage": "https://www.drupal.org/user/36762"
+                },
+                {
+                    "name": "jcnventura",
+                    "homepage": "https://www.drupal.org/user/122464"
+                },
+                {
+                    "name": "nerdstein",
+                    "homepage": "https://www.drupal.org/user/1557710"
+                },
+                {
+                    "name": "poker10",
+                    "homepage": "https://www.drupal.org/user/272316"
+                }
+            ],
+            "description": "Pluggable provider of second factor authentication for Drupal",
+            "homepage": "https://www.drupal.org/project/tfa",
+            "support": {
+                "source": "https://git.drupalcode.org/project/tfa"
+            }
+        },
+        {
+            "name": "drupal/tfa_basic",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/tfa_basic.git",
+                "reference": "7.x-1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/tfa_basic-7.x-1.2.zip",
+                "reference": "7.x-1.2",
+                "shasum": "be29c26079be6355abd076c9a05c62b5bbb8d9e0"
+            },
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/tfa": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-1.2",
+                    "datestamp": "1689537944",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "coltrane",
+                    "homepage": "https://www.drupal.org/user/91990"
+                },
+                {
+                    "name": "poker10",
+                    "homepage": "https://www.drupal.org/user/272316"
+                }
+            ],
+            "description": "TFA plugins for Time-based One Time Passwords, Trusted Browsers, Recovery Codes, and Twilio SMS",
+            "homepage": "https://www.drupal.org/project/tfa_basic",
+            "support": {
+                "source": "https://git.drupalcode.org/project/tfa_basic"
+            }
+        },
+        {
+            "name": "drupal/timeago",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/timeago.git",
+                "reference": "7.x-2.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/timeago-7.x-2.3.zip",
+                "reference": "7.x-2.3",
+                "shasum": "2cfefa437c8754c52117a1674a5bf56f0549a3d5"
+            },
+            "require": {
+                "drupal/drupal": "~7.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-2.3",
+                    "datestamp": "1415314680",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "IceCreamYou",
+                    "homepage": "https://www.drupal.org/user/201425"
+                },
+                {
+                    "name": "jonaswouters",
+                    "homepage": "https://www.drupal.org/user/17"
+                }
+            ],
+            "description": "Converts dynamic timetamps to a 'time ago' format using jQuery with graceful degredation.",
+            "homepage": "https://www.drupal.org/project/timeago",
+            "support": {
+                "source": "https://git.drupalcode.org/project/timeago"
+            }
+        },
+        {
+            "name": "drupal/views",
+            "version": "3.29.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/views.git",
+                "reference": "7.x-3.29"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views-7.x-3.29.zip",
+                "reference": "7.x-3.29",
+                "shasum": "4fc548a8f5252993d5edba557e2aa77ba0fe5b3b"
+            },
+            "require": {
+                "drupal/ctools": "*",
+                "drupal/drupal": "~7.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.29",
+                    "datestamp": "1678722009",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "bojanz",
+                    "homepage": "https://www.drupal.org/user/86106"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "damiankloip",
+                    "homepage": "https://www.drupal.org/user/1037976"
+                },
+                {
+                    "name": "DamienMcKenna",
+                    "homepage": "https://www.drupal.org/user/108450"
+                },
+                {
+                    "name": "dawehner",
+                    "homepage": "https://www.drupal.org/user/99340"
+                },
+                {
+                    "name": "dww",
+                    "homepage": "https://www.drupal.org/user/46549"
+                },
+                {
+                    "name": "esmerel",
+                    "homepage": "https://www.drupal.org/user/164022"
+                },
+                {
+                    "name": "Lendude",
+                    "homepage": "https://www.drupal.org/user/690914"
+                },
+                {
+                    "name": "merlinofchaos",
+                    "homepage": "https://www.drupal.org/user/26979"
+                },
+                {
+                    "name": "renatog",
+                    "homepage": "https://www.drupal.org/user/3326031"
+                },
+                {
+                    "name": "tim.plunkett",
+                    "homepage": "https://www.drupal.org/user/241634"
+                }
+            ],
+            "description": "Create customized lists and queries from your database.",
+            "homepage": "https://www.drupal.org/project/views",
+            "support": {
+                "source": "https://git.drupalcode.org/project/views"
+            }
+        },
+        {
+            "name": "drupal/views_bulk_operations",
+            "version": "3.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/views_bulk_operations.git",
+                "reference": "7.x-3.7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views_bulk_operations-7.x-3.7.zip",
+                "reference": "7.x-3.7",
+                "shasum": "2c9b16cdd59928403d510dc610f20334274fd98d"
+            },
+            "require": {
+                "drupal/drupal": "~7.0",
+                "drupal/entity": "*",
+                "drupal/views": "^3.12"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "7.x-3.7",
+                    "datestamp": "1666149178",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/7/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "bojanz",
+                    "homepage": "https://www.drupal.org/user/86106"
+                },
+                {
+                    "name": "Graber",
+                    "homepage": "https://www.drupal.org/user/1599440"
+                },
+                {
+                    "name": "joelpittet",
+                    "homepage": "https://www.drupal.org/user/160302"
+                }
+            ],
+            "description": "Provides a way of selecting multiple rows and applying operations to them.",
+            "homepage": "https://www.drupal.org/project/views_bulk_operations",
+            "support": {
+                "source": "https://git.drupalcode.org/project/views_bulk_operations"
+            }
         },
         {
             "name": "nikic/php-parser",
@@ -1358,6 +3922,57 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.12.3"
             },
             "time": "2024-04-02T15:57:53+00:00"
+        },
+        {
+            "name": "sandykadam/preserve-paths",
+            "version": "0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sandykadam/preserve-paths.git",
+                "reference": "c7befee2f781aa700b2c92b9c2c8987e01c330eb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sandykadam/preserve-paths/zipball/c7befee2f781aa700b2c92b9c2c8987e01c330eb",
+                "reference": "c7befee2f781aa700b2c92b9c2c8987e01c330eb",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0 || ^2.0"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0",
+                "derhasi/tempdirectory": "0.1.*",
+                "escapestudios/symfony2-coding-standard": "2.*",
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "DrupalComposer\\PreservePaths\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "DrupalComposer\\PreservePaths\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Composer plugin for preserving custom paths and supporting nested packages",
+            "homepage": "https://github.com/sandykadam/preserve-paths",
+            "keywords": [
+                "composer-plugin",
+                "custom path",
+                "installer",
+                "nested package"
+            ],
+            "support": {
+                "issues": "https://github.com/sandykadam/preserve-paths/issues",
+                "source": "https://github.com/sandykadam/preserve-paths/tree/0.4"
+            },
+            "time": "2024-04-06T12:35:02+00:00"
         },
         {
             "name": "symfony/console",
@@ -2264,16 +4879,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v5.4.39",
+            "version": "v5.4.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "1987f86ad7f339fe3d3e8e6cf3b7ce4d4b8e547e"
+                "reference": "af8868a6e9d6082dfca11f1a1f205ae93a8b6d93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/1987f86ad7f339fe3d3e8e6cf3b7ce4d4b8e547e",
-                "reference": "1987f86ad7f339fe3d3e8e6cf3b7ce4d4b8e547e",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/af8868a6e9d6082dfca11f1a1f205ae93a8b6d93",
+                "reference": "af8868a6e9d6082dfca11f1a1f205ae93a8b6d93",
                 "shasum": ""
             },
             "require": {
@@ -2333,7 +4948,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v5.4.39"
+                "source": "https://github.com/symfony/var-dumper/tree/v5.4.40"
             },
             "funding": [
                 {
@@ -2349,7 +4964,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-18T08:26:06+00:00"
+            "time": "2024-05-31T14:33:22+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -2581,10 +5196,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "aegir/hosting": 20,
-        "aegir/provision": 20,
-        "drush/drush": 20,
-        "aegir/hostmaster": 20
+        "aegir/hostmaster": 20,
+        "aegir/drush8": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

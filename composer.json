@@ -41,18 +41,16 @@
         "ext-pdo": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "aegir/hosting": "dev-dev/composer",
-        "aegir/provision": "dev-backport/boa",
+        "aegir/hostmaster": "dev-dev/composer",
+        "aegir/drush8": "dev-dev/aegir",
         "composer/installers": "^1.9",
         "composer/semver": "^1.4",
         "cweagans/composer-patches": "^1.7",
-        "drupal-composer/preserve-paths": "^0.1.6",
+        "sandykadam/preserve-paths": "^0.4",
         "drupal/composer_autoloader": "^1.0",
         "drupal/drupal": "^7.100",
-        "drush/drush": "dev-dev/aegir",
         "symfony/filesystem": "~2.7 || ^3",
-        "webflo/drupal-finder": "^1.2.1",
-        "aegir/hostmaster": "dev-dev/composer"
+        "webflo/drupal-finder": "^1.2.1"
     },
     "conflict": {
         "drupal/core": "8.*"
@@ -62,9 +60,9 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "drupal-composer/preserve-paths": true,
             "cweagans/composer-patches": true,
-            "composer/installers": true
+            "composer/installers": true,
+            "sandykadam/preserve-paths": true
         }
     },
     "autoload": {
@@ -99,20 +97,30 @@
     },
     "extra": {
         "installer-paths": {
-            "hostmaster": ["type:drupal-core"],
+            "hostmaster/": ["type:drupal-core"],
             "hostmaster/profiles/{$name}/": ["type:drupal-profile"],
             "hostmaster/sites/all/drush/{$name}/": ["type:drupal-drush"],
             "hostmaster/sites/all/libraries/{$name}/": ["type:drupal-library"],
             "hostmaster/sites/all/modules/contrib/{$name}/": ["type:drupal-module"],
             "hostmaster/sites/all/themes/contrib/{$name}/": ["type:drupal-theme"]
         },
+        "preserve-paths": [
+	    "hostmaster/sites",
+	    "hostmaster/sites/all/modules/contrib",
+	    "hostmaster/sites/all/themes/contrib",
+	    "hostmaster/sites/all/libraries",
+	    "hostmaster/sites/all/drush",
+	    "hostmaster/sites/default/settings.php",
+	    "hostmaster/sites/default/files"
+        ],
+        "patches-install-hooks": true,
         "patches": {
             "cweagans/composer-patches": {
-                "Call the preserve paths hooks" : "https://github.com/SebCorbin/composer-patches/commit/1cb9bacba51f8bba0c5f3f322c3bb61e4ceae974.patch"
+                "Call the preserve paths hooks" : "https://github.com/jcnventura/composer-patches/compare/1.x...jcnventura:fix-preserve-paths.diff"
+            },
+            "drupal-composer/preserve-paths": {
+                "Update PluginWrapper.php" : "https://github.com/lazysoundsystem/preserve-paths/commit/173dde446d161aa2beb5b1cafccfd14f2a8bbed4.patch"
             }
-        },
-        "preserve-paths": [
-            "hostmaster/sites"
-        ]
+        }
     }
 }
