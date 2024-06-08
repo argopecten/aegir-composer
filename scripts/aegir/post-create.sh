@@ -2,9 +2,9 @@
 #
 # Aegir 3.x install/update scripts Ubuntu
 #
-# on Github: https://github.com/argopecten/aegir-hostmaster
+# on Github: https://github.com/argopecten/aegir-composer
 #
-echo "post-create script" | tee -a log.txt
+echo "ÆGIR | post-create script is running..." | tee -a log.txt
 # occurs after the create-project command has been executed
 
 # reload services

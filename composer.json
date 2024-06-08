@@ -105,13 +105,13 @@
             "hostmaster/sites/all/themes/contrib/{$name}/": ["type:drupal-theme"]
         },
         "preserve-paths": [
-	    "hostmaster/sites",
-	    "hostmaster/sites/all/modules/contrib",
-	    "hostmaster/sites/all/themes/contrib",
-	    "hostmaster/sites/all/libraries",
-	    "hostmaster/sites/all/drush",
-	    "hostmaster/sites/default/settings.php",
-	    "hostmaster/sites/default/files"
+            "hostmaster/sites",
+            "hostmaster/sites/all/modules/contrib",
+            "hostmaster/sites/all/themes/contrib",
+            "hostmaster/sites/all/libraries",
+            "hostmaster/sites/all/drush",
+            "hostmaster/sites/default/settings.php",
+            "hostmaster/sites/default/files"
         ],
         "patches-install-hooks": true,
         "patches": {

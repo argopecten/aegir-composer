@@ -2,28 +2,54 @@
 #
 # Aegir 3.x install/update scripts Ubuntu
 #
-# on Github: https://github.com/argopecten/aegir-hostmaster
+# on Github: https://github.com/argopecten/aegir-composer
 #
-echo "post-install script" | tee -a log.txt
-# occurs after the install command has been executed with a lock file present.
+
+# some variable
+# webserver: apache2 or nginx, for now it is just nginx
+WEBSERVER="nginx"
+# hostmaster directory
+AEGIR_HOSTMASTER="/var/aegir/hostmaster"
+# vendor directory
+AEGIR_VENDOR="/var/aegir/vendor"
+
+
+echo "ÆGIR | post-install script is running ..." | tee -a log.txt
+# runs after the install command has been executed with a lock file present
+# all files are downloaded and relocated by composer
 
 #  - webserver config to use aegir settings
-echo " - ÆGIR | config_webserver" | tee -a log.txt
+echo " - ÆGIR | $WEBSERVER is using the Aegir configuration." | tee -a log.txt
+AEGIR_CONF="/var/aegir/config/$WEBSERVER.conf"
+case "$WEBSERVER" in
+    nginx)
+        WEBSERVER_CONF="/etc/nginx/conf.d/aegir.conf"
+        ;;
+    apache)
+        WEBSERVER_CONF="/etc/apache2/conf-enabled/aegir.conf"
+        ;;
+esac
+[[ -f "$WEBSERVER_CONF" ]] && sudo su -c "rm $WEBSERVER_CONF"
+sudo su -c "ln -s $AEGIR_CONF $WEBSERVER_CONF"
+
 
 #  Deploy "fix ownership & permissions" scripts
-echo " - ÆGIR | deploy_fix_scripts" | tee -a log.txt
+echo " - ÆGIR | deploying fix ownership & permissions scripts" | tee -a log.txt
 
-# setup drush
+# remove old scripts, if any
+sudo su -c "rm /usr/local/bin/fix-drupal-*.sh 2>/dev/null"
+sudo su -c "rm /etc/sudoers.d/fix-drupal-* 2>/dev/null"
+
+# deploy scripts
+sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
+
+
+# setup drush8, download done by composer
 echo " - ÆGIR | Setup global Drush8 for Aegir 3.x" | tee -a log.txt
-# install mehet a composer.json-ba
-# - git clone https://github.com/omega8cc/drush /usr/share/drush8
-#  - chown root:ubuntu /usr/share/drush8
-#  - chmod 775 /usr/share/drush8
-#  - su - ubuntu -c "composer install --working-dir=/usr/share/drush8 -n"
-#  - ln -s /usr/share/drush8/drush /usr/bin/drush
-#
-# init drush
+# allow drush via PATH
+sudo ln -s $AEGIR_VENDOR/aegir/drush8/drush /usr/bin/drush
 # clear cache
+sudo su - aegir -c "drush cache:clear drush"
 
 # Configure the Provision module
 echo " - ÆGIR | config_provision" | tee -a log.txt

@@ -2,9 +2,9 @@
 #
 # Aegir 3.x install/update scripts Ubuntu
 #
-# on Github: https://github.com/argopecten/aegir-hostmaster
+# on Github: https://github.com/argopecten/aegir-composer
 #
-echo "post-update script" | tee -a log.txt
+echo "ÆGIR | post-update script is running..." | tee -a log.txt
 # occurs after the update command has been executed,
 # or after the install command has been executed without a lock file present.
 
