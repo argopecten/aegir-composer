@@ -18,6 +18,10 @@ AEGIR_HOSTMASTER="/var/aegir/hostmaster"
 AEGIR_VENDOR="/var/aegir/vendor"
 
 
+echo " - ÆGIR | Prepare /var/aegir..." | tee -a log.txt
+# move downloaded files into /var/aegir
+sudo mv /tmp/aegir-composer /var/aegir
+
 echo " - ÆGIR | Setup aegir user" | tee -a log.txt
 # create user if not yet exists
 if ! getent passwd aegir >/dev/null ; then
