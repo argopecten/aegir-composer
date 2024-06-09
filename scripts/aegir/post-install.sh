@@ -19,11 +19,6 @@ AEGIR_VENDOR="/var/aegir/vendor"
 # global drush
 DRUSH_PATH="/usr/bin/drush"
 
-echo " - ÆGIR | Prepare /var/aegir..." | tee -a log.txt
-# move downloaded files into /var/aegir
-[[ -d /var/aegir ]] && sudo su -c "rm -rf /var/aegir"
-sudo mv /tmp/aegir-composer /var/aegir
-
 echo " - ÆGIR | Setup aegir user" | tee -a log.txt
 # create user if not yet exists
 if ! getent passwd aegir >/dev/null ; then
