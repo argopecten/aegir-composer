@@ -31,9 +31,10 @@ if ! getent passwd aegir >/dev/null ; then
     sudo adduser --quiet aegir www-data
     sudo cp /etc/skel/.bash* /var/aegir
     sudo cp /etc/skel/.profile /var/aegir
-    sudo chown -R aegir:aegir /var/aegir
-    sudo chmod 755 /var/aegir
 fi
+sudo chown -R aegir:aegir /var/aegir
+sudo chmod 755 /var/aegir
+
 #  grant passwordless sudo rights for everything
 echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
 sudo chmod 0440 /tmp/aegir
