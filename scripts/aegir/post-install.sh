@@ -16,7 +16,8 @@ WEBSERVER="nginx"
 AEGIR_HOSTMASTER="/var/aegir/hostmaster"
 # vendor directory
 AEGIR_VENDOR="/var/aegir/vendor"
-
+# global drush
+DRUSH_PATH="/usr/bin/drush"
 
 echo " - ÆGIR | Prepare /var/aegir..." | tee -a log.txt
 # move downloaded files into /var/aegir
@@ -70,7 +71,8 @@ sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_pe
 # setup drush8, download done by composer
 echo " - ÆGIR | Setup global Drush8 for Aegir 3.x" | tee -a log.txt
 # allow drush via PATH
-sudo ln -s $AEGIR_VENDOR/aegir/drush8/drush /usr/bin/drush
+[[ -L "$DRUSH_PATH" ]] && sudo su -c "rm $DRUSH_PATH"
+sudo ln -s $AEGIR_VENDOR/aegir/drush8/drush $DRUSH_PATH
 # clear cache
 sudo su - aegir -c "drush cache:clear drush"
 
