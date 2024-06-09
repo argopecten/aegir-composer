@@ -35,11 +35,11 @@ echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
 sudo chmod 0440 /tmp/aegir
 sudo chown root:root /tmp/aegir
 sudo mv /tmp/aegir /etc/sudoers.d/aegir
-echo " - ÆGIR | The aegir user and its permissions have been setup." | tee -a log.txt
+echo " - ÆGIR | The aegir user and its permissions have been setup." | sudo tee -a log.txt
 
 
 #  - webserver config to use aegir settings
-echo " - ÆGIR | $WEBSERVER is using the Aegir configuration." | tee -a log.txt
+echo " - ÆGIR | $WEBSERVER is using the Aegir configuration." | sudo tee -a log.txt
 AEGIR_CONF="/var/aegir/config/$WEBSERVER.conf"
 case "$WEBSERVER" in
     nginx)
@@ -54,7 +54,7 @@ sudo su -c "ln -s $AEGIR_CONF $WEBSERVER_CONF"
 
 
 #  Deploy "fix ownership & permissions" scripts
-echo " - ÆGIR | deploying fix ownership & permissions scripts" | tee -a log.txt
+echo " - ÆGIR | deploying fix ownership & permissions scripts" | sudo tee -a log.txt
 
 # remove old scripts, if any
 sudo su -c "rm /usr/local/bin/fix-drupal-*.sh 2>/dev/null"
@@ -65,26 +65,31 @@ sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_pe
 
 
 # setup drush8, download done by composer
-echo " - ÆGIR | Setup global Drush8 for Aegir 3.x" | tee -a log.txt
+echo " - ÆGIR | Setup global Drush8 for Aegir 3.x" | sudo tee -a log.txt
 # allow drush via PATH
 [[ -L "$DRUSH_PATH" ]] && sudo su -c "rm $DRUSH_PATH"
 sudo ln -s $AEGIR_VENDOR/aegir/drush8/drush $DRUSH_PATH
 # clear cache
 sudo su - aegir -c "drush cache:clear drush"
 
+
 # Configure the Provision module
-echo " - ÆGIR | config_provision" | tee -a log.txt
+echo " - ÆGIR | config_provision" | sudo tee -a log.txt
+
 
 # Configure db user for Aegir
-echo " - ÆGIR | db user for Aegir" | tee -a log.txt
+echo " - ÆGIR | db user for Aegir" | sudo tee -a log.txt
+
 
 # Install Aegir frontend via drush hostmaster-install
-echo " - ÆGIR | Install Aegir frontend via drush hostmaster-install" | tee -a log.txt
+echo " - ÆGIR | Install Aegir frontend via drush hostmaster-install" | sudo tee -a log.txt
 # Flush the drush cache to find new commands
 # sudo su - aegir -c "drush cache:clear drush"
 
+
 # install hosting-queued daemon
-echo " - ÆGIR | Install hosting-queued daemon..."
+echo " - ÆGIR | Install hosting-queued daemon..." | sudo tee -a log.txt
+
 
 #  - Enable Aegir modules: hosting_civicrm, hosting_civicrm_cron, ...
-echo " - ÆGIR | Enabling hosting modules: hosting-queued daemon, fix ownership & permissions ..."
+echo " - ÆGIR | Enabling hosting modules: hosting-queued daemon, fix ownership & permissions ..."  | sudo tee -a log.txt
