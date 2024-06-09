@@ -55,13 +55,11 @@ sudo su -c "ln -s $AEGIR_CONF $WEBSERVER_CONF"
 
 #  Deploy "fix ownership & permissions" scripts
 echo " - ÆGIR | deploying fix ownership & permissions scripts" | sudo tee -a log.txt
-
 # remove old scripts, if any
 sudo su -c "rm /usr/local/bin/fix-drupal-*.sh 2>/dev/null"
 sudo su -c "rm /etc/sudoers.d/fix-drupal-* 2>/dev/null"
-
 # deploy scripts
-sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh
+sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh 2>&1>/dev/null
 
 
 # setup drush8, download done by composer
@@ -74,7 +72,8 @@ sudo su - aegir -c "drush cache:clear drush"
 
 
 # Configure the Provision module
-echo " - ÆGIR | config_provision" | sudo tee -a log.txt
+# echo " - ÆGIR | Configure the Provision module" | sudo tee -a log.txt
+# download done by composer, nothing else to do here
 
 
 # Configure db user for Aegir
