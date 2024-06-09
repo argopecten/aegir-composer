@@ -20,6 +20,7 @@ AEGIR_VENDOR="/var/aegir/vendor"
 
 echo " - ÆGIR | Prepare /var/aegir..." | tee -a log.txt
 # move downloaded files into /var/aegir
+[[ -d /var/aegir ]] && sudo su -c "rm -rf /var/aegir"
 sudo mv /tmp/aegir-composer /var/aegir
 
 echo " - ÆGIR | Setup aegir user" | tee -a log.txt
@@ -51,7 +52,7 @@ case "$WEBSERVER" in
         WEBSERVER_CONF="/etc/apache2/conf-enabled/aegir.conf"
         ;;
 esac
-[[ -f "$WEBSERVER_CONF" ]] && sudo su -c "rm $WEBSERVER_CONF"
+[[ -L "$WEBSERVER_CONF" ]] && sudo su -c "rm $WEBSERVER_CONF"
 sudo su -c "ln -s $AEGIR_CONF $WEBSERVER_CONF"
 
 
