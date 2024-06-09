@@ -5,6 +5,10 @@
 # on Github: https://github.com/argopecten/aegir-composer
 #
 
+echo "ÆGIR | post-install script is running ..." | tee -a log.txt
+# runs after the install command has been executed with a lock file present
+# all files are downloaded and relocated by composer
+
 # some variable
 # webserver: apache2 or nginx, for now it is just nginx
 WEBSERVER="nginx"
@@ -14,9 +18,23 @@ AEGIR_HOSTMASTER="/var/aegir/hostmaster"
 AEGIR_VENDOR="/var/aegir/vendor"
 
 
-echo "ÆGIR | post-install script is running ..." | tee -a log.txt
-# runs after the install command has been executed with a lock file present
-# all files are downloaded and relocated by composer
+echo " - ÆGIR | Setup aegir user" | tee -a log.txt
+# create user if not yet exists
+if ! getent passwd aegir >/dev/null ; then
+    sudo adduser --quiet --system --group --no-create-home --home '/var/aegir' --shell '/bin/bash' --gecos 'Aegir user,,,' aegir
+    sudo adduser --quiet aegir www-data
+    sudo cp /etc/skel/.bash* /var/aegir
+    sudo cp /etc/skel/.profile /var/aegir
+    sudo chown -R aegir:aegir /var/aegir
+    sudo chmod 755 /var/aegir
+fi
+#  grant passwordless sudo rights for everything
+echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
+sudo chmod 0440 /tmp/aegir
+sudo chown root:root /tmp/aegir
+sudo mv /tmp/aegir /etc/sudoers.d/aegir
+echo " - ÆGIR | The aegir user and its permissions have been setup." | tee -a log.txt
+
 
 #  - webserver config to use aegir settings
 echo " - ÆGIR | $WEBSERVER is using the Aegir configuration." | tee -a log.txt
