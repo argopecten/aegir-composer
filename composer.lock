@@ -148,7 +148,7 @@
             "version": "dev-dev/composer",
             "source": {
                 "type": "git",
-                "url": "git@github.com:argopecten/aegir-hosting.git",
+                "url": "https://github.com/argopecten/aegir-hosting.git",
                 "reference": "62b0a68ec9568bfd9361aae44e2b6ee4a0fd5ab1"
             },
             "dist": {
@@ -184,12 +184,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-hostmaster.git",
-                "reference": "63c9f4904a1b4a2a0bd4b070053a3a2413016348"
+                "reference": "983b34ceba9a89676f2ec6c3d09ffe34115ba791"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/63c9f4904a1b4a2a0bd4b070053a3a2413016348",
-                "reference": "63c9f4904a1b4a2a0bd4b070053a3a2413016348",
+                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/983b34ceba9a89676f2ec6c3d09ffe34115ba791",
+                "reference": "983b34ceba9a89676f2ec6c3d09ffe34115ba791",
                 "shasum": ""
             },
             "require": {
@@ -249,14 +249,14 @@
                 "source": "https://github.com/argopecten/aegir-hostmaster/tree/dev/composer",
                 "issues": "https://github.com/argopecten/aegir-hostmaster/issues"
             },
-            "time": "2024-06-07T08:54:21+00:00"
+            "time": "2024-06-15T09:56:35+00:00"
         },
         {
             "name": "aegir/provision",
             "version": "dev-backport/boa",
             "source": {
                 "type": "git",
-                "url": "git@github.com:argopecten/aegir-provision.git",
+                "url": "https://github.com/argopecten/aegir-provision.git",
                 "reference": "23f71965cde722478a1af66c841167b63a434b2a"
             },
             "dist": {
@@ -3846,16 +3846,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.12.3",
+            "version": "v0.12.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "b6b6cce7d3ee8fbf31843edce5e8f5a72eff4a73"
+                "reference": "2fd717afa05341b4f8152547f142cd2f130f6818"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/b6b6cce7d3ee8fbf31843edce5e8f5a72eff4a73",
-                "reference": "b6b6cce7d3ee8fbf31843edce5e8f5a72eff4a73",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/2fd717afa05341b4f8152547f142cd2f130f6818",
+                "reference": "2fd717afa05341b4f8152547f142cd2f130f6818",
                 "shasum": ""
             },
             "require": {
@@ -3919,9 +3919,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.12.3"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.12.4"
             },
-            "time": "2024-04-02T15:57:53+00:00"
+            "time": "2024-06-10T01:18:23+00:00"
         },
         {
             "name": "sandykadam/preserve-paths",
