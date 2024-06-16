@@ -54,6 +54,8 @@ sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_pe
 
 # setup drush8, download done by composer
 echo " - ÆGIR | Setup global Drush8 for Aegir 3.x" | sudo tee -a log.txt
+# link provision drush commands into drush8 directory
+ln -s $AEGIR_HOSTMASTER/sites/all/drush/provision $AEGIR_VENDOR/aegir/drush8/commands
 # allow drush via PATH
 [[ -L "$DRUSH_PATH" ]] && sudo su -c "rm $DRUSH_PATH"
 sudo ln -s $AEGIR_VENDOR/aegir/drush8/drush $DRUSH_PATH
