@@ -78,10 +78,77 @@ sudo su - aegir -c "drush cache:clear drush"
 
 # Configure db user for Aegir
 echo " - ÆGIR | db user for Aegir" | sudo tee -a log.txt
+# random database password for aegir user will be stored in
+#    /var/aegir/.drush/server_localhost.alias.drushrc.php
+#    generate 5x4 bits and replace space with underscore as password
+AEGIR_DB_PASS=$(echo `pwgen 5 4 -c -n -s -B` | tr -s ' ' '_' )
+AEGIR_DB_USER="aegirdbuser"
+AEGIR_DB_HOST="localhost"
+# Create db-user for Aegir, aligned to changes in MySQL 8.0
+# https://www.drupal.org/project/provision/issues/3145881
+sudo /usr/bin/mysql -e "CREATE USER IF NOT EXISTS '$AEGIR_DB_USER'@'$AEGIR_DB_HOST'"
+sudo /usr/bin/mysql -e "ALTER USER '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' IDENTIFIED BY '$AEGIR_DB_PASS'"
+sudo /usr/bin/mysql -e "GRANT ALL ON *.* TO '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' WITH GRANT OPTION"
+
+#The URL of the site to install
+SITE_URI="aegir.example.com"
+# Fully qualified domain name of the local server
+AEGIR_HOST="aegir.example.com"
+# version of this Aegir release
+AEGIR_VERSION="7.x-3.x"
 
 
-# Install Aegir frontend via drush hostmaster-install
+# Install Aegir frontend via drush hostmaster-install -y
 echo " - ÆGIR | Install Aegir frontend via drush hostmaster-install" | sudo tee -a log.txt
+
+ez make-install-ra ment, ami hülyeség
+sudo su - aegir -c "drush hostmaster-install --strict=0 $SITE_URI \
+  --aegir_db_host=$AEGIR_DB_HOST \
+  --aegir_db_pass=$AEGIR_DB_PASS \
+  --aegir_db_port='3306' \
+  --aegir_db_user=$AEGIR_DB_USER \
+  --aegir_host=$AEGIR_HOST \
+  --aegir_root="/var/aegir" \
+  --client_name="admin" \
+  --client_email="admin@aegir.example.com" \
+  --http_service_type=$WEBSERVER \
+  --root=$AEGIR_HOSTMASTER \
+  --version=$AEGIR_VERSION \
+"
+
+ez működött (profile install), ha minden paraméternek volt értéke, kivéve VERSION(?).
+drush hostmaster-install -y --strict=0 $SITE_URI \
+          --aegir_db_host=$AEGIR_DB_HOST \
+          --aegir_db_pass=$AEGIR_DB_PASS \
+          --aegir_db_port='3306' \
+          --aegir_db_user=$AEGIR_DB_USER \
+          --aegir_host=$AEGIR_HOST \
+          --aegir_root=$AEGIR_HOME \
+          --client_name=$AEGIR_CLIENT_NAME \
+          --client_email=$AEGIR_CLIENT_EMAIL \
+          --http_service_type=$WEBSERVER \
+          --root=$AEGIR_HOSTMASTER \
+          --version=$AEGIR_VERSION
+
+The following settings will be used:
+ Aegir frontend URL: aegir.example.com
+ Master server FQDN: aegir.example.com
+ Aegir root: /var/aegir
+ Aegir user: aegir
+ Web group: www-data
+ Web server: nginx
+ Web server port: 80
+ Aegir DB host: localhost
+ Aegir DB user: aegirdbuser
+ Aegir DB password: <previously set>
+ Aegir DB port: 3306
+ Aegir version:
+ Aegir platform path: /var/aegir/hostmaster
+ Admin email: admin@aegir.example.com
+
+ Aegir install profile: hostmaster
+
+
 # Flush the drush cache to find new commands
 # sudo su - aegir -c "drush cache:clear drush"
 
@@ -92,3 +159,19 @@ echo " - ÆGIR | Install hosting-queued daemon..." | sudo tee -a log.txt
 
 #  - Enable Aegir modules: hosting_civicrm, hosting_civicrm_cron, ...
 echo " - ÆGIR | Enabling hosting modules: hosting-queued daemon, fix ownership & permissions ..."  | sudo tee -a log.txt
+
+
+#  - Reload services: nginx, queue, ...
+echo " - ÆGIR | Reload services: nginx, queue, ..."  | sudo tee -a log.txt
+
+#  - Status message and login URL
+# this will ensure that this script aborts if the site can't be bootstrapped
+if sudo su - aegir -c "drush @hostmaster status" 2>&1 | grep -q 'Drupal bootstrap.*Successful'; then
+    echo " - ÆGIR | Aegir frontend bootstrap correctly, operation was a success!"
+    echo "Use this URL to login on your new site:"
+    sudo su - aegir -c "drush @hostmaster uli"
+else
+    echo " - ÆGIR | Aegir frontend failed to bootstrap, something went wrong!"
+    echo " - ÆGIR | Look at the log above for clues or run with DPKG_DEBUG=developer"
+    exit 1
+fi
