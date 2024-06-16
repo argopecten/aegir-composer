@@ -22,10 +22,3 @@ sudo chmod 0440 /tmp/aegir
 sudo chown root:root /tmp/aegir
 sudo mv /tmp/aegir /etc/sudoers.d/aegir
 echo " - ÆGIR | The aegir user and its permissions have been setup." | sudo tee -a log.txt
-
-# prepare Aegir directory and set permissions
-echo " - ÆGIR | Copying Aegir files into aegir home ..." | sudo tee -a log.txt
-# move downloaded stuff into aegir home
-sudo cp -R /tmp/aegir-composer/* /var/aegir/
-# grant user permissions
-sudo chown -R aegir:aegir /var/aegir

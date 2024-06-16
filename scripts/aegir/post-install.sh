@@ -19,6 +19,15 @@ AEGIR_VENDOR="/var/aegir/vendor"
 # global drush
 DRUSH_PATH="/usr/bin/drush"
 
+
+# prepare Aegir directory and set permissions
+echo " - ÆGIR | Copying Aegir files into aegir home ..." | sudo tee -a log.txt
+# move downloaded stuff into aegir home
+sudo cp -R /tmp/aegir-composer/* /var/aegir/
+# grant user permissions
+sudo chown -R aegir:aegir /var/aegir
+
+
 #  - webserver config to use aegir settings
 echo " - ÆGIR | $WEBSERVER is using the Aegir configuration." | sudo tee -a log.txt
 AEGIR_CONF="/var/aegir/config/$WEBSERVER.conf"
