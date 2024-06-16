@@ -19,25 +19,6 @@ AEGIR_VENDOR="/var/aegir/vendor"
 # global drush
 DRUSH_PATH="/usr/bin/drush"
 
-echo " - ÆGIR | Setup aegir user" | tee -a log.txt
-# create user if not yet exists
-if ! getent passwd aegir >/dev/null ; then
-    sudo adduser --quiet --system --group --no-create-home --home '/var/aegir' --shell '/bin/bash' --gecos 'Aegir user,,,' aegir
-    sudo adduser --quiet aegir www-data
-    sudo cp /etc/skel/.bash* /var/aegir
-    sudo cp /etc/skel/.profile /var/aegir
-fi
-sudo chown -R aegir:aegir /var/aegir
-sudo chmod 755 /var/aegir
-
-#  grant passwordless sudo rights for everything
-echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
-sudo chmod 0440 /tmp/aegir
-sudo chown root:root /tmp/aegir
-sudo mv /tmp/aegir /etc/sudoers.d/aegir
-echo " - ÆGIR | The aegir user and its permissions have been setup." | sudo tee -a log.txt
-
-
 #  - webserver config to use aegir settings
 echo " - ÆGIR | $WEBSERVER is using the Aegir configuration." | sudo tee -a log.txt
 AEGIR_CONF="/var/aegir/config/$WEBSERVER.conf"
@@ -97,27 +78,30 @@ AEGIR_HOST="aegir.example.com"
 # version of this Aegir release
 AEGIR_VERSION="7.x-3.x"
 
-
 # Install Aegir frontend via drush hostmaster-install -y
 echo " - ÆGIR | Install Aegir frontend via drush hostmaster-install" | sudo tee -a log.txt
 
-ez make-install-ra ment, ami hülyeség
-sudo su - aegir -c "drush hostmaster-install --strict=0 $SITE_URI \
-  --aegir_db_host=$AEGIR_DB_HOST \
-  --aegir_db_pass=$AEGIR_DB_PASS \
-  --aegir_db_port='3306' \
-  --aegir_db_user=$AEGIR_DB_USER \
-  --aegir_host=$AEGIR_HOST \
-  --aegir_root="/var/aegir" \
-  --client_name="admin" \
-  --client_email="admin@aegir.example.com" \
-  --http_service_type=$WEBSERVER \
-  --root=$AEGIR_HOSTMASTER \
-  --version=$AEGIR_VERSION \
-"
+echo "ÆGIR | We will install Aegir frontend with the following options:"
+echo "ÆGIR | "
+echo "ÆGIR | Aegir URI:             $SITE_URI"
+echo "ÆGIR | Aegir server (host):   $AEGIR_HOST"
+echo "ÆGIR | Aegir root:            /var/aegir"
+echo "ÆGIR | Admin name:            admin"
+echo "ÆGIR | Admin email:           admin@aegir.example.com"
+echo "ÆGIR | Web group:             www-data"
+echo "ÆGIR | Webserver:             $WEBSERVER"
+echo "ÆGIR | Webserver port:        80"
+echo "ÆGIR | Database host:         $AEGIR_DB_HOST"
+echo "ÆGIR | Database user:         $AEGIR_DB_USER"
+echo "ÆGIR | Database pwd:          stored in /var/aegir/.drush/server_localhost.alias.drushrc.php"
+echo "ÆGIR | Database port:         3306"
+echo "ÆGIR | Aegir version:         $AEGIR_VERSION"
+echo "ÆGIR | Hostmaster dir:        $AEGIR_HOSTMASTER"
+echo "ÆGIR | Aegir profile:         hostmaster"
+echo "ÆGIR | "
 
-ez működött (profile install), ha minden paraméternek volt értéke, kivéve VERSION(?).
-drush hostmaster-install -y --strict=0 $SITE_URI \
+echo "ÆGIR | Running: drush hostmaster-install:"
+sudo su - aegir -c "drush hostmaster-install -y --strict=0 $SITE_URI \
           --aegir_db_host=$AEGIR_DB_HOST \
           --aegir_db_pass=$AEGIR_DB_PASS \
           --aegir_db_port='3306' \
@@ -129,40 +113,38 @@ drush hostmaster-install -y --strict=0 $SITE_URI \
           --http_service_type=$WEBSERVER \
           --root=$AEGIR_HOSTMASTER \
           --version=$AEGIR_VERSION
-
-The following settings will be used:
- Aegir frontend URL: aegir.example.com
- Master server FQDN: aegir.example.com
- Aegir root: /var/aegir
- Aegir user: aegir
- Web group: www-data
- Web server: nginx
- Web server port: 80
- Aegir DB host: localhost
- Aegir DB user: aegirdbuser
- Aegir DB password: <previously set>
- Aegir DB port: 3306
- Aegir version:
- Aegir platform path: /var/aegir/hostmaster
- Admin email: admin@aegir.example.com
-
- Aegir install profile: hostmaster
-
-
+"
 # Flush the drush cache to find new commands
-# sudo su - aegir -c "drush cache:clear drush"
+sudo su - aegir -c "drush cache:clear drush"
 
 
 # install hosting-queued daemon
 echo " - ÆGIR | Install hosting-queued daemon..." | sudo tee -a log.txt
+sudo cp $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
+sudo chmod 755 /etc/init.d/hosting-queued
+sudo systemctl daemon-reload
+sudo systemctl enable hosting-queued
 
 
 #  - Enable Aegir modules: hosting_civicrm, hosting_civicrm_cron, ...
 echo " - ÆGIR | Enabling hosting modules: hosting-queued daemon, fix ownership & permissions ..."  | sudo tee -a log.txt
+sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_queued"
+sudo su - aegir -c "drush @hostmaster pm:enable -y fix_ownership fix_permissions"
+# sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_civicrm hosting_civicrm_cron"
 
 
 #  - Reload services: nginx, queue, ...
 echo " - ÆGIR | Reload services: nginx, queue, ..."  | sudo tee -a log.txt
+case $WEBSERVER in
+    nginx)
+        sudo systemctl restart nginx
+        ;;
+    apache)
+        sudo systemctl restart apache2
+        ;;
+esac
+# restart queued daemon
+sudo systemctl restart hosting-queued
 
 #  - Status message and login URL
 # this will ensure that this script aborts if the site can't be bootstrapped
