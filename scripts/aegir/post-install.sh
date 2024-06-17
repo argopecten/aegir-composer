@@ -26,7 +26,8 @@ echo " - ÆGIR | Copying Aegir files into aegir home ..." | sudo tee -a log.txt
 sudo cp -R /tmp/aegir-composer/* /var/aegir/
 # grant user permissions
 sudo chown -R aegir:aegir /var/aegir
-
+# access for webserver
+sudo chmod 755 /var/aegir
 
 #  - webserver config to use aegir settings
 echo " - ÆGIR | $WEBSERVER is using the Aegir configuration." | sudo tee -a log.txt
@@ -119,8 +120,8 @@ sudo su - aegir -c "drush hostmaster-install -y --strict=0 $SITE_URI \
           --aegir_db_user=$AEGIR_DB_USER \
           --aegir_host=$AEGIR_HOST \
           --aegir_root=$AEGIR_HOME \
-          --client_name=$AEGIR_CLIENT_NAME \
-          --client_email=$AEGIR_CLIENT_EMAIL \
+          --client_name=admin \
+          --client_email=admin@$AEGIR_HOST \
           --http_service_type=$WEBSERVER \
           --root=$AEGIR_HOSTMASTER \
           --version=$AEGIR_VERSION
