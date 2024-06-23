@@ -55,18 +55,18 @@ sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_pe
 
 # setup drush8, download done by composer
 echo " - ÆGIR | Setup global Drush8 for Aegir 3.x" | sudo tee -a log.txt
-# link provision drush commands into drush8 directory
-ln -s $AEGIR_HOSTMASTER/sites/all/drush/provision $AEGIR_VENDOR/aegir/drush8/commands
 # allow drush via PATH
 [[ -L "$DRUSH_PATH" ]] && sudo su -c "rm $DRUSH_PATH"
 sudo ln -s $AEGIR_VENDOR/aegir/drush8/drush $DRUSH_PATH
-# clear cache
-sudo su - aegir -c "drush cache:clear drush"
 
 
 # Configure the Provision module
-# echo " - ÆGIR | Configure the Provision module" | sudo tee -a log.txt
-# download done by composer, nothing else to do here
+echo " - ÆGIR | Configure the Provision module" | sudo tee -a log.txt
+# download done by composer, link provision drush commands into drush8 directory
+[[ -L "$AEGIR_VENDOR/aegir/drush8/commands/provision" ]] && sudo su - aegir -c "rm $AEGIR_VENDOR/aegir/drush8/commands/provision"
+sudo su - aegir -c "ln -s $AEGIR_HOSTMASTER/sites/all/drush/provision $AEGIR_VENDOR/aegir/drush8/commands"
+# clear cache
+sudo su - aegir -c "drush cache:clear drush"
 
 
 # Configure db user for Aegir
@@ -83,10 +83,10 @@ sudo /usr/bin/mysql -e "CREATE USER IF NOT EXISTS '$AEGIR_DB_USER'@'$AEGIR_DB_HO
 sudo /usr/bin/mysql -e "ALTER USER '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' IDENTIFIED BY '$AEGIR_DB_PASS'"
 sudo /usr/bin/mysql -e "GRANT ALL ON *.* TO '$AEGIR_DB_USER'@'$AEGIR_DB_HOST' WITH GRANT OPTION"
 
-#The URL of the site to install
-SITE_URI="aegir.example.com"
 # Fully qualified domain name of the local server
-AEGIR_HOST="aegir.example.com"
+AEGIR_HOST=$(hostname -f)
+#The URL of the ÆGIR site is the hostname
+SITE_URI=$(echo $AEGIR_HOST)
 # version of this Aegir release
 AEGIR_VERSION="7.x-3.x"
 
