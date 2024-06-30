@@ -42,7 +42,7 @@
         "ext-xml": "*",
         "ext-zip": "*",
         "aegir/hostmaster": "dev-dev/composer",
-        "aegir/drush8": "dev-dev/aegir",
+        "aegir/drush8": "^8.4.12",
         "composer/installers": "^1.9",
         "composer/semver": "^1.4",
         "cweagans/composer-patches": "^1.7",
