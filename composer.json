@@ -10,29 +10,29 @@
         }
     ],
     "repositories": {
-        "aegir": {
-            "type": "vcs",
-            "url":  "https://github.com/argopecten/aegir-composer"
-        },
-        "provision": {
-            "type": "vcs",
-            "url":  "https://github.com/argopecten/aegir-provision"
-        },
-        "drupal": {
-              "type": "composer",
-              "url": "https://packages.drupal.org/7"
-        },
-        "hostmaster": {
-            "type": "vcs",
-            "url":  "https://github.com/argopecten/aegir-hostmaster"
-        },
-        "hosting_deploy": {
-            "type": "vcs",
-            "url":  "https://github.com/argopecten/hosting_deploy"
-        }
+          "aegir/drush8": {
+              "type": "vcs",
+              "url":  "https://github.com/argopecten/aegir-drush8"
+          },
+          "aegir/provision": {
+              "type": "vcs",
+              "url":  "https://github.com/argopecten/aegir-provision"
+          },
+          "aegir/hosting": {
+              "type": "vcs",
+              "url":  "https://github.com/argopecten/aegir-hosting"
+          },
+          "aegir/hostmaster": {
+              "type": "vcs",
+              "url":  "https://github.com/argopecten/aegir-hostmaster"
+          },
+          "drupal": {
+                "type": "composer",
+                "url": "https://packages.drupal.org/7"
+          }
     },
     "require": {
-        "php": ">=7.1",
+        "php": ">=8.1",
         "ext-curl": "*",
         "ext-gd": "*",
         "ext-json": "*",
@@ -41,14 +41,16 @@
         "ext-pdo": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "composer/installers": "^1.2",
+        "aegir/hostmaster": "^3.193.1",
+        "aegir/drush8": "^8.4.12",
+        "composer/installers": "^1.9",
         "composer/semver": "^1.4",
-        "cweagans/composer-patches": "^1.6.5",
-        "drupal-composer/preserve-paths": "dev-master#4c5f62",
+        "cweagans/composer-patches": "^1.7",
+        "sandykadam/preserve-paths": "^0.4",
         "drupal/composer_autoloader": "^1.0",
-        "symfony/filesystem": "~2.7|^3",
-        "webflo/drupal-finder": "^1.0.0",
-        "argopecten/hostmaster": "^3.182.1"
+        "drupal/drupal": "^7.100",
+        "symfony/filesystem": "~2.7 || ^3",
+        "webflo/drupal-finder": "^1.2.1"
     },
     "conflict": {
         "drupal/core": "8.*"
@@ -56,7 +58,12 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "cweagans/composer-patches": true,
+            "composer/installers": true,
+            "sandykadam/preserve-paths": true
+        }
     },
     "autoload": {
         "classmap": [
@@ -65,46 +72,55 @@
     },
     "scripts": {
         "pre-install-cmd": [
-          "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+          "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
+          "bash scripts/aegir/pre-install.sh"
         ],
         "pre-update-cmd": [
           "DrupalProject\\composer\\ScriptHandler::checkComposerVersion",
-          "bash scripts/composer/bash/lamp-config.sh < /dev/tty",
-          "bash scripts/composer/bash/aegir-backup.sh"
+          "bash scripts/aegir/pre-update.sh"
         ],
         "post-install-cmd": [
           "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-          "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-          "bash scripts/composer/bash/aegir-upgrade.sh"
+          "bash scripts/aegir/post-install.sh"
         ],
         "post-update-cmd": [
           "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-          "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
-          "bash scripts/composer/bash/aegir-install-update.sh"
+          "bash scripts/aegir/post-update.sh"
+        ],
+        "post-root-package-install": [
+          "bash scripts/aegir/post-root-package.sh"
         ],
         "post-create-project-cmd": [
-          "DrupalProject\\composer\\ScriptHandler::removeInternalFiles"
+          "DrupalProject\\composer\\ScriptHandler::removeInternalFiles",
+          "bash scripts/aegir/post-create.sh"
         ]
     },
     "extra": {
         "installer-paths": {
-            "hostmaster": ["type:drupal-core"],
+            "hostmaster/": ["type:drupal-core"],
             "hostmaster/profiles/{$name}/": ["type:drupal-profile"],
             "hostmaster/sites/all/drush/{$name}/": ["type:drupal-drush"],
             "hostmaster/sites/all/libraries/{$name}/": ["type:drupal-library"],
             "hostmaster/sites/all/modules/contrib/{$name}/": ["type:drupal-module"],
             "hostmaster/sites/all/themes/contrib/{$name}/": ["type:drupal-theme"]
         },
+        "preserve-paths": [
+            "hostmaster/sites",
+            "hostmaster/sites/all/modules/contrib",
+            "hostmaster/sites/all/themes/contrib",
+            "hostmaster/sites/all/libraries",
+            "hostmaster/sites/all/drush",
+            "hostmaster/sites/default/settings.php",
+            "hostmaster/sites/default/files"
+        ],
+        "patches-install-hooks": true,
         "patches": {
             "cweagans/composer-patches": {
-                "Call the preserve paths hooks" : "https://github.com/SebCorbin/composer-patches/commit/1cb9bacba51f8bba0c5f3f322c3bb61e4ceae974.patch"
+                "Call the preserve paths hooks" : "https://github.com/jcnventura/composer-patches/compare/1.x...jcnventura:fix-preserve-paths.diff"
             },
-            "drupal/drupal": {
-                "Mysql8 support in Drupal7 core" : "https://www.drupal.org/files/issues/2020-08-14/2978575-218.patch"
+            "drupal-composer/preserve-paths": {
+                "Update PluginWrapper.php" : "https://github.com/lazysoundsystem/preserve-paths/commit/173dde446d161aa2beb5b1cafccfd14f2a8bbed4.patch"
             }
-        },
-        "preserve-paths": [
-            "hostmaster/sites"
-        ]
+        }
     }
 }
