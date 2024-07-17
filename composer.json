@@ -10,6 +10,10 @@
         }
     ],
     "repositories": {
+          "drupal/hosting_deploy": {
+              "type": "vcs",
+              "url":  "https://github.com/argopecten/hosting_deploy"
+          },
           "aegir/drush8": {
               "type": "vcs",
               "url":  "https://github.com/argopecten/aegir-drush8"
@@ -18,7 +22,7 @@
               "type": "vcs",
               "url":  "https://github.com/argopecten/aegir-provision"
           },
-          "aegir/hosting": {
+          "drupal/hosting": {
               "type": "vcs",
               "url":  "https://github.com/argopecten/aegir-hosting"
           },
@@ -41,14 +45,12 @@
         "ext-pdo": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "aegir/hostmaster": "^3.193.1",
-        "aegir/drush8": "^8.4.12",
+        "aegir/hostmaster": "^3.193.2",
         "composer/installers": "^1.9",
         "composer/semver": "^1.4",
         "cweagans/composer-patches": "^1.7",
         "sandykadam/preserve-paths": "^0.4",
         "drupal/composer_autoloader": "^1.0",
-        "drupal/drupal": "^7.100",
         "symfony/filesystem": "~2.7 || ^3",
         "webflo/drupal-finder": "^1.2.1"
     },

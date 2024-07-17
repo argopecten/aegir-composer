@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e38aa815f9f5d2429b5a98985bd7f6a",
+    "content-hash": "21d18f1923d407f9047f3463d49ade64",
     "packages": [
         {
             "name": "aegir/drush8",
@@ -144,83 +144,49 @@
             "time": "2024-06-07T08:48:57+00:00"
         },
         {
-            "name": "aegir/hosting",
-            "version": "3.193.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/argopecten/aegir-hosting.git",
-                "reference": "9bd38b538aacd5fbaa2cfb0c01f4d099af6f1ae6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-hosting/zipball/9bd38b538aacd5fbaa2cfb0c01f4d099af6f1ae6",
-                "reference": "9bd38b538aacd5fbaa2cfb0c01f4d099af6f1ae6",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/process": "^3.4"
-            },
-            "type": "drupal-module",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Aegir maintainers",
-                    "homepage": "http://docs.aegirproject.org/en/3.x/community/core-team/"
-                }
-            ],
-            "description": "Drupal modules for front-end of Aegir",
-            "support": {
-                "issues": "https://www.drupal.org/project/issues/hosting",
-                "docs": "http://docs.aegirproject.org/",
-                "source": "https://github.com/argopecten/aegir-hosting/tree/3.193.1"
-            },
-            "time": "2024-07-06T14:40:39+00:00"
-        },
-        {
             "name": "aegir/hostmaster",
-            "version": "3.193.1",
+            "version": "3.193.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-hostmaster.git",
-                "reference": "9e9bc765cf34fca0e1925dac8b4722604d48c397"
+                "reference": "1a34506b2ae403322ec4237b16e691b1e87ca7de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/9e9bc765cf34fca0e1925dac8b4722604d48c397",
-                "reference": "9e9bc765cf34fca0e1925dac8b4722604d48c397",
+                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/1a34506b2ae403322ec4237b16e691b1e87ca7de",
+                "reference": "1a34506b2ae403322ec4237b16e691b1e87ca7de",
                 "shasum": ""
             },
             "require": {
                 "aegir/drush8": "^8.4.12",
-                "aegir/hosting": "^3.193",
                 "aegir/provision": "^3.193",
-                "drupal/admin_menu": "3.0-rc7",
-                "drupal/aegir_objects": "3.190",
-                "drupal/betterlogin": "1.5",
-                "drupal/ctools": "1.21",
-                "drupal/eldir": "3.190",
-                "drupal/entity": "1.10",
-                "drupal/features": "2.15",
-                "drupal/hosting_civicrm": "3.190",
-                "drupal/hosting_deploy": "dev-3.x",
-                "drupal/hosting_git": "3.190",
-                "drupal/hosting_https": "3.190",
-                "drupal/hosting_logs": "3.190",
-                "drupal/hosting_remote_import": "3.190",
-                "drupal/hosting_site_backup_manager": "3.190",
-                "drupal/hosting_tasks_extra": "3.191",
-                "drupal/libraries": "2.5",
-                "drupal/module_filter": "2.3",
-                "drupal/openidadmin": "1.0",
-                "drupal/overlay_paths": "1.3",
-                "drupal/r4032login": "1.8",
-                "drupal/tfa": "2.3",
-                "drupal/tfa_basic": "1.2",
-                "drupal/timeago": "2.3",
-                "drupal/views": "3.29",
-                "drupal/views_bulk_operations": "3.7",
+                "drupal/admin_menu": "^3.0-rc7",
+                "drupal/aegir_objects": "^3.190",
+                "drupal/betterlogin": "^1.5",
+                "drupal/ctools": "^1.21",
+                "drupal/drupal": "^7.100",
+                "drupal/eldir": "^3.190",
+                "drupal/entity": "^1.11",
+                "drupal/features": "^2.15",
+                "drupal/hosting": "^3.193",
+                "drupal/hosting_civicrm": "^3.190",
+                "drupal/hosting_deploy": "^3.193",
+                "drupal/hosting_git": "^3.190",
+                "drupal/hosting_https": "^3.190",
+                "drupal/hosting_logs": "^3.190",
+                "drupal/hosting_remote_import": "^3.190",
+                "drupal/hosting_site_backup_manager": "^3.190",
+                "drupal/hosting_tasks_extra": "^3.191",
+                "drupal/libraries": "^2.5",
+                "drupal/module_filter": "^2.3",
+                "drupal/openidadmin": "^1.0",
+                "drupal/overlay_paths": "^1.3",
+                "drupal/r4032login": "^1.8",
+                "drupal/tfa": "^2.3",
+                "drupal/tfa_basic": "^1.2",
+                "drupal/timeago": "^2.3",
+                "drupal/views": "^3.29",
+                "drupal/views_bulk_operations": "^3.7",
                 "ext-curl": "*",
                 "ext-gd": "*",
                 "ext-json": "*",
@@ -246,10 +212,10 @@
             ],
             "description": "Aegir Hostmaster profile with composer",
             "support": {
-                "source": "https://github.com/argopecten/aegir-hostmaster/tree/3.193.1",
+                "source": "https://github.com/argopecten/aegir-hostmaster/tree/3.193.2",
                 "issues": "https://github.com/argopecten/aegir-hostmaster/issues"
             },
-            "time": "2024-07-06T15:11:58+00:00"
+            "time": "2024-07-17T08:43:27+00:00"
         },
         {
             "name": "aegir/provision",
@@ -1393,17 +1359,17 @@
         },
         {
             "name": "drupal/entity",
-            "version": "1.10.0",
+            "version": "1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/entity.git",
-                "reference": "7.x-1.10"
+                "reference": "7.x-1.11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/entity-7.x-1.10.zip",
-                "reference": "7.x-1.10",
-                "shasum": "0c1ae0b551403231a089426d098b3dd09107910f"
+                "url": "https://ftp.drupal.org/files/projects/entity-7.x-1.11.zip",
+                "reference": "7.x-1.11",
+                "shasum": "e0f3d05e15b6f4e57452dbad84be73edf26091d3"
             },
             "require": {
                 "drupal/drupal": "~7.0"
@@ -1415,8 +1381,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "7.x-1.10",
-                    "datestamp": "1637434456",
+                    "version": "7.x-1.11",
+                    "datestamp": "1720924766",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -1699,104 +1665,40 @@
         },
         {
             "name": "drupal/hosting",
-            "version": "3.190.0",
+            "version": "3.193.1",
             "source": {
                 "type": "git",
-                "url": "https://git.drupalcode.org/project/hosting.git",
-                "reference": "7.x-3.190"
+                "url": "https://github.com/argopecten/aegir-hosting.git",
+                "reference": "d7e7afb25d05981425a5f6e932ff04115d02b4e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/hosting-7.x-3.190.zip",
-                "reference": "7.x-3.190",
-                "shasum": "51f7a41cb6964a1b7779c989866757ad8f3b9edc"
+                "url": "https://api.github.com/repos/argopecten/aegir-hosting/zipball/d7e7afb25d05981425a5f6e932ff04115d02b4e3",
+                "reference": "d7e7afb25d05981425a5f6e932ff04115d02b4e3",
+                "shasum": ""
             },
             "require": {
-                "drupal/drupal": "~7.0",
-                "drupal/views": "*",
-                "drupal/views_bulk_operations": "*"
-            },
-            "require-dev": {
-                "drupal/hosting_alias": "*",
-                "drupal/hosting_client": "*",
-                "drupal/hosting_migrate": "*",
-                "drupal/hosting_nginx": "*",
-                "drupal/hosting_package": "*",
-                "drupal/hosting_server": "*",
-                "drupal/hosting_site": "*",
-                "drupal/hosting_ssl": "*",
-                "drupal/hosting_web_server": "*"
+                "drupal/views": "^3.29",
+                "drupal/views_bulk_operations": "^3.7",
+                "symfony/process": "^3.4"
             },
             "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "7.x-3.190",
-                    "datestamp": "1606489599",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/7/downloads",
             "license": [
                 "GPL-2.0-or-later"
             ],
             "authors": [
                 {
-                    "name": "adrian",
-                    "homepage": "https://www.drupal.org/user/1337"
-                },
-                {
-                    "name": "anarcat",
-                    "homepage": "https://www.drupal.org/user/1274"
-                },
-                {
-                    "name": "bgm",
-                    "homepage": "https://www.drupal.org/user/89461"
-                },
-                {
-                    "name": "colan",
-                    "homepage": "https://www.drupal.org/user/58704"
-                },
-                {
-                    "name": "cweagans",
-                    "homepage": "https://www.drupal.org/user/404732"
-                },
-                {
-                    "name": "ergonlogic",
-                    "homepage": "https://www.drupal.org/user/368613"
-                },
-                {
-                    "name": "gboudrias",
-                    "homepage": "https://www.drupal.org/user/918342"
-                },
-                {
-                    "name": "helmo",
-                    "homepage": "https://www.drupal.org/user/449000"
-                },
-                {
-                    "name": "Jon Pugh",
-                    "homepage": "https://www.drupal.org/user/17028"
-                },
-                {
-                    "name": "memtkmcc",
-                    "homepage": "https://www.drupal.org/user/92646"
-                },
-                {
-                    "name": "omega8cc",
-                    "homepage": "https://www.drupal.org/user/539502"
-                },
-                {
-                    "name": "Steven Jones",
-                    "homepage": "https://www.drupal.org/user/99644"
+                    "name": "Aegir maintainers",
+                    "homepage": "http://docs.aegirproject.org/en/3.x/community/core-team/"
                 }
             ],
-            "description": "Allow this Drupal site to deploy hosted sites.",
-            "homepage": "https://www.drupal.org/project/hosting",
+            "description": "Drupal modules for front-end of Aegir",
             "support": {
-                "source": "https://git.drupalcode.org/project/hosting"
-            }
+                "issues": "https://www.drupal.org/project/issues/hosting",
+                "docs": "http://docs.aegirproject.org/",
+                "source": "https://github.com/argopecten/aegir-hosting/tree/3.193.1"
+            },
+            "time": "2024-07-16T15:12:59+00:00"
         },
         {
             "name": "drupal/hosting_certificate",
@@ -2010,149 +1912,40 @@
             }
         },
         {
-            "name": "drupal/hosting_composer",
-            "version": "dev-3.x",
+            "name": "drupal/hosting_deploy",
+            "version": "3.193.1",
             "source": {
                 "type": "git",
-                "url": "https://git.drupalcode.org/project/hosting_composer.git",
-                "reference": "396f9fe6a2cb852050bb1269c766221676ad5632"
+                "url": "https://github.com/argopecten/hosting_deploy.git",
+                "reference": "35cfc8a7c7bee94807add585ccdf5e6d2cea5960"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/argopecten/hosting_deploy/zipball/35cfc8a7c7bee94807add585ccdf5e6d2cea5960",
+                "reference": "35cfc8a7c7bee94807add585ccdf5e6d2cea5960",
+                "shasum": ""
             },
             "require": {
-                "drupal/aegir_objects": "*",
-                "drupal/drupal": "~7.0",
-                "drupal/hosting_platform": "*"
-            },
-            "require-dev": {
-                "drupal/aegir_objects": "*",
-                "drupal/features": "*",
-                "drupal/hosting_deploy": "*",
-                "drupal/hosting_platform": "*"
+                "drupal/aegir_objects": "^3.190",
+                "drupal/features": "^2.15"
             },
             "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-3.x": "3.x-dev"
-                },
-                "drupal": {
-                    "version": "7.x-3.x-dev",
-                    "datestamp": "1513375685",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Dev releases are not covered by Drupal security advisories."
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/7/downloads",
             "license": [
                 "GPL-2.0-or-later"
             ],
             "authors": [
                 {
-                    "name": "Jon Pugh",
-                    "homepage": "https://www.drupal.org/user/17028"
-                },
-                {
-                    "name": "bgm",
-                    "homepage": "https://www.drupal.org/user/89461"
-                },
-                {
-                    "name": "colan",
-                    "homepage": "https://www.drupal.org/user/58704"
-                },
-                {
-                    "name": "cweagans",
-                    "homepage": "https://www.drupal.org/user/404732"
-                },
-                {
-                    "name": "ergonlogic",
-                    "homepage": "https://www.drupal.org/user/368613"
-                },
-                {
-                    "name": "gboudrias",
-                    "homepage": "https://www.drupal.org/user/918342"
-                },
-                {
-                    "name": "helmo",
-                    "homepage": "https://www.drupal.org/user/449000"
-                },
-                {
-                    "name": "memtkmcc",
-                    "homepage": "https://www.drupal.org/user/92646"
+                    "name": "Aegir maintainers",
+                    "homepage": "http://docs.aegirproject.org/en/3.x/community/core-team/"
                 }
             ],
-            "description": "Adds support for building platform dependencies using Composer.",
-            "homepage": "https://www.drupal.org/project/hosting_composer",
+            "description": "This module extends Aegir's platform deployment strategies, and enhances the user experience of the Create Platform form.",
             "support": {
-                "source": "https://git.drupalcode.org/project/hosting_composer"
-            }
-        },
-        {
-            "name": "drupal/hosting_deploy",
-            "version": "dev-3.x",
-            "require": {
-                "drupal/aegir_objects": "*",
-                "drupal/drupal": "*",
-                "drupal/features": "*",
-                "drupal/hosting_composer": "^3",
-                "drupal/hosting_platform": "*"
+                "issues": "https://www.drupal.org/project/issues/hosting_deploy",
+                "docs": "http://docs.aegirproject.org/",
+                "source": "https://github.com/argopecten/hosting_deploy/tree/3.193.1"
             },
-            "type": "metapackage",
-            "extra": {
-                "branch-alias": {
-                    "dev-3.x": "3.x-dev"
-                },
-                "drupal": {
-                    "version": "7.x-3.x-dev",
-                    "datestamp": "1513375685",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Dev releases are not covered by Drupal security advisories."
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/7/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Jon Pugh",
-                    "homepage": "https://www.drupal.org/user/17028"
-                },
-                {
-                    "name": "bgm",
-                    "homepage": "https://www.drupal.org/user/89461"
-                },
-                {
-                    "name": "colan",
-                    "homepage": "https://www.drupal.org/user/58704"
-                },
-                {
-                    "name": "cweagans",
-                    "homepage": "https://www.drupal.org/user/404732"
-                },
-                {
-                    "name": "ergonlogic",
-                    "homepage": "https://www.drupal.org/user/368613"
-                },
-                {
-                    "name": "gboudrias",
-                    "homepage": "https://www.drupal.org/user/918342"
-                },
-                {
-                    "name": "helmo",
-                    "homepage": "https://www.drupal.org/user/449000"
-                },
-                {
-                    "name": "memtkmcc",
-                    "homepage": "https://www.drupal.org/user/92646"
-                }
-            ],
-            "description": "Improve the UI for selecting the Aegir platform deployment strategy.",
-            "homepage": "https://www.drupal.org/project/hosting_composer",
-            "support": {
-                "source": "https://git.drupalcode.org/project/hosting_composer"
-            }
+            "time": "2024-07-17T06:37:04+00:00"
         },
         {
             "name": "drupal/hosting_git",
@@ -2376,163 +2169,6 @@
             "homepage": "https://www.drupal.org/project/hosting_logs",
             "support": {
                 "source": "https://git.drupalcode.org/project/hosting_logs"
-            }
-        },
-        {
-            "name": "drupal/hosting_package",
-            "version": "3.190.0",
-            "require": {
-                "drupal/drupal": "~7.0",
-                "drupal/hosting": "*"
-            },
-            "type": "metapackage",
-            "extra": {
-                "drupal": {
-                    "version": "7.x-3.190",
-                    "datestamp": "1606489599",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/7/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "adrian",
-                    "homepage": "https://www.drupal.org/user/1337"
-                },
-                {
-                    "name": "anarcat",
-                    "homepage": "https://www.drupal.org/user/1274"
-                },
-                {
-                    "name": "bgm",
-                    "homepage": "https://www.drupal.org/user/89461"
-                },
-                {
-                    "name": "colan",
-                    "homepage": "https://www.drupal.org/user/58704"
-                },
-                {
-                    "name": "cweagans",
-                    "homepage": "https://www.drupal.org/user/404732"
-                },
-                {
-                    "name": "ergonlogic",
-                    "homepage": "https://www.drupal.org/user/368613"
-                },
-                {
-                    "name": "gboudrias",
-                    "homepage": "https://www.drupal.org/user/918342"
-                },
-                {
-                    "name": "helmo",
-                    "homepage": "https://www.drupal.org/user/449000"
-                },
-                {
-                    "name": "Jon Pugh",
-                    "homepage": "https://www.drupal.org/user/17028"
-                },
-                {
-                    "name": "memtkmcc",
-                    "homepage": "https://www.drupal.org/user/92646"
-                },
-                {
-                    "name": "omega8cc",
-                    "homepage": "https://www.drupal.org/user/539502"
-                },
-                {
-                    "name": "Steven Jones",
-                    "homepage": "https://www.drupal.org/user/99644"
-                }
-            ],
-            "description": "Allow Hostmaster to keep track which packages have been installed.",
-            "homepage": "https://www.drupal.org/project/hosting",
-            "support": {
-                "source": "https://git.drupalcode.org/project/hosting"
-            }
-        },
-        {
-            "name": "drupal/hosting_platform",
-            "version": "3.190.0",
-            "require": {
-                "drupal/drupal": "~7.0",
-                "drupal/hosting": "*",
-                "drupal/hosting_package": "*"
-            },
-            "type": "metapackage",
-            "extra": {
-                "drupal": {
-                    "version": "7.x-3.190",
-                    "datestamp": "1606489599",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/7/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "adrian",
-                    "homepage": "https://www.drupal.org/user/1337"
-                },
-                {
-                    "name": "anarcat",
-                    "homepage": "https://www.drupal.org/user/1274"
-                },
-                {
-                    "name": "bgm",
-                    "homepage": "https://www.drupal.org/user/89461"
-                },
-                {
-                    "name": "colan",
-                    "homepage": "https://www.drupal.org/user/58704"
-                },
-                {
-                    "name": "cweagans",
-                    "homepage": "https://www.drupal.org/user/404732"
-                },
-                {
-                    "name": "ergonlogic",
-                    "homepage": "https://www.drupal.org/user/368613"
-                },
-                {
-                    "name": "gboudrias",
-                    "homepage": "https://www.drupal.org/user/918342"
-                },
-                {
-                    "name": "helmo",
-                    "homepage": "https://www.drupal.org/user/449000"
-                },
-                {
-                    "name": "Jon Pugh",
-                    "homepage": "https://www.drupal.org/user/17028"
-                },
-                {
-                    "name": "memtkmcc",
-                    "homepage": "https://www.drupal.org/user/92646"
-                },
-                {
-                    "name": "omega8cc",
-                    "homepage": "https://www.drupal.org/user/539502"
-                },
-                {
-                    "name": "Steven Jones",
-                    "homepage": "https://www.drupal.org/user/99644"
-                }
-            ],
-            "description": "Allow Hostmaster to keep track of multiple instances of Drupal.",
-            "homepage": "https://www.drupal.org/project/hosting",
-            "support": {
-                "source": "https://git.drupalcode.org/project/hosting"
             }
         },
         {
