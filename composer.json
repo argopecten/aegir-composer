@@ -14,7 +14,7 @@
               "type": "vcs",
               "url":  "https://github.com/argopecten/hosting_deploy"
           },
-          "aegir/drush8": {
+          "drush/drush": {
               "type": "vcs",
               "url":  "https://github.com/argopecten/aegir-drush8"
           },
@@ -45,7 +45,7 @@
         "ext-pdo": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "aegir/hostmaster": "^3.193.2",
+        "aegir/hostmaster": "^3.193.3",
         "composer/installers": "^1.9",
         "composer/semver": "^1.4",
         "cweagans/composer-patches": "^1.7",
