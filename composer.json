@@ -122,6 +122,12 @@
             },
             "drupal-composer/preserve-paths": {
                 "Update PluginWrapper.php" : "https://github.com/lazysoundsystem/preserve-paths/commit/173dde446d161aa2beb5b1cafccfd14f2a8bbed4.patch"
+            },
+            "drupal/hosting_https": {
+                "Nginx: Fix the try_files directive" : "https://git.drupalcode.org/project/hosting_https/-/merge_requests/1.diff"
+            },
+            "drupal/hosting_https": {
+                "Nginx: ssl directive is deprecated" : "https://www.drupal.org/files/issues/2024-07-11/3313064-update-nginx-1.25-14.patch"
             }
         }
     }
