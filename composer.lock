@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-hostmaster.git",
-                "reference": "508429a1e5171207f56af6d152ab2062a6d63d1d"
+                "reference": "ae9e2723bfcf48cd2d5328b16a7705a578e778c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/508429a1e5171207f56af6d152ab2062a6d63d1d",
-                "reference": "508429a1e5171207f56af6d152ab2062a6d63d1d",
+                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/ae9e2723bfcf48cd2d5328b16a7705a578e778c7",
+                "reference": "ae9e2723bfcf48cd2d5328b16a7705a578e778c7",
                 "shasum": ""
             },
             "require": {
@@ -78,7 +78,7 @@
                 "source": "https://github.com/argopecten/aegir-hostmaster/tree/dev/latest",
                 "issues": "https://github.com/argopecten/aegir-hostmaster/issues"
             },
-            "time": "2024-08-15T13:19:13+00:00"
+            "time": "2024-08-16T09:22:30+00:00"
         },
         {
             "name": "aegir/provision",
@@ -86,12 +86,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-provision.git",
-                "reference": "a24aeb8373ac1c198ee05c4db342241a3e3199d7"
+                "reference": "71807fcbc5aabf754e5bd4bae7b8d97639dc0d83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-provision/zipball/a24aeb8373ac1c198ee05c4db342241a3e3199d7",
-                "reference": "a24aeb8373ac1c198ee05c4db342241a3e3199d7",
+                "url": "https://api.github.com/repos/argopecten/aegir-provision/zipball/71807fcbc5aabf754e5bd4bae7b8d97639dc0d83",
+                "reference": "71807fcbc5aabf754e5bd4bae7b8d97639dc0d83",
                 "shasum": ""
             },
             "require": {
@@ -123,7 +123,7 @@
                 "docs": "http://docs.aegirproject.org/",
                 "source": "https://github.com/argopecten/aegir-provision/tree/dev/main"
             },
-            "time": "2024-08-02T13:49:58+00:00"
+            "time": "2024-08-16T09:21:50+00:00"
         },
         {
             "name": "composer/installers",
@@ -3102,15 +3102,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-drush8.git",
-                "reference": "9217a2fc433d298f1ad863223b9b169822b5d4dd"
+                "reference": "014935382579f0b38d2e0f589091b019b3713f19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-drush8/zipball/9217a2fc433d298f1ad863223b9b169822b5d4dd",
-                "reference": "9217a2fc433d298f1ad863223b9b169822b5d4dd",
+                "url": "https://api.github.com/repos/argopecten/aegir-drush8/zipball/014935382579f0b38d2e0f589091b019b3713f19",
+                "reference": "014935382579f0b38d2e0f589091b019b3713f19",
                 "shasum": ""
             },
             "require": {
+                "composer/installers": "^1.9",
                 "consolidation/annotated-command": "^2.12.0",
                 "consolidation/output-formatters": "~3",
                 "pear/console_table": "~1.3.1",
@@ -3147,7 +3148,7 @@
                 "drush.php",
                 "drush.complete.sh"
             ],
-            "type": "library",
+            "type": "drupal-drush",
             "extra": {
                 "branch-alias": {
                     "dev-master": "8.3.x-dev"
@@ -3229,9 +3230,9 @@
             "support": {
                 "forum": "http://drupal.stackexchange.com/questions/tagged/drush",
                 "irc": "irc://irc.freenode.org/drush",
-                "source": "https://github.com/argopecten/aegir-drush8/tree/8.4.12.10"
+                "source": "https://github.com/argopecten/aegir-drush8/tree/dev/main"
             },
-            "time": "2024-07-30T14:19:53+00:00"
+            "time": "2024-08-16T15:03:38+00:00"
         },
         {
             "name": "nikic/php-parser",
