@@ -57,8 +57,6 @@ sudo bash $HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissi
 echo " - ÆGIR | Setup global Drush8 for Aegir 3.x"
 # download vendors for drush (is it really needed?)
 sudo su - aegir -c "cd $AEGIR_DRUSH && composer install"
-# download policy.drush.inc file, unless not in drush repo
-sudo su - aegir -c "cd $AEGIR_DRUSH && curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/7.x/drush/policy.drush.inc"
 # allow drush via PATH
 [[ -L "$GLOBAL_DRUSH" ]] && sudo su -c "rm $GLOBAL_DRUSH"
 sudo ln -s $AEGIR_DRUSH/drush $GLOBAL_DRUSH
