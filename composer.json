@@ -49,7 +49,7 @@
         "ext-pdo": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "aegir/hostmaster": "^3.193.3",
+        "aegir/hostmaster": "dev-dev/latest",
         "composer/installers": "^1.9",
         "composer/semver": "^1.4",
         "cweagans/composer-patches": "^1.7",
@@ -103,9 +103,10 @@
     },
     "extra": {
         "installer-paths": {
+            "drush/": ["drush/drush"],
+            "drush/commands/{$name}/": ["type:drupal-drush"],
             "hostmaster/": ["type:drupal-core"],
             "hostmaster/profiles/{$name}/": ["type:drupal-profile"],
-            "hostmaster/sites/all/drush/{$name}/": ["type:drupal-drush"],
             "hostmaster/sites/all/libraries/{$name}/": ["type:drupal-library"],
             "hostmaster/sites/all/modules/contrib/{$name}/": ["type:drupal-module"],
             "hostmaster/sites/all/themes/contrib/{$name}/": ["type:drupal-theme"]
@@ -115,7 +116,6 @@
             "hostmaster/sites/all/modules/contrib",
             "hostmaster/sites/all/themes/contrib",
             "hostmaster/sites/all/libraries",
-            "hostmaster/sites/all/drush",
             "hostmaster/sites/default/settings.php",
             "hostmaster/sites/default/files"
         ],

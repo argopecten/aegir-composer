@@ -12,12 +12,12 @@ echo "ÆGIR | post-install script is running ..."
 # some variable
 # webserver: apache2 or nginx, for now it is just nginx
 WEBSERVER="nginx"
-# hostmaster directory
-AEGIR_HOSTMASTER="/var/aegir/hostmaster"
-# vendor directory
-AEGIR_VENDOR="/var/aegir/vendor"
+# hostmaster root directory
+HOSTMASTER="/var/aegir/hostmaster"
+# drush directory in Aegir
+AEGIR_DRUSH="/var/aegir/drush"
 # global drush
-DRUSH_PATH="/usr/bin/drush"
+GLOBAL_DRUSH="/usr/bin/drush"
 
 
 # prepare Aegir directory and set permissions
@@ -50,21 +50,18 @@ echo " - ÆGIR | deploying fix ownership & permissions scripts"
 sudo su -c "rm /usr/local/bin/fix-drupal-*.sh 2>/dev/null"
 sudo su -c "rm /etc/sudoers.d/fix-drupal-* 2>/dev/null"
 # deploy scripts
-sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh 2>&1>/dev/null
+sudo bash $HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh 2>&1>/dev/null
 
 
 # setup drush8, download done by composer
 echo " - ÆGIR | Setup global Drush8 for Aegir 3.x"
+# download vendors for drush (is it really needed?)
+sudo su - aegir -c "cd $AEGIR_DRUSH && composer install"
+# download policy.drush.inc file, unless not in drush repo
+sudo su - aegir -c "cd $AEGIR_DRUSH && curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/7.x/drush/policy.drush.inc"
 # allow drush via PATH
-[[ -L "$DRUSH_PATH" ]] && sudo su -c "rm $DRUSH_PATH"
-sudo ln -s $AEGIR_VENDOR/drush/drush/drush $DRUSH_PATH
-
-
-# Configure the Provision module
-echo " - ÆGIR | Configure the Provision module"
-# download done by composer, link provision drush commands into drush8 directory
-[[ -L "$AEGIR_VENDOR/drush/drush/commands/provision" ]] && sudo su - aegir -c "rm $AEGIR_VENDOR/drush/drush/commands/provision"
-sudo su - aegir -c "ln -s $AEGIR_HOSTMASTER/sites/all/drush/provision $AEGIR_VENDOR/drush/drush/commands"
+[[ -L "$GLOBAL_DRUSH" ]] && sudo su -c "rm $GLOBAL_DRUSH"
+sudo ln -s $AEGIR_DRUSH/drush $GLOBAL_DRUSH
 # clear cache
 sudo su - aegir -c "drush cache:clear drush"
 
@@ -108,7 +105,7 @@ echo "ÆGIR | Database user:         $AEGIR_DB_USER"
 echo "ÆGIR | Database pwd:          stored in /var/aegir/.drush/server_localhost.alias.drushrc.php"
 echo "ÆGIR | Database port:         3306"
 echo "ÆGIR | Aegir version:         $AEGIR_VERSION"
-echo "ÆGIR | Hostmaster dir:        $AEGIR_HOSTMASTER"
+echo "ÆGIR | Hostmaster dir:        $HOSTMASTER"
 echo "ÆGIR | Aegir profile:         hostmaster"
 echo "ÆGIR | "
 
@@ -123,7 +120,7 @@ sudo su - aegir -c "drush hostmaster-install -y --strict=0 $SITE_URI \
           --client_name=admin \
           --client_email=admin@$AEGIR_HOST \
           --http_service_type=$WEBSERVER \
-          --root=$AEGIR_HOSTMASTER \
+          --root=$HOSTMASTER \
           --version=$AEGIR_VERSION
 "
 # Flush the drush cache to find new commands
@@ -132,7 +129,7 @@ sudo su - aegir -c "drush cache:clear drush"
 
 # install hosting-queued daemon
 echo " - ÆGIR | Install hosting-queued daemon..."
-sudo cp $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
+sudo cp $HOSTMASTER/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
 sudo chmod 755 /etc/init.d/hosting-queued
 sudo systemctl daemon-reload
 sudo systemctl enable hosting-queued

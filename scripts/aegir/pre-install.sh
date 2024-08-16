@@ -21,4 +21,4 @@ echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
 sudo chmod 0440 /tmp/aegir
 sudo chown root:root /tmp/aegir
 sudo mv /tmp/aegir /etc/sudoers.d/aegir
-echo " - ÆGIR | The aegir user and its permissions have been setup." | sudo tee -a log.txt
+echo " - ÆGIR | The aegir user and its permissions have been setup."
