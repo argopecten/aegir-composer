@@ -86,12 +86,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-provision.git",
-                "reference": "71807fcbc5aabf754e5bd4bae7b8d97639dc0d83"
+                "reference": "9862ba476186e0cfd3633d7b44ff03083fade34b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-provision/zipball/71807fcbc5aabf754e5bd4bae7b8d97639dc0d83",
-                "reference": "71807fcbc5aabf754e5bd4bae7b8d97639dc0d83",
+                "url": "https://api.github.com/repos/argopecten/aegir-provision/zipball/9862ba476186e0cfd3633d7b44ff03083fade34b",
+                "reference": "9862ba476186e0cfd3633d7b44ff03083fade34b",
                 "shasum": ""
             },
             "require": {
@@ -123,7 +123,7 @@
                 "docs": "http://docs.aegirproject.org/",
                 "source": "https://github.com/argopecten/aegir-provision/tree/dev/main"
             },
-            "time": "2024-08-16T09:21:50+00:00"
+            "time": "2024-08-20T16:12:28+00:00"
         },
         {
             "name": "composer/installers",
