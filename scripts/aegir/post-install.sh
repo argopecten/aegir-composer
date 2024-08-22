@@ -60,6 +60,8 @@ sudo su - aegir -c "cd $AEGIR_DRUSH && composer install"
 # allow drush via PATH
 [[ -L "$GLOBAL_DRUSH" ]] && sudo su -c "rm $GLOBAL_DRUSH"
 sudo ln -s $AEGIR_DRUSH/drush $GLOBAL_DRUSH
+# workaround, as few places has hardcoded drush path like this
+sudo ln -s $AEGIR_DRUSH/drush /usr/local/bin/drush
 # clear cache
 sudo su - aegir -c "drush cache:clear drush"
 
