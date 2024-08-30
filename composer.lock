@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-hostmaster.git",
-                "reference": "ae9e2723bfcf48cd2d5328b16a7705a578e778c7"
+                "reference": "77b14c9a485349992230dee15bda53d9ad676f7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/ae9e2723bfcf48cd2d5328b16a7705a578e778c7",
-                "reference": "ae9e2723bfcf48cd2d5328b16a7705a578e778c7",
+                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/77b14c9a485349992230dee15bda53d9ad676f7b",
+                "reference": "77b14c9a485349992230dee15bda53d9ad676f7b",
                 "shasum": ""
             },
             "require": {
@@ -32,7 +32,7 @@
                 "drupal/features": "^2.15",
                 "drupal/hosting": "^3.193",
                 "drupal/hosting_civicrm": "^3.193",
-                "drupal/hosting_deploy": "^3.193",
+                "drupal/hosting_deploy": "dev-dev/main",
                 "drupal/hosting_git": "^3.190",
                 "drupal/hosting_https": "^3.190",
                 "drupal/hosting_logs": "^3.190",
@@ -78,7 +78,7 @@
                 "source": "https://github.com/argopecten/aegir-hostmaster/tree/dev/latest",
                 "issues": "https://github.com/argopecten/aegir-hostmaster/issues"
             },
-            "time": "2024-08-16T09:22:30+00:00"
+            "time": "2024-08-30T09:39:26+00:00"
         },
         {
             "name": "aegir/provision",
@@ -1079,7 +1079,7 @@
                     "homepage": "https://www.drupal.org/user/693738"
                 },
                 {
-                    "name": "Gábor Hojtsy",
+                    "name": "gábor hojtsy",
                     "homepage": "https://www.drupal.org/user/4166"
                 },
                 {
@@ -1744,16 +1744,16 @@
         },
         {
             "name": "drupal/hosting_deploy",
-            "version": "3.193.1",
+            "version": "dev-dev/main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/hosting_deploy.git",
-                "reference": "35cfc8a7c7bee94807add585ccdf5e6d2cea5960"
+                "reference": "1628b104f485e333ee71bcae15dd521939e0d861"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/hosting_deploy/zipball/35cfc8a7c7bee94807add585ccdf5e6d2cea5960",
-                "reference": "35cfc8a7c7bee94807add585ccdf5e6d2cea5960",
+                "url": "https://api.github.com/repos/argopecten/hosting_deploy/zipball/1628b104f485e333ee71bcae15dd521939e0d861",
+                "reference": "1628b104f485e333ee71bcae15dd521939e0d861",
                 "shasum": ""
             },
             "require": {
@@ -1774,9 +1774,9 @@
             "support": {
                 "issues": "https://www.drupal.org/project/issues/hosting_deploy",
                 "docs": "http://docs.aegirproject.org/",
-                "source": "https://github.com/argopecten/hosting_deploy/tree/3.193.1"
+                "source": "https://github.com/argopecten/hosting_deploy/tree/dev/main"
             },
-            "time": "2024-07-17T06:37:04+00:00"
+            "time": "2024-08-30T09:29:10+00:00"
         },
         {
             "name": "drupal/hosting_git",
