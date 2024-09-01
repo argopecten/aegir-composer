@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-hostmaster.git",
-                "reference": "77b14c9a485349992230dee15bda53d9ad676f7b"
+                "reference": "b42d2ae82606f7e7809e64d14288ca520ee843c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/77b14c9a485349992230dee15bda53d9ad676f7b",
-                "reference": "77b14c9a485349992230dee15bda53d9ad676f7b",
+                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/b42d2ae82606f7e7809e64d14288ca520ee843c4",
+                "reference": "b42d2ae82606f7e7809e64d14288ca520ee843c4",
                 "shasum": ""
             },
             "require": {
@@ -31,7 +31,7 @@
                 "drupal/entity": "^1.11",
                 "drupal/features": "^2.15",
                 "drupal/hosting": "^3.193",
-                "drupal/hosting_civicrm": "^3.193",
+                "drupal/hosting_civicrm": "dev-dev/main",
                 "drupal/hosting_deploy": "dev-dev/main",
                 "drupal/hosting_git": "^3.190",
                 "drupal/hosting_https": "^3.190",
@@ -78,7 +78,7 @@
                 "source": "https://github.com/argopecten/aegir-hostmaster/tree/dev/latest",
                 "issues": "https://github.com/argopecten/aegir-hostmaster/issues"
             },
-            "time": "2024-08-30T09:39:26+00:00"
+            "time": "2024-08-31T13:50:55+00:00"
         },
         {
             "name": "aegir/provision",
@@ -1377,156 +1377,6 @@
             }
         },
         {
-            "name": "drupal/fix_ownership",
-            "version": "3.191.0",
-            "require": {
-                "drupal/drupal": "~7.0",
-                "drupal/hosting_site": "*",
-                "drupal/hosting_tasks_extra": "^3"
-            },
-            "type": "metapackage",
-            "extra": {
-                "drupal": {
-                    "version": "7.x-3.191",
-                    "datestamp": "1674283416",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/7/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "anarcat",
-                    "homepage": "https://www.drupal.org/user/1274"
-                },
-                {
-                    "name": "colan",
-                    "homepage": "https://www.drupal.org/user/58704"
-                },
-                {
-                    "name": "cweagans",
-                    "homepage": "https://www.drupal.org/user/404732"
-                },
-                {
-                    "name": "dsnopek",
-                    "homepage": "https://www.drupal.org/user/266527"
-                },
-                {
-                    "name": "ergonlogic",
-                    "homepage": "https://www.drupal.org/user/368613"
-                },
-                {
-                    "name": "gboudrias",
-                    "homepage": "https://www.drupal.org/user/918342"
-                },
-                {
-                    "name": "helmo",
-                    "homepage": "https://www.drupal.org/user/449000"
-                },
-                {
-                    "name": "Jon Pugh",
-                    "homepage": "https://www.drupal.org/user/17028"
-                },
-                {
-                    "name": "memtkmcc",
-                    "homepage": "https://www.drupal.org/user/92646"
-                },
-                {
-                    "name": "omega8cc",
-                    "homepage": "https://www.drupal.org/user/539502"
-                },
-                {
-                    "name": "Steven Jones",
-                    "homepage": "https://www.drupal.org/user/99644"
-                }
-            ],
-            "description": "Fix file ownership of Drupal platforms and sites.",
-            "homepage": "https://www.drupal.org/project/hosting_tasks_extra",
-            "support": {
-                "source": "https://git.drupalcode.org/project/hosting_tasks_extra"
-            }
-        },
-        {
-            "name": "drupal/fix_permissions",
-            "version": "3.191.0",
-            "require": {
-                "drupal/drupal": "~7.0",
-                "drupal/hosting_site": "*",
-                "drupal/hosting_tasks_extra": "^3"
-            },
-            "type": "metapackage",
-            "extra": {
-                "drupal": {
-                    "version": "7.x-3.191",
-                    "datestamp": "1674283416",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/7/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "anarcat",
-                    "homepage": "https://www.drupal.org/user/1274"
-                },
-                {
-                    "name": "colan",
-                    "homepage": "https://www.drupal.org/user/58704"
-                },
-                {
-                    "name": "cweagans",
-                    "homepage": "https://www.drupal.org/user/404732"
-                },
-                {
-                    "name": "dsnopek",
-                    "homepage": "https://www.drupal.org/user/266527"
-                },
-                {
-                    "name": "ergonlogic",
-                    "homepage": "https://www.drupal.org/user/368613"
-                },
-                {
-                    "name": "gboudrias",
-                    "homepage": "https://www.drupal.org/user/918342"
-                },
-                {
-                    "name": "helmo",
-                    "homepage": "https://www.drupal.org/user/449000"
-                },
-                {
-                    "name": "Jon Pugh",
-                    "homepage": "https://www.drupal.org/user/17028"
-                },
-                {
-                    "name": "memtkmcc",
-                    "homepage": "https://www.drupal.org/user/92646"
-                },
-                {
-                    "name": "omega8cc",
-                    "homepage": "https://www.drupal.org/user/539502"
-                },
-                {
-                    "name": "Steven Jones",
-                    "homepage": "https://www.drupal.org/user/99644"
-                }
-            ],
-            "description": "Fix file permissions of Drupal platforms and sites.",
-            "homepage": "https://www.drupal.org/project/hosting_tasks_extra",
-            "support": {
-                "source": "https://git.drupalcode.org/project/hosting_tasks_extra"
-            }
-        },
-        {
             "name": "drupal/hosting",
             "version": "3.193.1",
             "source": {
@@ -1628,25 +1478,28 @@
         },
         {
             "name": "drupal/hosting_civicrm",
-            "version": "3.193.3",
+            "version": "dev-dev/main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/hosting_civicrm.git",
-                "reference": "26a972bf6bef346511dffc757d52e29393cff213"
+                "reference": "802b3c22d3184b5fe7982656777cc03708c1fe82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/hosting_civicrm/zipball/26a972bf6bef346511dffc757d52e29393cff213",
-                "reference": "26a972bf6bef346511dffc757d52e29393cff213",
+                "url": "https://api.github.com/repos/argopecten/hosting_civicrm/zipball/802b3c22d3184b5fe7982656777cc03708c1fe82",
+                "reference": "802b3c22d3184b5fe7982656777cc03708c1fe82",
                 "shasum": ""
             },
             "require": {
-                "drupal/fix_ownership": "^3.191",
-                "drupal/fix_permissions": "^3.191",
                 "drupal/hosting": "^3.193",
                 "symfony/process": "^3.1"
             },
             "type": "drupal-module",
+            "autoload-dev": {
+                "psr-0": {
+                    "HostingCiviTest": "tests/"
+                }
+            },
             "license": [
                 "GPL-2.0-or-later"
             ],
@@ -1656,13 +1509,13 @@
                     "homepage": "http://docs.aegirproject.org/en/3.x/community/core-team/"
                 }
             ],
-            "description": "This module provides tools to manage CiviCRM in the Aegir Hosting System ",
+            "description": "This module provides tools to manage CiviCRM in the Aegir Hosting System.",
             "support": {
-                "issues": "https://www.drupal.org/project/issues/hosting_civicrm",
+                "issues": "https://www.drupal.org/project/issues/hosting_deploy",
                 "docs": "http://docs.aegirproject.org/",
-                "source": "https://github.com/argopecten/hosting_civicrm/tree/3.193.3"
+                "source": "https://github.com/argopecten/hosting_civicrm/tree/dev/main"
             },
-            "time": "2024-07-30T16:22:01+00:00"
+            "time": "2024-08-31T13:48:33+00:00"
         },
         {
             "name": "drupal/hosting_client",
@@ -4484,16 +4337,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v5.4.42",
+            "version": "v5.4.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "0c17c56d8ea052fc33942251c75d0e28936e043d"
+                "reference": "6be6a6a8af4818564e3726fc65cf936f34743cef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/0c17c56d8ea052fc33942251c75d0e28936e043d",
-                "reference": "0c17c56d8ea052fc33942251c75d0e28936e043d",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/6be6a6a8af4818564e3726fc65cf936f34743cef",
+                "reference": "6be6a6a8af4818564e3726fc65cf936f34743cef",
                 "shasum": ""
             },
             "require": {
@@ -4553,7 +4406,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v5.4.42"
+                "source": "https://github.com/symfony/var-dumper/tree/v5.4.43"
             },
             "funding": [
                 {
@@ -4569,7 +4422,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-26T12:23:09+00:00"
+            "time": "2024-08-30T16:01:46+00:00"
         },
         {
             "name": "symfony/yaml",
