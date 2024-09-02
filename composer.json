@@ -10,6 +10,10 @@
         }
     ],
     "repositories": {
+          "drupal/hosting_tasks_extra": {
+              "type": "vcs",
+              "url":  "https://github.com/argopecten/hosting_tasks_extra"
+          },
           "drupal/hosting_civicrm": {
               "type": "vcs",
               "url":  "https://github.com/argopecten/hosting_civicrm"
