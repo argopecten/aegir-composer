@@ -62,6 +62,8 @@ sudo su - aegir -c "cd $AEGIR_DRUSH && composer install"
 sudo ln -s $AEGIR_DRUSH/drush $GLOBAL_DRUSH
 # workaround, as few places has hardcoded drush path like this
 sudo ln -s $AEGIR_DRUSH/drush /usr/local/bin/drush
+#  workaround for faulty hosting_tasks_extra module
+sudo su - aegir -c "cd $AEGIR_DRUSH/commands/provision && curl -OL https://raw.githubusercontent.com/omega8cc/provision_tasks_extra/master/provision_tasks_extra.drush.inc"
 # clear cache
 sudo su - aegir -c "drush cache:clear drush"
 
@@ -139,7 +141,7 @@ sudo systemctl enable hosting-queued
 echo " - ÆGIR | Enabling hosting modules: hosting-queued daemon, fix ownership & permissions ..."
 sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_queued"
 sudo su - aegir -c "drush @hostmaster pm:enable -y fix_ownership fix_permissions"
-# sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_civicrm hosting_civicrm_cron"
+sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_civicrm hosting_civicrm_cron"
 
 
 #  - Reload services: nginx, queue, ...
@@ -152,8 +154,9 @@ case $WEBSERVER in
         sudo systemctl restart apache2
         ;;
 esac
-# restart queued daemon
-sudo systemctl restart hosting-queued
+# start queued daemon
+sudo systemctl start hosting-queued
+
 
 #  - Status message and login URL
 # this will ensure that this script aborts if the site can't be bootstrapped
@@ -161,6 +164,9 @@ if sudo su - aegir -c "drush @hostmaster status" 2>&1 | grep -q 'Drupal bootstra
     echo " - ÆGIR | Aegir frontend bootstrap correctly, operation was a success!"
     echo "Use this URL to login on your new site:"
     sudo su - aegir -c "drush @hostmaster uli"
+    # start queued daemon
+    sudo su - aegir -c "systemctl start hosting-queued"
+
 else
     echo " - ÆGIR | Aegir frontend failed to bootstrap, something went wrong!"
     echo " - ÆGIR | Look at the log above for clues or run with DPKG_DEBUG=developer"
