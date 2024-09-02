@@ -164,8 +164,8 @@ if sudo su - aegir -c "drush @hostmaster status" 2>&1 | grep -q 'Drupal bootstra
     echo " - ÆGIR | Aegir frontend bootstrap correctly, operation was a success!"
     echo "Use this URL to login on your new site:"
     sudo su - aegir -c "drush @hostmaster uli"
-    # start queued daemon
-    sudo su - aegir -c "systemctl start hosting-queued"
+    # restart queued daemon as aegir user
+    sudo su - aegir -c "systemctl restart hosting-queued"
 
 else
     echo " - ÆGIR | Aegir frontend failed to bootstrap, something went wrong!"
