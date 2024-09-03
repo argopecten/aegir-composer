@@ -4,24 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3c49c23f4868ba6236bdadf636e9a276",
+    "content-hash": "15a7f5994ee961b910791441b629f544",
     "packages": [
         {
             "name": "aegir/hostmaster",
-            "version": "dev-dev/latest",
+            "version": "3.193.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-hostmaster.git",
-                "reference": "2c4f538bfdceb53f2ca1b2348198a78c4649a447"
+                "reference": "c337ca33fd9eab196b14850a212b12129ce64d9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/2c4f538bfdceb53f2ca1b2348198a78c4649a447",
-                "reference": "2c4f538bfdceb53f2ca1b2348198a78c4649a447",
+                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/c337ca33fd9eab196b14850a212b12129ce64d9b",
+                "reference": "c337ca33fd9eab196b14850a212b12129ce64d9b",
                 "shasum": ""
             },
             "require": {
-                "aegir/provision": "dev-dev/main",
+                "aegir/provision": "^3.193.2",
                 "drupal/admin_menu": "^3.0-rc7",
                 "drupal/aegir_objects": "^3.190",
                 "drupal/betterlogin": "^1.5",
@@ -31,14 +31,14 @@
                 "drupal/entity": "^1.11",
                 "drupal/features": "^2.15",
                 "drupal/hosting": "^3.193",
-                "drupal/hosting_civicrm": "dev-dev/main",
-                "drupal/hosting_deploy": "dev-dev/main",
+                "drupal/hosting_civicrm": "^3.193",
+                "drupal/hosting_deploy": "^3.193",
                 "drupal/hosting_git": "^3.190",
                 "drupal/hosting_https": "^3.190",
                 "drupal/hosting_logs": "^3.190",
                 "drupal/hosting_remote_import": "^3.190",
                 "drupal/hosting_site_backup_manager": "^3.190",
-                "drupal/hosting_tasks_extra": "dev-dev/main",
+                "drupal/hosting_tasks_extra": "^3.193",
                 "drupal/libraries": "^2.5",
                 "drupal/module_filter": "^2.3",
                 "drupal/openidadmin": "^1.0",
@@ -49,7 +49,7 @@
                 "drupal/timeago": "^2.3",
                 "drupal/views": "^3.29",
                 "drupal/views_bulk_operations": "^3.7",
-                "drush/drush": "dev-dev/main",
+                "drush/drush": "^8.4.12",
                 "ext-curl": "*",
                 "ext-gd": "*",
                 "ext-json": "*",
@@ -75,23 +75,23 @@
             ],
             "description": "Aegir Hostmaster profile with composer",
             "support": {
-                "source": "https://github.com/argopecten/aegir-hostmaster/tree/dev/latest",
+                "source": "https://github.com/argopecten/aegir-hostmaster/tree/3.193.5",
                 "issues": "https://github.com/argopecten/aegir-hostmaster/issues"
             },
-            "time": "2024-09-02T11:16:55+00:00"
+            "time": "2024-09-03T11:59:44+00:00"
         },
         {
             "name": "aegir/provision",
-            "version": "dev-dev/main",
+            "version": "3.193.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-provision.git",
-                "reference": "9862ba476186e0cfd3633d7b44ff03083fade34b"
+                "reference": "27a7b1ecc5065c74b56390dd9aa091191a7f0a80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-provision/zipball/9862ba476186e0cfd3633d7b44ff03083fade34b",
-                "reference": "9862ba476186e0cfd3633d7b44ff03083fade34b",
+                "url": "https://api.github.com/repos/argopecten/aegir-provision/zipball/27a7b1ecc5065c74b56390dd9aa091191a7f0a80",
+                "reference": "27a7b1ecc5065c74b56390dd9aa091191a7f0a80",
                 "shasum": ""
             },
             "require": {
@@ -121,9 +121,9 @@
             "support": {
                 "issues": "https://www.drupal.org/project/issues/provision",
                 "docs": "http://docs.aegirproject.org/",
-                "source": "https://github.com/argopecten/aegir-provision/tree/dev/main"
+                "source": "https://github.com/argopecten/aegir-provision/tree/3.193.2"
             },
-            "time": "2024-08-20T16:12:28+00:00"
+            "time": "2024-09-03T11:33:14+00:00"
         },
         {
             "name": "composer/installers",
@@ -1478,16 +1478,16 @@
         },
         {
             "name": "drupal/hosting_civicrm",
-            "version": "dev-dev/main",
+            "version": "3.193.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/hosting_civicrm.git",
-                "reference": "802b3c22d3184b5fe7982656777cc03708c1fe82"
+                "reference": "58f020313c5eb678329c330a1a723958b30a0718"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/hosting_civicrm/zipball/802b3c22d3184b5fe7982656777cc03708c1fe82",
-                "reference": "802b3c22d3184b5fe7982656777cc03708c1fe82",
+                "url": "https://api.github.com/repos/argopecten/hosting_civicrm/zipball/58f020313c5eb678329c330a1a723958b30a0718",
+                "reference": "58f020313c5eb678329c330a1a723958b30a0718",
                 "shasum": ""
             },
             "require": {
@@ -1513,9 +1513,9 @@
             "support": {
                 "issues": "https://www.drupal.org/project/issues/hosting_deploy",
                 "docs": "http://docs.aegirproject.org/",
-                "source": "https://github.com/argopecten/hosting_civicrm/tree/dev/main"
+                "source": "https://github.com/argopecten/hosting_civicrm/tree/3.193.2"
             },
-            "time": "2024-08-31T13:48:33+00:00"
+            "time": "2024-09-03T11:00:49+00:00"
         },
         {
             "name": "drupal/hosting_client",
@@ -1597,16 +1597,16 @@
         },
         {
             "name": "drupal/hosting_deploy",
-            "version": "dev-dev/main",
+            "version": "3.193.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/hosting_deploy.git",
-                "reference": "758ce36eab851391766cf34eb610adf761ba440c"
+                "reference": "c032e56fd768155e64be23810b1f9e9e3c5914fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/hosting_deploy/zipball/758ce36eab851391766cf34eb610adf761ba440c",
-                "reference": "758ce36eab851391766cf34eb610adf761ba440c",
+                "url": "https://api.github.com/repos/argopecten/hosting_deploy/zipball/c032e56fd768155e64be23810b1f9e9e3c5914fd",
+                "reference": "c032e56fd768155e64be23810b1f9e9e3c5914fd",
                 "shasum": ""
             },
             "require": {
@@ -1627,9 +1627,9 @@
             "support": {
                 "issues": "https://www.drupal.org/project/issues/hosting_deploy",
                 "docs": "http://docs.aegirproject.org/",
-                "source": "https://github.com/argopecten/hosting_deploy/tree/dev/main"
+                "source": "https://github.com/argopecten/hosting_deploy/tree/3.193.2"
             },
-            "time": "2024-08-30T13:11:28+00:00"
+            "time": "2024-09-03T10:55:27+00:00"
         },
         {
             "name": "drupal/hosting_git",
@@ -2172,16 +2172,16 @@
         },
         {
             "name": "drupal/hosting_tasks_extra",
-            "version": "dev-dev/main",
+            "version": "3.193.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/hosting_tasks_extra.git",
-                "reference": "e5570a1eda292e4b572afa11f5e0da41ebaca054"
+                "reference": "2c1887eb5191bd594259dff512c5786a1cceca68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/hosting_tasks_extra/zipball/e5570a1eda292e4b572afa11f5e0da41ebaca054",
-                "reference": "e5570a1eda292e4b572afa11f5e0da41ebaca054",
+                "url": "https://api.github.com/repos/argopecten/hosting_tasks_extra/zipball/2c1887eb5191bd594259dff512c5786a1cceca68",
+                "reference": "2c1887eb5191bd594259dff512c5786a1cceca68",
                 "shasum": ""
             },
             "require": {
@@ -2201,9 +2201,9 @@
             "support": {
                 "issues": "https://www.drupal.org/project/issues/hosting_deploy",
                 "docs": "http://docs.aegirproject.org/",
-                "source": "https://github.com/argopecten/hosting_tasks_extra/tree/dev/main"
+                "source": "https://github.com/argopecten/hosting_tasks_extra/tree/3.193.1"
             },
-            "time": "2024-09-02T11:14:42+00:00"
+            "time": "2024-09-03T10:48:21+00:00"
         },
         {
             "name": "drupal/hosting_web_server",
@@ -2897,16 +2897,16 @@
         },
         {
             "name": "drush/drush",
-            "version": "dev-dev/main",
+            "version": "8.4.12.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-drush8.git",
-                "reference": "014935382579f0b38d2e0f589091b019b3713f19"
+                "reference": "dda1deb12466a9c7ae7dd87849e2733be5a6b8d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-drush8/zipball/014935382579f0b38d2e0f589091b019b3713f19",
-                "reference": "014935382579f0b38d2e0f589091b019b3713f19",
+                "url": "https://api.github.com/repos/argopecten/aegir-drush8/zipball/dda1deb12466a9c7ae7dd87849e2733be5a6b8d0",
+                "reference": "dda1deb12466a9c7ae7dd87849e2733be5a6b8d0",
                 "shasum": ""
             },
             "require": {
@@ -3029,9 +3029,9 @@
             "support": {
                 "forum": "http://drupal.stackexchange.com/questions/tagged/drush",
                 "irc": "irc://irc.freenode.org/drush",
-                "source": "https://github.com/argopecten/aegir-drush8/tree/dev/main"
+                "source": "https://github.com/argopecten/aegir-drush8/tree/8.4.12.11"
             },
-            "time": "2024-08-16T15:03:38+00:00"
+            "time": "2024-09-03T11:08:43+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -4600,9 +4600,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "aegir/hostmaster": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
