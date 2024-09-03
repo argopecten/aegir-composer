@@ -10,11 +10,19 @@
         }
     ],
     "repositories": {
+          "drupal/hosting_tasks_extra": {
+              "type": "vcs",
+              "url":  "https://github.com/argopecten/hosting_tasks_extra"
+          },
+          "drupal/hosting_civicrm": {
+              "type": "vcs",
+              "url":  "https://github.com/argopecten/hosting_civicrm"
+          },
           "drupal/hosting_deploy": {
               "type": "vcs",
               "url":  "https://github.com/argopecten/hosting_deploy"
           },
-          "aegir/drush8": {
+          "drush/drush": {
               "type": "vcs",
               "url":  "https://github.com/argopecten/aegir-drush8"
           },
@@ -45,7 +53,7 @@
         "ext-pdo": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "aegir/hostmaster": "^3.193.2",
+        "aegir/hostmaster": "^3.193.5",
         "composer/installers": "^1.9",
         "composer/semver": "^1.4",
         "cweagans/composer-patches": "^1.7",
@@ -99,9 +107,10 @@
     },
     "extra": {
         "installer-paths": {
+            "drush/": ["drush/drush"],
+            "drush/commands/{$name}/": ["type:drupal-drush"],
             "hostmaster/": ["type:drupal-core"],
             "hostmaster/profiles/{$name}/": ["type:drupal-profile"],
-            "hostmaster/sites/all/drush/{$name}/": ["type:drupal-drush"],
             "hostmaster/sites/all/libraries/{$name}/": ["type:drupal-library"],
             "hostmaster/sites/all/modules/contrib/{$name}/": ["type:drupal-module"],
             "hostmaster/sites/all/themes/contrib/{$name}/": ["type:drupal-theme"]
@@ -111,7 +120,6 @@
             "hostmaster/sites/all/modules/contrib",
             "hostmaster/sites/all/themes/contrib",
             "hostmaster/sites/all/libraries",
-            "hostmaster/sites/all/drush",
             "hostmaster/sites/default/settings.php",
             "hostmaster/sites/default/files"
         ],
@@ -122,6 +130,12 @@
             },
             "drupal-composer/preserve-paths": {
                 "Update PluginWrapper.php" : "https://github.com/lazysoundsystem/preserve-paths/commit/173dde446d161aa2beb5b1cafccfd14f2a8bbed4.patch"
+            },
+            "drupal/hosting_https": {
+                "Nginx: Fix the try_files directive" : "https://git.drupalcode.org/project/hosting_https/-/merge_requests/1.diff"
+            },
+            "drupal/hosting_https": {
+                "Nginx: ssl directive is deprecated" : "https://www.drupal.org/files/issues/2024-07-11/3313064-update-nginx-1.25-14.patch"
             }
         }
     }

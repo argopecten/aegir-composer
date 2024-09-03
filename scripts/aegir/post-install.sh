@@ -5,23 +5,23 @@
 # on Github: https://github.com/argopecten/aegir-composer
 #
 
-echo "ÆGIR | post-install script is running ..." | tee -a log.txt
+echo "ÆGIR | post-install script is running ..."
 # runs after the install command has been executed with a lock file present
 # all files are downloaded and relocated by composer
 
 # some variable
 # webserver: apache2 or nginx, for now it is just nginx
 WEBSERVER="nginx"
-# hostmaster directory
-AEGIR_HOSTMASTER="/var/aegir/hostmaster"
-# vendor directory
-AEGIR_VENDOR="/var/aegir/vendor"
+# hostmaster root directory
+HOSTMASTER="/var/aegir/hostmaster"
+# drush directory in Aegir
+AEGIR_DRUSH="/var/aegir/drush"
 # global drush
-DRUSH_PATH="/usr/bin/drush"
+GLOBAL_DRUSH="/usr/bin/drush"
 
 
 # prepare Aegir directory and set permissions
-echo " - ÆGIR | Copying Aegir files into aegir home ..." | sudo tee -a log.txt
+echo " - ÆGIR | Copying Aegir files into aegir home ..."
 # move downloaded stuff into aegir home
 sudo cp -R /tmp/aegir-composer/* /var/aegir/
 # grant user permissions
@@ -30,7 +30,7 @@ sudo chown -R aegir:aegir /var/aegir
 sudo chmod 755 /var/aegir
 
 #  - webserver config to use aegir settings
-echo " - ÆGIR | $WEBSERVER is using the Aegir configuration." | sudo tee -a log.txt
+echo " - ÆGIR | $WEBSERVER is using the Aegir configuration."
 AEGIR_CONF="/var/aegir/config/$WEBSERVER.conf"
 case "$WEBSERVER" in
     nginx)
@@ -45,32 +45,31 @@ sudo su -c "ln -s $AEGIR_CONF $WEBSERVER_CONF"
 
 
 #  Deploy "fix ownership & permissions" scripts
-echo " - ÆGIR | deploying fix ownership & permissions scripts" | sudo tee -a log.txt
+echo " - ÆGIR | deploying fix ownership & permissions scripts"
 # remove old scripts, if any
 sudo su -c "rm /usr/local/bin/fix-drupal-*.sh 2>/dev/null"
 sudo su -c "rm /etc/sudoers.d/fix-drupal-* 2>/dev/null"
 # deploy scripts
-sudo bash $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh 2>&1>/dev/null
+sudo bash $HOSTMASTER/sites/all/modules/contrib/hosting_tasks_extra/fix_permissions/scripts/standalone-install-fix-permissions-ownership.sh 2>&1>/dev/null
 
 
 # setup drush8, download done by composer
-echo " - ÆGIR | Setup global Drush8 for Aegir 3.x" | sudo tee -a log.txt
+echo " - ÆGIR | Setup global Drush8 for Aegir 3.x"
+# download vendors for drush (is it really needed?)
+sudo su - aegir -c "cd $AEGIR_DRUSH && composer install"
 # allow drush via PATH
-[[ -L "$DRUSH_PATH" ]] && sudo su -c "rm $DRUSH_PATH"
-sudo ln -s $AEGIR_VENDOR/aegir/drush8/drush $DRUSH_PATH
-
-
-# Configure the Provision module
-echo " - ÆGIR | Configure the Provision module" | sudo tee -a log.txt
-# download done by composer, link provision drush commands into drush8 directory
-[[ -L "$AEGIR_VENDOR/aegir/drush8/commands/provision" ]] && sudo su - aegir -c "rm $AEGIR_VENDOR/aegir/drush8/commands/provision"
-sudo su - aegir -c "ln -s $AEGIR_HOSTMASTER/sites/all/drush/provision $AEGIR_VENDOR/aegir/drush8/commands"
+[[ -L "$GLOBAL_DRUSH" ]] && sudo su -c "rm $GLOBAL_DRUSH"
+sudo ln -s $AEGIR_DRUSH/drush $GLOBAL_DRUSH
+# workaround, as few places has hardcoded drush path like this
+sudo ln -s $AEGIR_DRUSH/drush /usr/local/bin/drush
+#  workaround for faulty hosting_tasks_extra module
+sudo su - aegir -c "cd $AEGIR_DRUSH/commands/provision && curl -OL https://raw.githubusercontent.com/omega8cc/provision_tasks_extra/master/provision_tasks_extra.drush.inc"
 # clear cache
 sudo su - aegir -c "drush cache:clear drush"
 
 
 # Configure db user for Aegir
-echo " - ÆGIR | db user for Aegir" | sudo tee -a log.txt
+echo " - ÆGIR | db user for Aegir"
 # random database password for aegir user will be stored in
 #    /var/aegir/.drush/server_localhost.alias.drushrc.php
 #    generate 5x4 bits and replace space with underscore as password
@@ -91,7 +90,7 @@ SITE_URI=$(echo $AEGIR_HOST)
 AEGIR_VERSION="7.x-3.x"
 
 # Install Aegir frontend via drush hostmaster-install -y
-echo " - ÆGIR | Install Aegir frontend via drush hostmaster-install" | sudo tee -a log.txt
+echo " - ÆGIR | Install Aegir frontend via drush hostmaster-install"
 
 echo "ÆGIR | We will install Aegir frontend with the following options:"
 echo "ÆGIR | "
@@ -99,7 +98,7 @@ echo "ÆGIR | Aegir URI:             $SITE_URI"
 echo "ÆGIR | Aegir server (host):   $AEGIR_HOST"
 echo "ÆGIR | Aegir root:            /var/aegir"
 echo "ÆGIR | Admin name:            admin"
-echo "ÆGIR | Admin email:           admin@example.com"
+echo "ÆGIR | Admin email:           admin@$AEGIR_HOST"
 echo "ÆGIR | Web group:             www-data"
 echo "ÆGIR | Webserver:             $WEBSERVER"
 echo "ÆGIR | Webserver port:        80"
@@ -108,7 +107,7 @@ echo "ÆGIR | Database user:         $AEGIR_DB_USER"
 echo "ÆGIR | Database pwd:          stored in /var/aegir/.drush/server_localhost.alias.drushrc.php"
 echo "ÆGIR | Database port:         3306"
 echo "ÆGIR | Aegir version:         $AEGIR_VERSION"
-echo "ÆGIR | Hostmaster dir:        $AEGIR_HOSTMASTER"
+echo "ÆGIR | Hostmaster dir:        $HOSTMASTER"
 echo "ÆGIR | Aegir profile:         hostmaster"
 echo "ÆGIR | "
 
@@ -123,7 +122,7 @@ sudo su - aegir -c "drush hostmaster-install -y --strict=0 $SITE_URI \
           --client_name=admin \
           --client_email=admin@$AEGIR_HOST \
           --http_service_type=$WEBSERVER \
-          --root=$AEGIR_HOSTMASTER \
+          --root=$HOSTMASTER \
           --version=$AEGIR_VERSION
 "
 # Flush the drush cache to find new commands
@@ -131,22 +130,22 @@ sudo su - aegir -c "drush cache:clear drush"
 
 
 # install hosting-queued daemon
-echo " - ÆGIR | Install hosting-queued daemon..." | sudo tee -a log.txt
-sudo cp $AEGIR_HOSTMASTER/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
+echo " - ÆGIR | Install hosting-queued daemon..."
+sudo cp $HOSTMASTER/sites/all/modules/contrib/hosting/queued/init.d.example /etc/init.d/hosting-queued
 sudo chmod 755 /etc/init.d/hosting-queued
 sudo systemctl daemon-reload
 sudo systemctl enable hosting-queued
 
 
 #  - Enable Aegir modules: hosting_civicrm, hosting_civicrm_cron, ...
-echo " - ÆGIR | Enabling hosting modules: hosting-queued daemon, fix ownership & permissions ..."  | sudo tee -a log.txt
+echo " - ÆGIR | Enabling hosting modules: hosting-queued daemon, fix ownership & permissions ..."
 sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_queued"
 sudo su - aegir -c "drush @hostmaster pm:enable -y fix_ownership fix_permissions"
-# sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_civicrm hosting_civicrm_cron"
+sudo su - aegir -c "drush @hostmaster pm:enable -y hosting_civicrm hosting_civicrm_cron"
 
 
 #  - Reload services: nginx, queue, ...
-echo " - ÆGIR | Reload services: nginx, queue, ..."  | sudo tee -a log.txt
+echo " - ÆGIR | Reload services: nginx, queue, ..."
 case $WEBSERVER in
     nginx)
         sudo systemctl restart nginx
@@ -155,8 +154,9 @@ case $WEBSERVER in
         sudo systemctl restart apache2
         ;;
 esac
-# restart queued daemon
-sudo systemctl restart hosting-queued
+# start queued daemon
+sudo systemctl start hosting-queued
+
 
 #  - Status message and login URL
 # this will ensure that this script aborts if the site can't be bootstrapped
@@ -164,6 +164,9 @@ if sudo su - aegir -c "drush @hostmaster status" 2>&1 | grep -q 'Drupal bootstra
     echo " - ÆGIR | Aegir frontend bootstrap correctly, operation was a success!"
     echo "Use this URL to login on your new site:"
     sudo su - aegir -c "drush @hostmaster uli"
+    # restart queued daemon as aegir user
+    sudo su - aegir -c "sudo systemctl restart hosting-queued"
+
 else
     echo " - ÆGIR | Aegir frontend failed to bootstrap, something went wrong!"
     echo " - ÆGIR | Look at the log above for clues or run with DPKG_DEBUG=developer"

@@ -4,11 +4,11 @@
 #
 # on Github: https://github.com/argopecten/aegir-composer
 #
-echo "ÆGIR | pre-install script is running..." | tee -a log.txt
+echo "ÆGIR | pre-install script is running..."
 # before the install command is executed with a lock file present
 # before any files downloaded by composer
 
-echo " - ÆGIR | Setup aegir user" | tee -a log.txt
+echo " - ÆGIR | Setup aegir user"
 # create user if not yet exists
 if ! getent passwd aegir >/dev/null ; then
     sudo adduser --quiet --home "/var/aegir" --disabled-password --gecos 'Aegir user,,,' aegir
@@ -21,4 +21,4 @@ echo 'aegir ALL=(ALL) NOPASSWD:ALL     # no password' > /tmp/aegir
 sudo chmod 0440 /tmp/aegir
 sudo chown root:root /tmp/aegir
 sudo mv /tmp/aegir /etc/sudoers.d/aegir
-echo " - ÆGIR | The aegir user and its permissions have been setup." | sudo tee -a log.txt
+echo " - ÆGIR | The aegir user and its permissions have been setup."

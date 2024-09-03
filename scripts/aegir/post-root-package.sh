@@ -4,8 +4,8 @@
 #
 # on Github: https://github.com/argopecten/aegir-composer
 #
-echo "ÆGIR | post-root-package-install script is running..." | tee -a log.txt
+echo "ÆGIR | post-root-package-install script is running..."
 # occurs after the root package has been installed during the create-project
 # command (but before its dependencies are installed).
 
-echo " - ÆGIR | Hi there, install is starting ..." | tee -a log.txt
+echo " - ÆGIR | Hi there, install is starting ..."

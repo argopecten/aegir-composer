@@ -4,162 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "21d18f1923d407f9047f3463d49ade64",
+    "content-hash": "15a7f5994ee961b910791441b629f544",
     "packages": [
         {
-            "name": "aegir/drush8",
-            "version": "8.4.12.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/argopecten/aegir-drush8.git",
-                "reference": "d77f5f774503a1c927d77280c3427f145ae5b563"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-drush8/zipball/d77f5f774503a1c927d77280c3427f145ae5b563",
-                "reference": "d77f5f774503a1c927d77280c3427f145ae5b563",
-                "shasum": ""
-            },
-            "require": {
-                "consolidation/annotated-command": "^2.12.0",
-                "consolidation/output-formatters": "~3",
-                "pear/console_table": "~1.3.1",
-                "php": ">=5.4.5",
-                "psr/log": "~1.0",
-                "psy/psysh": "~0.6",
-                "symfony/console": "~2.7|^3|^4.4",
-                "symfony/event-dispatcher": "~2.7|^3|^4.4",
-                "symfony/finder": "~2.7|^3|^4.4",
-                "symfony/process": "~2.7|^3|^4.4",
-                "symfony/var-dumper": "~2.7|^3|^4.4|^5",
-                "symfony/yaml": "~2.3|^3|^4.4",
-                "webflo/drupal-finder": "^1.1.0",
-                "webmozart/path-util": "~2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4 || ^7.5.20 || ^9",
-                "squizlabs/php_codesniffer": "^3",
-                "symfony/console": "~2.7",
-                "symfony/event-dispatcher": "~2.7",
-                "symfony/finder": "~2.7",
-                "symfony/process": "2.7.*",
-                "symfony/var-dumper": "~2.7",
-                "symfony/yaml": "~2.3",
-                "yoast/phpunit-polyfills": "^1"
-            },
-            "suggest": {
-                "drush/config-extra": "Provides configuration workflow commands, such as config-merge.",
-                "ext-pcntl": "*"
-            },
-            "bin": [
-                "drush",
-                "drush.launcher",
-                "drush.php",
-                "drush.complete.sh"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "8.3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Drush\\": "lib/",
-                    "Consolidation\\": "lib/"
-                },
-                "psr-4": {
-                    "Drush\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-0": {
-                    "Unish": "tests/"
-                }
-            },
-            "scripts": {
-                "phar:install-tools": [
-                    "curl -L https://github.com/box-project/box/releases/download/4.3.7/box.phar --output box.phar"
-                ],
-                "phar:build": [
-                    "composer install -n --no-dev && php box.phar compile"
-                ],
-                "lint": [
-                    "find includes -name '*.inc' -print0 | xargs -0 -n1 php -l",
-                    "find lib/Drush -name '*.php' -print0 | xargs -0 -n1 php -l"
-                ]
-            },
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Moshe Weitzman",
-                    "email": "weitzman@tejasa.com"
-                },
-                {
-                    "name": "Owen Barton",
-                    "email": "drupal@owenbarton.com"
-                },
-                {
-                    "name": "Mark Sonnabaum",
-                    "email": "marksonnabaum@gmail.com"
-                },
-                {
-                    "name": "Antoine Beaupré",
-                    "email": "anarcat@koumbit.org"
-                },
-                {
-                    "name": "Greg Anderson",
-                    "email": "greg.1.anderson@greenknowe.org"
-                },
-                {
-                    "name": "Jonathan Araña Cruz",
-                    "email": "jonhattan@faita.net"
-                },
-                {
-                    "name": "Jonathan Hedstrom",
-                    "email": "jhedstrom@gmail.com"
-                },
-                {
-                    "name": "Christopher Gervais",
-                    "email": "chris@ergonlogic.com"
-                },
-                {
-                    "name": "Dave Reid",
-                    "email": "dave@davereid.net"
-                },
-                {
-                    "name": "Damian Lee",
-                    "email": "damiankloip@googlemail.com"
-                }
-            ],
-            "description": "BOA fork of Drush 8.x compatible with Drupal 10",
-            "homepage": "http://www.drush.org",
-            "support": {
-                "forum": "http://drupal.stackexchange.com/questions/tagged/drush",
-                "irc": "irc://irc.freenode.org/drush",
-                "source": "https://github.com/argopecten/aegir-drush8/tree/8.4.12.9"
-            },
-            "time": "2024-06-07T08:48:57+00:00"
-        },
-        {
             "name": "aegir/hostmaster",
-            "version": "3.193.2",
+            "version": "3.193.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-hostmaster.git",
-                "reference": "1a34506b2ae403322ec4237b16e691b1e87ca7de"
+                "reference": "c337ca33fd9eab196b14850a212b12129ce64d9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/1a34506b2ae403322ec4237b16e691b1e87ca7de",
-                "reference": "1a34506b2ae403322ec4237b16e691b1e87ca7de",
+                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/c337ca33fd9eab196b14850a212b12129ce64d9b",
+                "reference": "c337ca33fd9eab196b14850a212b12129ce64d9b",
                 "shasum": ""
             },
             "require": {
-                "aegir/drush8": "^8.4.12",
-                "aegir/provision": "^3.193",
+                "aegir/provision": "^3.193.2",
                 "drupal/admin_menu": "^3.0-rc7",
                 "drupal/aegir_objects": "^3.190",
                 "drupal/betterlogin": "^1.5",
@@ -169,14 +31,14 @@
                 "drupal/entity": "^1.11",
                 "drupal/features": "^2.15",
                 "drupal/hosting": "^3.193",
-                "drupal/hosting_civicrm": "^3.190",
+                "drupal/hosting_civicrm": "^3.193",
                 "drupal/hosting_deploy": "^3.193",
                 "drupal/hosting_git": "^3.190",
                 "drupal/hosting_https": "^3.190",
                 "drupal/hosting_logs": "^3.190",
                 "drupal/hosting_remote_import": "^3.190",
                 "drupal/hosting_site_backup_manager": "^3.190",
-                "drupal/hosting_tasks_extra": "^3.191",
+                "drupal/hosting_tasks_extra": "^3.193",
                 "drupal/libraries": "^2.5",
                 "drupal/module_filter": "^2.3",
                 "drupal/openidadmin": "^1.0",
@@ -187,6 +49,7 @@
                 "drupal/timeago": "^2.3",
                 "drupal/views": "^3.29",
                 "drupal/views_bulk_operations": "^3.7",
+                "drush/drush": "^8.4.12",
                 "ext-curl": "*",
                 "ext-gd": "*",
                 "ext-json": "*",
@@ -212,23 +75,23 @@
             ],
             "description": "Aegir Hostmaster profile with composer",
             "support": {
-                "source": "https://github.com/argopecten/aegir-hostmaster/tree/3.193.2",
+                "source": "https://github.com/argopecten/aegir-hostmaster/tree/3.193.5",
                 "issues": "https://github.com/argopecten/aegir-hostmaster/issues"
             },
-            "time": "2024-07-17T08:43:27+00:00"
+            "time": "2024-09-03T11:59:44+00:00"
         },
         {
             "name": "aegir/provision",
-            "version": "3.193.1",
+            "version": "3.193.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-provision.git",
-                "reference": "c33a92e5ec8def1f594ac978e7020ca0ad006788"
+                "reference": "27a7b1ecc5065c74b56390dd9aa091191a7f0a80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-provision/zipball/c33a92e5ec8def1f594ac978e7020ca0ad006788",
-                "reference": "c33a92e5ec8def1f594ac978e7020ca0ad006788",
+                "url": "https://api.github.com/repos/argopecten/aegir-provision/zipball/27a7b1ecc5065c74b56390dd9aa091191a7f0a80",
+                "reference": "27a7b1ecc5065c74b56390dd9aa091191a7f0a80",
                 "shasum": ""
             },
             "require": {
@@ -258,9 +121,9 @@
             "support": {
                 "issues": "https://www.drupal.org/project/issues/provision",
                 "docs": "http://docs.aegirproject.org/",
-                "source": "https://github.com/argopecten/aegir-provision/tree/7.x-3.193.1"
+                "source": "https://github.com/argopecten/aegir-provision/tree/3.193.2"
             },
-            "time": "2024-07-06T12:37:35+00:00"
+            "time": "2024-09-03T11:33:14+00:00"
         },
         {
             "name": "composer/installers",
@@ -1216,7 +1079,7 @@
                     "homepage": "https://www.drupal.org/user/693738"
                 },
                 {
-                    "name": "Gábor Hojtsy",
+                    "name": "gábor hojtsy",
                     "homepage": "https://www.drupal.org/user/4166"
                 },
                 {
@@ -1395,7 +1258,7 @@
             ],
             "authors": [
                 {
-                    "name": "Berdir",
+                    "name": "berdir",
                     "homepage": "https://www.drupal.org/user/214652"
                 },
                 {
@@ -1514,156 +1377,6 @@
             }
         },
         {
-            "name": "drupal/fix_ownership",
-            "version": "3.191.0",
-            "require": {
-                "drupal/drupal": "~7.0",
-                "drupal/hosting_site": "*",
-                "drupal/hosting_tasks_extra": "^3"
-            },
-            "type": "metapackage",
-            "extra": {
-                "drupal": {
-                    "version": "7.x-3.191",
-                    "datestamp": "1674283416",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/7/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "anarcat",
-                    "homepage": "https://www.drupal.org/user/1274"
-                },
-                {
-                    "name": "colan",
-                    "homepage": "https://www.drupal.org/user/58704"
-                },
-                {
-                    "name": "cweagans",
-                    "homepage": "https://www.drupal.org/user/404732"
-                },
-                {
-                    "name": "dsnopek",
-                    "homepage": "https://www.drupal.org/user/266527"
-                },
-                {
-                    "name": "ergonlogic",
-                    "homepage": "https://www.drupal.org/user/368613"
-                },
-                {
-                    "name": "gboudrias",
-                    "homepage": "https://www.drupal.org/user/918342"
-                },
-                {
-                    "name": "helmo",
-                    "homepage": "https://www.drupal.org/user/449000"
-                },
-                {
-                    "name": "Jon Pugh",
-                    "homepage": "https://www.drupal.org/user/17028"
-                },
-                {
-                    "name": "memtkmcc",
-                    "homepage": "https://www.drupal.org/user/92646"
-                },
-                {
-                    "name": "omega8cc",
-                    "homepage": "https://www.drupal.org/user/539502"
-                },
-                {
-                    "name": "Steven Jones",
-                    "homepage": "https://www.drupal.org/user/99644"
-                }
-            ],
-            "description": "Fix file ownership of Drupal platforms and sites.",
-            "homepage": "https://www.drupal.org/project/hosting_tasks_extra",
-            "support": {
-                "source": "https://git.drupalcode.org/project/hosting_tasks_extra"
-            }
-        },
-        {
-            "name": "drupal/fix_permissions",
-            "version": "3.191.0",
-            "require": {
-                "drupal/drupal": "~7.0",
-                "drupal/hosting_site": "*",
-                "drupal/hosting_tasks_extra": "^3"
-            },
-            "type": "metapackage",
-            "extra": {
-                "drupal": {
-                    "version": "7.x-3.191",
-                    "datestamp": "1674283416",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/7/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "anarcat",
-                    "homepage": "https://www.drupal.org/user/1274"
-                },
-                {
-                    "name": "colan",
-                    "homepage": "https://www.drupal.org/user/58704"
-                },
-                {
-                    "name": "cweagans",
-                    "homepage": "https://www.drupal.org/user/404732"
-                },
-                {
-                    "name": "dsnopek",
-                    "homepage": "https://www.drupal.org/user/266527"
-                },
-                {
-                    "name": "ergonlogic",
-                    "homepage": "https://www.drupal.org/user/368613"
-                },
-                {
-                    "name": "gboudrias",
-                    "homepage": "https://www.drupal.org/user/918342"
-                },
-                {
-                    "name": "helmo",
-                    "homepage": "https://www.drupal.org/user/449000"
-                },
-                {
-                    "name": "Jon Pugh",
-                    "homepage": "https://www.drupal.org/user/17028"
-                },
-                {
-                    "name": "memtkmcc",
-                    "homepage": "https://www.drupal.org/user/92646"
-                },
-                {
-                    "name": "omega8cc",
-                    "homepage": "https://www.drupal.org/user/539502"
-                },
-                {
-                    "name": "Steven Jones",
-                    "homepage": "https://www.drupal.org/user/99644"
-                }
-            ],
-            "description": "Fix file permissions of Drupal platforms and sites.",
-            "homepage": "https://www.drupal.org/project/hosting_tasks_extra",
-            "support": {
-                "source": "https://git.drupalcode.org/project/hosting_tasks_extra"
-            }
-        },
-        {
             "name": "drupal/hosting",
             "version": "3.193.1",
             "source": {
@@ -1765,73 +1478,44 @@
         },
         {
             "name": "drupal/hosting_civicrm",
-            "version": "3.190.0",
+            "version": "3.193.2",
             "source": {
                 "type": "git",
-                "url": "https://git.drupalcode.org/project/hosting_civicrm.git",
-                "reference": "7.x-3.190"
+                "url": "https://github.com/argopecten/hosting_civicrm.git",
+                "reference": "58f020313c5eb678329c330a1a723958b30a0718"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/hosting_civicrm-7.x-3.190.zip",
-                "reference": "7.x-3.190",
-                "shasum": "de5c443301fe4661b4507061b190680d2ef10861"
+                "url": "https://api.github.com/repos/argopecten/hosting_civicrm/zipball/58f020313c5eb678329c330a1a723958b30a0718",
+                "reference": "58f020313c5eb678329c330a1a723958b30a0718",
+                "shasum": ""
             },
             "require": {
-                "drupal/drupal": "~7.0",
-                "drupal/fix_ownership": "*",
-                "drupal/fix_permissions": "*",
-                "drupal/hosting": "*",
+                "drupal/hosting": "^3.193",
                 "symfony/process": "^3.1"
             },
-            "require-dev": {
-                "drupal/drush": "*",
-                "drupal/hosting": "*",
-                "drush/drush": "^8.0"
-            },
             "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "7.x-3.190",
-                    "datestamp": "1606489708",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
             "autoload-dev": {
                 "psr-0": {
                     "HostingCiviTest": "tests/"
                 }
             },
-            "notification-url": "https://packages.drupal.org/7/downloads",
             "license": [
                 "GPL-2.0-or-later"
             ],
             "authors": [
                 {
-                    "name": "bgm",
-                    "homepage": "https://www.drupal.org/user/89461"
-                },
-                {
-                    "name": "colan",
-                    "homepage": "https://www.drupal.org/user/58704"
-                },
-                {
-                    "name": "ergonlogic",
-                    "homepage": "https://www.drupal.org/user/368613"
-                },
-                {
-                    "name": "helmo",
-                    "homepage": "https://www.drupal.org/user/449000"
+                    "name": "Aegir maintainers",
+                    "homepage": "http://docs.aegirproject.org/en/3.x/community/core-team/"
                 }
             ],
-            "description": "Enables installation and maintenance of CiviCRM on sites.",
-            "homepage": "https://www.drupal.org/project/hosting_civicrm",
+            "description": "This module provides tools to manage CiviCRM in the Aegir Hosting System.",
             "support": {
-                "source": "https://git.drupalcode.org/project/hosting_civicrm"
-            }
+                "issues": "https://www.drupal.org/project/issues/hosting_deploy",
+                "docs": "http://docs.aegirproject.org/",
+                "source": "https://github.com/argopecten/hosting_civicrm/tree/3.193.2"
+            },
+            "time": "2024-09-03T11:00:49+00:00"
         },
         {
             "name": "drupal/hosting_client",
@@ -1913,16 +1597,16 @@
         },
         {
             "name": "drupal/hosting_deploy",
-            "version": "3.193.1",
+            "version": "3.193.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/hosting_deploy.git",
-                "reference": "35cfc8a7c7bee94807add585ccdf5e6d2cea5960"
+                "reference": "c032e56fd768155e64be23810b1f9e9e3c5914fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/hosting_deploy/zipball/35cfc8a7c7bee94807add585ccdf5e6d2cea5960",
-                "reference": "35cfc8a7c7bee94807add585ccdf5e6d2cea5960",
+                "url": "https://api.github.com/repos/argopecten/hosting_deploy/zipball/c032e56fd768155e64be23810b1f9e9e3c5914fd",
+                "reference": "c032e56fd768155e64be23810b1f9e9e3c5914fd",
                 "shasum": ""
             },
             "require": {
@@ -1943,9 +1627,9 @@
             "support": {
                 "issues": "https://www.drupal.org/project/issues/hosting_deploy",
                 "docs": "http://docs.aegirproject.org/",
-                "source": "https://github.com/argopecten/hosting_deploy/tree/3.193.1"
+                "source": "https://github.com/argopecten/hosting_deploy/tree/3.193.2"
             },
-            "time": "2024-07-17T06:37:04+00:00"
+            "time": "2024-09-03T10:55:27+00:00"
         },
         {
             "name": "drupal/hosting_git",
@@ -2488,92 +2172,38 @@
         },
         {
             "name": "drupal/hosting_tasks_extra",
-            "version": "3.191.0",
+            "version": "3.193.1",
             "source": {
                 "type": "git",
-                "url": "https://git.drupalcode.org/project/hosting_tasks_extra.git",
-                "reference": "7.x-3.191"
+                "url": "https://github.com/argopecten/hosting_tasks_extra.git",
+                "reference": "2c1887eb5191bd594259dff512c5786a1cceca68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/hosting_tasks_extra-7.x-3.191.zip",
-                "reference": "7.x-3.191",
-                "shasum": "77d49528a314b11ebafa5604cde889b3f3e0588d"
+                "url": "https://api.github.com/repos/argopecten/hosting_tasks_extra/zipball/2c1887eb5191bd594259dff512c5786a1cceca68",
+                "reference": "2c1887eb5191bd594259dff512c5786a1cceca68",
+                "shasum": ""
             },
             "require": {
-                "drupal/drupal": "~7.0",
-                "drupal/hosting_site": "*"
-            },
-            "require-dev": {
-                "drupal/hosting": "*",
-                "drupal/hosting_site": "*"
+                "drupal/hosting": "^3.193"
             },
             "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "7.x-3.191",
-                    "datestamp": "1674283416",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/7/downloads",
             "license": [
                 "GPL-2.0-or-later"
             ],
             "authors": [
                 {
-                    "name": "anarcat",
-                    "homepage": "https://www.drupal.org/user/1274"
-                },
-                {
-                    "name": "colan",
-                    "homepage": "https://www.drupal.org/user/58704"
-                },
-                {
-                    "name": "cweagans",
-                    "homepage": "https://www.drupal.org/user/404732"
-                },
-                {
-                    "name": "dsnopek",
-                    "homepage": "https://www.drupal.org/user/266527"
-                },
-                {
-                    "name": "ergonlogic",
-                    "homepage": "https://www.drupal.org/user/368613"
-                },
-                {
-                    "name": "gboudrias",
-                    "homepage": "https://www.drupal.org/user/918342"
-                },
-                {
-                    "name": "helmo",
-                    "homepage": "https://www.drupal.org/user/449000"
-                },
-                {
-                    "name": "Jon Pugh",
-                    "homepage": "https://www.drupal.org/user/17028"
-                },
-                {
-                    "name": "memtkmcc",
-                    "homepage": "https://www.drupal.org/user/92646"
-                },
-                {
-                    "name": "omega8cc",
-                    "homepage": "https://www.drupal.org/user/539502"
-                },
-                {
-                    "name": "Steven Jones",
-                    "homepage": "https://www.drupal.org/user/99644"
+                    "name": "Aegir maintainers",
+                    "homepage": "http://docs.aegirproject.org/en/3.x/community/core-team/"
                 }
             ],
-            "description": "Adds additional tasks to Aegir.",
-            "homepage": "https://www.drupal.org/project/hosting_tasks_extra",
+            "description": "This module extends Aegir with some additional tasks.",
             "support": {
-                "source": "https://git.drupalcode.org/project/hosting_tasks_extra"
-            }
+                "issues": "https://www.drupal.org/project/issues/hosting_deploy",
+                "docs": "http://docs.aegirproject.org/",
+                "source": "https://github.com/argopecten/hosting_tasks_extra/tree/3.193.1"
+            },
+            "time": "2024-09-03T10:48:21+00:00"
         },
         {
             "name": "drupal/hosting_web_server",
@@ -3264,6 +2894,144 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/views_bulk_operations"
             }
+        },
+        {
+            "name": "drush/drush",
+            "version": "8.4.12.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/argopecten/aegir-drush8.git",
+                "reference": "dda1deb12466a9c7ae7dd87849e2733be5a6b8d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/argopecten/aegir-drush8/zipball/dda1deb12466a9c7ae7dd87849e2733be5a6b8d0",
+                "reference": "dda1deb12466a9c7ae7dd87849e2733be5a6b8d0",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1.9",
+                "consolidation/annotated-command": "^2.12.0",
+                "consolidation/output-formatters": "~3",
+                "pear/console_table": "~1.3.1",
+                "php": ">=5.4.5",
+                "psr/log": "~1.0",
+                "psy/psysh": "~0.6",
+                "symfony/console": "~2.7|^3|^4.4",
+                "symfony/event-dispatcher": "~2.7|^3|^4.4",
+                "symfony/finder": "~2.7|^3|^4.4",
+                "symfony/process": "~2.7|^3|^4.4",
+                "symfony/var-dumper": "~2.7|^3|^4.4|^5",
+                "symfony/yaml": "~2.3|^3|^4.4",
+                "webflo/drupal-finder": "^1.1.0",
+                "webmozart/path-util": "~2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4 || ^7.5.20 || ^9",
+                "squizlabs/php_codesniffer": "^3",
+                "symfony/console": "~2.7",
+                "symfony/event-dispatcher": "~2.7",
+                "symfony/finder": "~2.7",
+                "symfony/process": "2.7.*",
+                "symfony/var-dumper": "~2.7",
+                "symfony/yaml": "~2.3",
+                "yoast/phpunit-polyfills": "^1"
+            },
+            "suggest": {
+                "drush/config-extra": "Provides configuration workflow commands, such as config-merge.",
+                "ext-pcntl": "*"
+            },
+            "bin": [
+                "drush",
+                "drush.launcher",
+                "drush.php",
+                "drush.complete.sh"
+            ],
+            "type": "drupal-drush",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "8.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Drush\\": "lib/",
+                    "Consolidation\\": "lib/"
+                },
+                "psr-4": {
+                    "Drush\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-0": {
+                    "Unish": "tests/"
+                }
+            },
+            "scripts": {
+                "phar:install-tools": [
+                    "curl -L https://github.com/box-project/box/releases/download/4.3.7/box.phar --output box.phar"
+                ],
+                "phar:build": [
+                    "composer install -n --no-dev && php box.phar compile"
+                ],
+                "lint": [
+                    "find includes -name '*.inc' -print0 | xargs -0 -n1 php -l",
+                    "find lib/Drush -name '*.php' -print0 | xargs -0 -n1 php -l"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Moshe Weitzman",
+                    "email": "weitzman@tejasa.com"
+                },
+                {
+                    "name": "Owen Barton",
+                    "email": "drupal@owenbarton.com"
+                },
+                {
+                    "name": "Mark Sonnabaum",
+                    "email": "marksonnabaum@gmail.com"
+                },
+                {
+                    "name": "Antoine Beaupré",
+                    "email": "anarcat@koumbit.org"
+                },
+                {
+                    "name": "Greg Anderson",
+                    "email": "greg.1.anderson@greenknowe.org"
+                },
+                {
+                    "name": "Jonathan Araña Cruz",
+                    "email": "jonhattan@faita.net"
+                },
+                {
+                    "name": "Jonathan Hedstrom",
+                    "email": "jhedstrom@gmail.com"
+                },
+                {
+                    "name": "Christopher Gervais",
+                    "email": "chris@ergonlogic.com"
+                },
+                {
+                    "name": "Dave Reid",
+                    "email": "dave@davereid.net"
+                },
+                {
+                    "name": "Damian Lee",
+                    "email": "damiankloip@googlemail.com"
+                }
+            ],
+            "description": "Drush is a command line shell and scripting interface for Drupal, a veritable Swiss Army knife designed to make life easier for those of us who spend some of our working hours hacking away at the command prompt.",
+            "homepage": "http://www.drush.org",
+            "support": {
+                "forum": "http://drupal.stackexchange.com/questions/tagged/drush",
+                "irc": "irc://irc.freenode.org/drush",
+                "source": "https://github.com/argopecten/aegir-drush8/tree/8.4.12.11"
+            },
+            "time": "2024-09-03T11:08:43+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -4515,16 +4283,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v5.4.40",
+            "version": "v5.4.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "af8868a6e9d6082dfca11f1a1f205ae93a8b6d93"
+                "reference": "6be6a6a8af4818564e3726fc65cf936f34743cef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/af8868a6e9d6082dfca11f1a1f205ae93a8b6d93",
-                "reference": "af8868a6e9d6082dfca11f1a1f205ae93a8b6d93",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/6be6a6a8af4818564e3726fc65cf936f34743cef",
+                "reference": "6be6a6a8af4818564e3726fc65cf936f34743cef",
                 "shasum": ""
             },
             "require": {
@@ -4584,7 +4352,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v5.4.40"
+                "source": "https://github.com/symfony/var-dumper/tree/v5.4.43"
             },
             "funding": [
                 {
@@ -4600,7 +4368,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-31T14:33:22+00:00"
+            "time": "2024-08-30T16:01:46+00:00"
         },
         {
             "name": "symfony/yaml",
