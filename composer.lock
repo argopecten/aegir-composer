@@ -8,20 +8,20 @@
     "packages": [
         {
             "name": "aegir/hostmaster",
-            "version": "3.193.5",
+            "version": "3.193.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-hostmaster.git",
-                "reference": "c337ca33fd9eab196b14850a212b12129ce64d9b"
+                "reference": "68c97060b5bf7e06e96a11caf0d15786d8ebf6f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/c337ca33fd9eab196b14850a212b12129ce64d9b",
-                "reference": "c337ca33fd9eab196b14850a212b12129ce64d9b",
+                "url": "https://api.github.com/repos/argopecten/aegir-hostmaster/zipball/68c97060b5bf7e06e96a11caf0d15786d8ebf6f1",
+                "reference": "68c97060b5bf7e06e96a11caf0d15786d8ebf6f1",
                 "shasum": ""
             },
             "require": {
-                "aegir/provision": "^3.193.2",
+                "aegir/provision": "^3.193.3",
                 "drupal/admin_menu": "^3.0-rc7",
                 "drupal/aegir_objects": "^3.190",
                 "drupal/betterlogin": "^1.5",
@@ -75,10 +75,10 @@
             ],
             "description": "Aegir Hostmaster profile with composer",
             "support": {
-                "source": "https://github.com/argopecten/aegir-hostmaster/tree/3.193.5",
+                "source": "https://github.com/argopecten/aegir-hostmaster/tree/3.193.6",
                 "issues": "https://github.com/argopecten/aegir-hostmaster/issues"
             },
-            "time": "2024-09-03T11:59:44+00:00"
+            "time": "2024-09-05T10:02:38+00:00"
         },
         {
             "name": "aegir/provision",
