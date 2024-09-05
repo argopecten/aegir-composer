@@ -82,16 +82,16 @@
         },
         {
             "name": "aegir/provision",
-            "version": "3.193.2",
+            "version": "3.193.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/argopecten/aegir-provision.git",
-                "reference": "27a7b1ecc5065c74b56390dd9aa091191a7f0a80"
+                "reference": "b73293015383a443a86a80a99a2d650743982684"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/argopecten/aegir-provision/zipball/27a7b1ecc5065c74b56390dd9aa091191a7f0a80",
-                "reference": "27a7b1ecc5065c74b56390dd9aa091191a7f0a80",
+                "url": "https://api.github.com/repos/argopecten/aegir-provision/zipball/b73293015383a443a86a80a99a2d650743982684",
+                "reference": "b73293015383a443a86a80a99a2d650743982684",
                 "shasum": ""
             },
             "require": {
@@ -121,9 +121,9 @@
             "support": {
                 "issues": "https://www.drupal.org/project/issues/provision",
                 "docs": "http://docs.aegirproject.org/",
-                "source": "https://github.com/argopecten/aegir-provision/tree/3.193.2"
+                "source": "https://github.com/argopecten/aegir-provision/tree/3.193.3"
             },
-            "time": "2024-09-03T11:33:14+00:00"
+            "time": "2024-09-05T09:28:09+00:00"
         },
         {
             "name": "composer/installers",
